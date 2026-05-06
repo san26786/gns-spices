@@ -1,0 +1,24 @@
+{
+  "name": "gns-spices",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "dev:api": "pnpm --filter @gns/api dev",
+    "dev:web": "pnpm --filter @gns/storefront dev",
+    "dev": "pnpm -r --parallel --stream dev",
+    "build": "pnpm -r build",
+    "db:generate": "pnpm --filter @gns/api prisma:generate",
+    "db:migrate": "pnpm --filter @gns/api prisma:migrate",
+    "db:seed": "pnpm --filter @gns/api seed",
+    "db:reset": "pnpm --filter @gns/api prisma:reset",
+    "infra:up": "docker compose -f infra/docker-compose.yml up -d",
+    "infra:down": "docker compose -f infra/docker-compose.yml down"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}
