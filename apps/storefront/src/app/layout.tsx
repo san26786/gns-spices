@@ -23,18 +23,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Main header — glass on dark */}
         <header className="glass-strong sticky top-0 z-30 border-b border-white/10">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-            <Link href="/" className="flex items-center gap-3">
-              <span
-                aria-hidden
-                className="grid place-items-center w-10 h-10 rounded-full bg-amber-500 text-amber-950 font-bold text-lg leading-none shadow-amber"
-              >
-                G
+            <Link href="/" className="flex items-center gap-3" aria-label="GNS Spices home">
+              <span className="inline-flex items-center justify-center bg-white rounded-lg px-2 py-1.5 shadow-md ring-1 ring-black/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/brand/logo.jpeg"
+                  alt="GNS Spices"
+                  className="h-10 md:h-12 w-auto object-contain"
+                />
               </span>
-              <span className="leading-none">
-                <span className="block brand-mark">GNSSPICES</span>
-                <span className="block text-[10px] tracking-[0.25em] uppercase text-zinc-400 mt-1">
-                  Estd. 1972 · India
-                </span>
+              <span className="hidden sm:block text-[10px] tracking-[0.25em] uppercase text-zinc-400 leading-none">
+                Estd. 1972 · India
               </span>
             </Link>
             <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-zinc-200">
@@ -62,7 +61,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="mt-24 border-t border-white/10 bg-black/80 text-zinc-300">
           <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
             <div className="col-span-2 md:col-span-1">
-              <p className="brand-mark mb-3">GNSSPICES</p>
+              <span className="inline-flex items-center justify-center bg-white rounded-lg px-2.5 py-2 shadow-md ring-1 ring-black/5 mb-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/brand/logo.jpeg"
+                  alt="GNS Spices"
+                  className="h-12 w-auto object-contain"
+                />
+              </span>
               <p className="text-zinc-400 leading-relaxed">
                 Three generations of farming, sourcing, and slow-roasting. From our family in Kerala to kitchens worldwide.
               </p>
