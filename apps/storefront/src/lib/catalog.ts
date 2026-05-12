@@ -158,6 +158,50 @@ export const CATALOG: CatalogProduct[] = [
     ink: 'text-spice-maroon',
     icon: '🫚',
   },
+  {
+    slug: 'cardamom-powder',
+    name: 'Cardamom Powder',
+    shortDesc: 'Freshly ground green cardamom — sweet, floral, intense.',
+    origin: 'Idukki, Kerala',
+    category: 'powders',
+    variants: [{ description: 'Premium · stone-ground', pack: '50g · 200g' }],
+    tone: 'bg-gradient-to-br from-spice-mint via-spice-leaf to-emerald-800',
+    ink: 'text-white',
+    icon: '🟢',
+  },
+  {
+    slug: 'cinnamon-powder',
+    name: 'Cinnamon Powder',
+    shortDesc: 'Sweet Ceylon cinnamon — warm, mellow, never bitter.',
+    origin: 'Munnar, Kerala',
+    category: 'powders',
+    variants: [{ description: 'Ceylon · fine grind', pack: '100g · 500g' }],
+    tone: 'bg-gradient-to-br from-orange-700 via-amber-800 to-stone-900',
+    ink: 'text-white',
+    icon: '🟫',
+  },
+  {
+    slug: 'pink-salt',
+    name: 'Pink Himalayan Salt',
+    shortDesc: 'Hand-mined rock salt — mineral-rich, gently mineral-sweet.',
+    origin: 'Punjab foothills, Himalayas',
+    category: 'powders',
+    variants: [{ description: 'Fine grind', pack: '200g · 1kg' }],
+    tone: 'bg-gradient-to-br from-pink-200 via-rose-400 to-rose-700',
+    ink: 'text-spice-maroon',
+    icon: '🧂',
+  },
+  {
+    slug: 'white-pepper-powder',
+    name: 'White Pepper Powder',
+    shortDesc: 'Fermented & polished pepper — sharper, less aromatic than black.',
+    origin: 'Sarawak / Tellicherry, Kerala',
+    category: 'powders',
+    variants: [{ description: 'Fine grind', pack: '100g · 500g' }],
+    tone: 'bg-gradient-to-br from-stone-200 via-stone-400 to-stone-600',
+    ink: 'text-spice-pepper',
+    icon: '⚪',
+  },
 
   // ── Whole seeds ──────────────────────────────────────────────────────
   {
@@ -358,6 +402,10 @@ const KEYWORD_VISUALS: Array<{ test: RegExp; v: ProductVisual }> = [
       tone: 'bg-gradient-to-br from-stone-500 via-stone-700 to-spice-pepper',
       ink: 'text-white', pile: '#6B5750', icon: '🧂',
     } },
+  { test: /pink salt|himalayan salt|rock salt/i, v: {
+      tone: 'bg-gradient-to-br from-pink-200 via-rose-400 to-rose-700',
+      ink: 'text-spice-maroon', pile: '#E58FAB', icon: '🧂',
+    } },
   { test: /ginger|sonth|adrak/i, v: {
       tone: 'bg-gradient-to-br from-amber-200 via-amber-400 to-amber-700',
       ink: 'text-spice-maroon', pile: '#D6B581', icon: '🫚',
@@ -460,23 +508,74 @@ const KEYWORD_VISUALS: Array<{ test: RegExp; v: ProductVisual }> = [
     } },
 ];
 
-/** Map of slug → image path. Only slugs listed here will render real
- *  product photos; everything else falls back to the powder-pile tile.
+/** Image auto-detection: looks in `public/products/` at server startup and
+ *  picks up any `<slug>.{jpg,jpeg,png,webp}` file. Drop a file in with the
+ *  right slug, refresh, and it appears. No code changes needed.
  *
- *  To add a real product photo:
- *    1. Save the file as `apps/storefront/public/products/<slug>.jpg`
- *       (or .png / .webp — match whatever you put in the path below).
- *    2. Add an entry here, e.g. `'turmeric-powder': '/products/turmeric-powder.jpg'`.
- *    3. Refresh the page — the photo will replace the powder-pile fallback. */
-export const PRODUCT_IMAGES: Record<string, string> = {
-  // Add image paths as you receive product photography. Keys are product slugs.
-  // Examples (uncomment once files exist in /public/products/):
-  // 'turmeric-powder':    '/products/turmeric-powder.jpg',
-  // 'chilli-powder':      '/products/kashmiri-chilli-powder.jpg',
-  // 'black-pepper-powder':'/products/black-pepper-powder.jpg',
-  // 'mango-powder':       '/products/dry-mango-powder.jpg',
-  // 'ginger-powder':      '/products/dry-ginger-powder.jpg',
+ *  Manual overrides can still be added below if you want a different filename
+ *  than `<slug>`. Manual entries take priority over auto-detection. */
+const MANUAL_IMAGE_OVERRIDES: Record<string, string> = {
+  // Filename typos in uploaded photos — point correct slugs at the misspelled files
+  // so we don't have to rename anything.
+  'cardamom-powder': '/products/cardemom-powder.png',
+  'cinnamon-powder': '/products/cinnamom-powder.png',
 };
+
+const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'] as const;
+
+let _imageCache: Record<string, string> | null = null;
+
+function getProductImagesMap(): Record<string, string> {
+  if (_imageCache) return _imageCache;
+
+  const map: Record<string, string> = { ...MANUAL_IMAGE_OVERRIDES };
+
+  // On the server, scan the public/products directory for slug-named files.
+  // (Bundled/runtime safe — fs is only required server-side.)
+  if (typeof window === 'undefined') {
+    try {
+      // Lazy-require so client bundles don't try to include `fs`.
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const fs = require('node:fs') as typeof import('node:fs');
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require('node:path') as typeof import('node:path');
+      const dir = path.join(process.cwd(), 'public', 'products');
+      if (fs.existsSync(dir)) {
+        const files = fs.readdirSync(dir);
+        for (const file of files) {
+          const dot = file.lastIndexOf('.');
+          if (dot < 0) continue;
+          const slug = file.slice(0, dot).toLowerCase();
+          const ext = file.slice(dot + 1).toLowerCase() as (typeof IMAGE_EXTENSIONS)[number];
+          if (!IMAGE_EXTENSIONS.includes(ext)) continue;
+          // Don't overwrite manual overrides.
+          if (!map[slug]) map[slug] = `/products/${file}`;
+        }
+      }
+    } catch {
+      // No products directory or fs unavailable — ignore, fallback to manual map.
+    }
+  }
+
+  _imageCache = map;
+  return map;
+}
+
+/** @deprecated Use `getProductImagesMap()` instead. Kept for backward compat. */
+export const PRODUCT_IMAGES = new Proxy({} as Record<string, string>, {
+  get(_, key: string) {
+    return getProductImagesMap()[key];
+  },
+  has(_, key: string) {
+    return key in getProductImagesMap();
+  },
+  ownKeys() {
+    return Object.keys(getProductImagesMap());
+  },
+  getOwnPropertyDescriptor() {
+    return { enumerable: true, configurable: true };
+  },
+});
 
 /** Resolves the visual for a product given any combination of slug, name, or
  *  category. Order: exact slug match → keyword match on name → category
