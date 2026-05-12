@@ -24,13 +24,20 @@ export function ProductTile({
 
   // Real product photo path
   if (visual.image) {
+    const imgPadding = size === 'detail' ? 'p-6' : 'p-3';
     return (
-      <div className={`relative aspect-square ${radius} overflow-hidden ring-1 ring-white/10 shadow-xl bg-black ${className}`}>
+      <div
+        className={`relative aspect-square ${radius} overflow-hidden ring-1 ring-white/10 shadow-xl ${className}`}
+        style={{
+          background:
+            'radial-gradient(circle at 50% 30%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 55%), linear-gradient(180deg, #050505 0%, #0E0E0E 80%, #050505 100%)',
+        }}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={visual.image}
           alt={alt}
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-contain ${imgPadding} transition-transform duration-300 group-hover:scale-[1.03]`}
           loading="lazy"
         />
       </div>
