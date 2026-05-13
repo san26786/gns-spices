@@ -173,7 +173,7 @@ export default async function HomePage() {
             From a single sack of pepper to a family of spices.
           </h2>
           <p className="mt-7 text-zinc-300 leading-relaxed text-lg">
-            In 1972, our grandfather started GNS with one sack of Malabar black pepper and a borrowed scale. Three generations later, we still source from the same hill villages — only now we ship to 28 countries, blend for Michelin kitchens, and quietly stand behind a dozen private-label brands you already know.
+            Our grandfather started GNS with one sack of Malabar black pepper and a borrowed scale. Three generations later, we still source from the same hill villages — only now we ship to 28 countries, blend for Michelin kitchens, and quietly stand behind a dozen private-label brands you already know.
           </p>
           <p className="mt-4 text-zinc-400 leading-relaxed">
             Every spice we sell is traceable to a farm. Every blend is recorded by name and number, the way Grandfather did it. Some things shouldn&apos;t change.
