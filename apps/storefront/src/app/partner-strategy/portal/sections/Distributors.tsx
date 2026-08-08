@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { DistCriteriaWeights, distRecommendationFromScore, usePortal } from '../store';
-import { IllustrativeTag, Panel, SectionHead } from '../ui';
+import { IllustrativeTag, Panel, PlainEnglish, SectionHead } from '../ui';
 
 const DIST_LABELS: Record<keyof DistCriteriaWeights, string> = {
   fmcgNetwork: 'Existing FMCG network',
@@ -154,6 +154,29 @@ export default function Distributors() {
         title="Distribution Architecture"
         subtitle="Every layer has a role, a revenue formula, a cost, a KPI and a risk. Click any node to see the working definition used in this business case."
       />
+
+      <PlainEnglish>
+        <p>
+          Distributors are the partners who physically move product from the
+          supplier down to the shops. This page has two working tools.
+        </p>
+        <p className="mt-2">
+          The <strong>architecture</strong> on the left shows the eight tiers
+          our product passes through — from the supplier (Kamdhenu) down to
+          the consumer. Click any tier to see that layer&apos;s role, revenue
+          model, cost, KPI and risk. The <strong>scoring engine</strong> further
+          down is how we evaluate a candidate distributor: nine criteria such
+          as existing network, working capital, warehouse and technology,
+          each scored against a maximum weight. The total decides whether a
+          candidate is recommended as Strategic, Preferred, Eligible or Not
+          Recommended.
+        </p>
+        <p className="mt-2">
+          The <strong>pipeline</strong> at the bottom shows the eight steps
+          every distributor moves through before earning exclusive territory
+          rights — <em>exclusivity is earned, never granted at signing</em>.
+        </p>
+      </PlainEnglish>
 
       <div className="grid lg:grid-cols-12 gap-4">
         <Panel title="Architecture · click a node" className="lg:col-span-5">

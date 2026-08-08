@@ -9,7 +9,13 @@ import {
   priorityFromScore,
   usePortal,
 } from '../store';
-import { IllustrativeTag, Panel, PriorityBadge, SectionHead } from '../ui';
+import {
+  IllustrativeTag,
+  Panel,
+  PlainEnglish,
+  PriorityBadge,
+  SectionHead,
+} from '../ui';
 
 const STATUS_OPTIONS: DistStatus[] = [
   'Not Assessed',
@@ -67,6 +73,26 @@ export default function Territories() {
         title="India Territory Planning"
         subtitle="India → State → District → Block → Gram Panchayat → Retailer. Every row is editable; every filter is live. Add / remove rows to build the full national plan."
       />
+
+      <PlainEnglish>
+        <p>
+          This page shows two things. Above, a table of sample Indian
+          districts — real states, populations and administrative counts —
+          each with a <strong>priority band</strong> and a
+          <strong> status</strong> column indicating which we plan to enter
+          first. The filters let you narrow the list by state, priority or
+          status.
+        </p>
+        <p className="mt-2">
+          Further down, a <strong>scoring engine</strong> shows <em>how</em>{' '}
+          those priority bands are actually calculated: nine factors —
+          population, retail opportunity, competition, and so on — each worth
+          a share of 100 points. Move the point weights up or down and the
+          priority for the sample district recalculates instantly. It is the
+          model behind the classifications, not just the classifications
+          themselves.
+        </p>
+      </PlainEnglish>
 
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <FilterSelect

@@ -1,7 +1,7 @@
 'use client';
 
 import { RetailerTier, usePortal } from '../store';
-import { IllustrativeTag, Panel, SectionHead } from '../ui';
+import { IllustrativeTag, Panel, PlainEnglish, SectionHead } from '../ui';
 
 type TierComputed = {
   effectiveCost: number;
@@ -37,6 +37,28 @@ export default function Retailers() {
         title="Retailer Profitability Engine"
         subtitle="Six ascending tiers. All commercial assumptions are editable — pricing, discounts, volumes. Effective cost, margin, monthly and annual profit compute live."
       />
+
+      <PlainEnglish>
+        <p>
+          Retailers are the shops that ultimately sell to consumers. This
+          table shows six tiers a retailer can climb — from
+          <strong> Starter</strong> (buying less than ₹25,000 a month) to
+          <strong> Area Partner</strong> (buying ₹5 lakh or more a month).
+        </p>
+        <p className="mt-2">
+          Each of the middle columns is a commercial input you can edit: how
+          many packs the retailer buys monthly, our base price to them, any
+          volume or promotional discount, and the price they resell at. The
+          columns on the right show the outcome — their effective cost, gross
+          profit per pack, margin percentage, and monthly and annual profit.
+        </p>
+        <p className="mt-2">
+          The design principle is straightforward: <em>as a retailer buys more,
+          their cost per pack drops and their profit rises meaningfully</em>.
+          If that ladder works, the network compounds by itself — retailers
+          climb tiers because it pays them to.
+        </p>
+      </PlainEnglish>
 
       <Panel padded={false}>
         <div className="scroll-x">

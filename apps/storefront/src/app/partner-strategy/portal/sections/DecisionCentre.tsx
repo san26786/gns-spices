@@ -6,6 +6,7 @@ import {
   KPI,
   NumberField,
   Panel,
+  PlainEnglish,
   SectionHead,
   TextareaField,
 } from '../ui';
@@ -50,6 +51,29 @@ export default function DecisionCentre() {
         title="Decision Centre"
         subtitle="The set of numbers the committee reads before choosing. Buttons are interface actions only — they do not send anything externally."
       />
+
+      <PlainEnglish>
+        <p>
+          The last page in the review. <strong>Eight editable figures</strong>{' '}
+          summarise the opportunity in one glance: total investment required,
+          expected annual revenue, contribution, break-even month, ROI,
+          payback period, active retailers and districts covered.
+        </p>
+        <p className="mt-2">
+          Below those, a <strong>cross-check panel</strong> shows what the
+          <em> National Scale </em> and <em> Working Capital </em> pages
+          currently predict — so the executive figures can be sanity-checked
+          against the interactive models before a decision is recorded.
+        </p>
+        <p className="mt-2">
+          The four buttons on the right —
+          <em> Approve Pilot · Request More Data · Revise Assumptions · Do Not Proceed </em>
+          — record the committee&apos;s decision. Nothing is sent externally;
+          the decision is stored locally with an audit note for future
+          reference. This is where judgement is captured, not where it is
+          executed.
+        </p>
+      </PlainEnglish>
 
       <div className="grid lg:grid-cols-12 gap-4">
         <Panel title="Executive figures" className="lg:col-span-8">

@@ -1,7 +1,14 @@
 'use client';
 
 import { inr, usePortal } from '../store';
-import { IllustrativeTag, KPI, NumberField, Panel, SectionHead } from '../ui';
+import {
+  IllustrativeTag,
+  KPI,
+  NumberField,
+  Panel,
+  PlainEnglish,
+  SectionHead,
+} from '../ui';
 
 export default function WorkingCapital() {
   const w = usePortal((s) => s.workingCapital);
@@ -30,6 +37,31 @@ export default function WorkingCapital() {
         title="Working Capital Model"
         subtitle="This is the make-or-break of scale. Inventory + receivables − payables = the cash the business ties up. A threshold alert fires when net WC exceeds the ceiling you set."
       />
+
+      <PlainEnglish>
+        <p>
+          Working capital is the money the business ties up in
+          <strong> inventory sitting in the warehouse</strong>, plus
+          <strong> unpaid customer bills</strong>, minus what the
+          <strong> supplier lets us owe them</strong>. It is the single most
+          common reason distribution businesses fail: the more you sell, the
+          more cash you tie up, until one day you run out.
+        </p>
+        <p className="mt-2">
+          This page has five inputs — monthly purchases, days of stock held,
+          days customers take to pay, days we can wait to pay the supplier,
+          and an alert threshold in crores. The output on the right shows
+          <strong> net working capital</strong> — the cash actually locked
+          into the business at that operating rate.
+        </p>
+        <p className="mt-2">
+          If net working capital exceeds the threshold, a
+          <em> red warning </em> appears. That warning is a governance
+          mechanism: it forces a CFO conversation before any decision to
+          expand into a new state or add distributors. Distribution
+          businesses do not usually fail on strategy — they fail on cash.
+        </p>
+      </PlainEnglish>
 
       <div className="grid lg:grid-cols-12 gap-4">
         <Panel title="Inputs" className="lg:col-span-5">

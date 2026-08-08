@@ -1,7 +1,7 @@
 'use client';
 
 import { Risk, usePortal } from '../store';
-import { IllustrativeTag, Panel, RiskBadge, SectionHead } from '../ui';
+import { IllustrativeTag, Panel, PlainEnglish, RiskBadge, SectionHead } from '../ui';
 
 const LEVELS: Risk['level'][] = ['Low', 'Medium', 'High'];
 const STATUSES: Risk['status'][] = ['Open', 'Monitoring', 'Mitigated', 'Escalated'];
@@ -26,6 +26,26 @@ export default function Risks() {
         title="Risk Dashboard"
         subtitle="A living register. Each risk has level, impact, mitigation, owner and status. Nothing here is auto-generated — edit as the working case matures."
       />
+
+      <PlainEnglish>
+        <p>
+          Ten categories of risk that could damage the business, maintained
+          as a live register. Each row has a
+          <strong> level</strong> (Low / Medium / High), a description of
+          what would happen if it materialises, our planned
+          <strong> mitigation</strong>, the person or function that
+          <strong> owns </strong> it, and its current <strong>status</strong>.
+        </p>
+        <p className="mt-2">
+          Four of the ten — <em>distributor selection, credit, execution
+          and working capital</em> — are the ones that historically destroy
+          distribution ventures. They warrant particular attention in every
+          review. The register is expected to be updated live: every
+          operating review should touch at least two rows and escalate any
+          &ldquo;High + Open&rdquo; item to the appropriate senior owner
+          before the next scale decision.
+        </p>
+      </PlainEnglish>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         <div className="kpi">

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { inrCr, usePortal } from '../store';
-import { IllustrativeTag, KPI, Panel, SectionHead } from '../ui';
+import { IllustrativeTag, KPI, Panel, PlainEnglish, SectionHead } from '../ui';
 
 export default function Overview() {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -25,6 +25,24 @@ export default function Overview() {
         title="Executive Business Case"
         subtitle="Kamdhenu is a proposed distribution opportunity under evaluation. This section frames the strategic intent, top-line planning references, and the objectives the case is being tested against."
       />
+
+      <PlainEnglish>
+        <p>
+          This is the executive summary of the whole opportunity. The five
+          boxes across the top tell you, at a glance, what market we&apos;re
+          targeting, where the pilot begins, how many administrative blocks
+          and Gram Panchayats sit under it, and roughly how many retailers we
+          could reach.
+        </p>
+        <p className="mt-2">
+          Below, three strategic objectives capture what success looks like —
+          reaching more markets, going deeper within them, and getting each
+          retailer to buy more over time. The status snapshot on the right
+          tells you where we are in the internal decision cycle. For the full
+          narrative behind these numbers, open the <strong>Business Case</strong>{' '}
+          document via the gold button just below.
+        </p>
+      </PlainEnglish>
 
       {/* Prominent link to the written case */}
       <button

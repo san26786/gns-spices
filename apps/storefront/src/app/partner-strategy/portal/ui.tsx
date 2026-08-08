@@ -354,6 +354,30 @@ export function RiskBadge({ level }: { level: 'Low' | 'Medium' | 'High' }) {
   return <span className={`badge ${cls}`}>{level}</span>;
 }
 
+export function PlainEnglish({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="mb-6 p-4 md:p-5 rounded-lg leading-relaxed"
+      style={{
+        background: 'rgba(176,141,58,0.06)',
+        border: '1px solid rgba(176,141,58,0.25)',
+        borderLeft: '3px solid var(--pt-gold)',
+        color: 'var(--pt-text)',
+        fontSize: 14.5,
+        lineHeight: 1.7,
+      }}
+    >
+      <div
+        className="text-[10px] tracking-[0.35em] uppercase font-bold mb-2"
+        style={{ color: 'var(--pt-gold)' }}
+      >
+        In plain English
+      </div>
+      {children}
+    </div>
+  );
+}
+
 export function IllustrativeTag({ children }: { children?: React.ReactNode }) {
   return (
     <div

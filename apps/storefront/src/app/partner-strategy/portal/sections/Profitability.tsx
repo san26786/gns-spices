@@ -6,6 +6,7 @@ import {
   KPI,
   NumberField,
   Panel,
+  PlainEnglish,
   SectionHead,
 } from '../ui';
 
@@ -222,6 +223,30 @@ function RetailerSim() {
 export default function Profitability() {
   return (
     <div className="space-y-10">
+      <PlainEnglish>
+        <p>
+          This is where the money makes sense — or does not. There are
+          <strong> three connected profit-and-loss models </strong> on this
+          page.
+        </p>
+        <p className="mt-2">
+          The <strong>first</strong> calculates a distributor&apos;s
+          profitability at a chosen volume, price and cost structure. The
+          <strong> second</strong> calculates GNS Spices&apos; own
+          profitability, with a scenario selector —
+          <em> Conservative · Base · Growth </em> — that scales volume up or
+          down to test sensitivity. The <strong>third</strong> simulates a
+          whole retailer network: enter a number of retailers and their
+          average monthly purchase, and it computes annual sales and the
+          estimated contribution to each layer of the chain.
+        </p>
+        <p className="mt-2">
+          Every input is editable and every output recalculates instantly.
+          This is the sensitivity dial the CFO will spend the most time on —
+          adjust the supplier price, incentives or operating cost and see
+          what breaks.
+        </p>
+      </PlainEnglish>
       <DistributorProfit />
       <div className="divider" />
       <GNSProfit />

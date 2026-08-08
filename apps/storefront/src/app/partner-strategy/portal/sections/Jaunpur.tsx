@@ -6,7 +6,14 @@ import {
   Priority,
   usePortal,
 } from '../store';
-import { IllustrativeTag, KPI, Panel, PriorityBadge, SectionHead } from '../ui';
+import {
+  IllustrativeTag,
+  KPI,
+  Panel,
+  PlainEnglish,
+  PriorityBadge,
+  SectionHead,
+} from '../ui';
 
 const STATUS_OPTIONS: DistStatus[] = [
   'Not Assessed',
@@ -40,6 +47,25 @@ export default function Jaunpur() {
         title="Jaunpur — Model District"
         subtitle="21 development blocks under the pilot planning frame. Every value is editable. Use it as a live working sheet during evaluation."
       />
+
+      <PlainEnglish>
+        <p>
+          Jaunpur is the proposed pilot district. Its administrative area is
+          divided into <strong>21 development blocks</strong> — think of a
+          block as a sub-district. This page is the working sheet for
+          planning each block individually.
+        </p>
+        <p className="mt-2">
+          Each row of the table below shows one block&apos;s population, its
+          number of <em>Gram Panchayats</em> (village-cluster councils), how
+          many retailers we estimate operate there, how many distributors we
+          would need to serve them, and the rough monthly sales potential.
+          The <strong>priority</strong> and <strong>status</strong> columns
+          are how we sequence the rollout — Priority A blocks activate first.
+          Every cell is editable; change any number and the totals row at the
+          bottom updates immediately.
+        </p>
+      </PlainEnglish>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
         <KPI k="Blocks" v={blocks.length} />

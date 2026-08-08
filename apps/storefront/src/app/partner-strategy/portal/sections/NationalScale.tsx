@@ -6,6 +6,7 @@ import {
   KPI,
   NumberField,
   Panel,
+  PlainEnglish,
   SectionHead,
 } from '../ui';
 
@@ -38,6 +39,24 @@ export default function NationalScale() {
 
   return (
     <div className="space-y-10">
+      <PlainEnglish>
+        <p>
+          How big could this become. The <strong>simulator</strong> at the
+          top has four presets — Jaunpur pilot, Uttar Pradesh, Multi-State,
+          National — each of which fills in reasonable numbers for how many
+          states, districts, distributors and retailers that stage implies.
+          The outputs show total distributors, total retailers, monthly and
+          annual sales in crores, and estimated contribution to GNS.
+        </p>
+        <p className="mt-2">
+          Below, a <strong>five-year roadmap</strong> steps through Year 1 to
+          Year 5, showing what states, districts, distributors, retailers,
+          annual sales, contribution, working capital and management
+          headcount look like at each stage. Every cell is editable — build
+          the trajectory the leadership team believes rather than accepting
+          the one the planning team has drafted.
+        </p>
+      </PlainEnglish>
       <div>
         <SectionHead
           n="07.a"
