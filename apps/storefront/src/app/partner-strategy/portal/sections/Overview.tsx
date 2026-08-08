@@ -10,6 +10,7 @@ export default function Overview() {
   const decision = usePortal((s) => s.decision);
   const jaunpurBlocks = usePortal((s) => s.jaunpurBlocks);
   const territories = usePortal((s) => s.territories);
+  const setActive = usePortal((s) => s.setActive);
 
   const totalGPs = jaunpurBlocks.reduce((a, b) => a + b.gramPanchayats, 0);
   const totalRetailers = jaunpurBlocks.reduce((a, b) => a + b.estRetailers, 0);
@@ -24,6 +25,43 @@ export default function Overview() {
         title="Executive Business Case"
         subtitle="Kamdhenu is a proposed distribution opportunity under evaluation. This section frames the strategic intent, top-line planning references, and the objectives the case is being tested against."
       />
+
+      {/* Prominent link to the written case */}
+      <button
+        onClick={() => setActive('business-case')}
+        className="w-full text-left mb-6 rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 transition"
+        style={{
+          background: 'linear-gradient(180deg, rgba(176,141,58,0.12) 0%, rgba(176,141,58,0.04) 100%)',
+          border: '1px solid rgba(176,141,58,0.40)',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'linear-gradient(180deg, rgba(176,141,58,0.18) 0%, rgba(176,141,58,0.06) 100%)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'linear-gradient(180deg, rgba(176,141,58,0.12) 0%, rgba(176,141,58,0.04) 100%)')}
+      >
+        <div className="min-w-0">
+          <div
+            className="text-[10px] tracking-[0.35em] uppercase font-bold"
+            style={{ color: 'var(--pt-gold)' }}
+          >
+            Written document
+          </div>
+          <div
+            className="mt-1 text-base md:text-lg font-semibold truncate"
+            style={{ color: 'var(--pt-off)' }}
+          >
+            Read the full business case
+          </div>
+          <div className="mt-0.5 text-xs" style={{ color: 'var(--pt-muted)' }}>
+            10-section prose brief · executive summary, opportunity, model,
+            pilot, financials, risks, decision · print-ready
+          </div>
+        </div>
+        <div
+          className="shrink-0 text-2xl"
+          style={{ color: 'var(--pt-gold)' }}
+        >
+          →
+        </div>
+      </button>
 
       {/* KPI ROW */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">

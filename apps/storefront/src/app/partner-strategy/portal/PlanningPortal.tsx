@@ -5,6 +5,7 @@ import SessionBar from './SessionBar';
 import { hydrateFor, persistFor, usePortal } from './store';
 import { portalCSS } from './ui';
 import Overview from './sections/Overview';
+import BusinessCase from './sections/BusinessCase';
 import Territories from './sections/Territories';
 import Jaunpur from './sections/Jaunpur';
 import Distributors from './sections/Distributors';
@@ -22,16 +23,17 @@ const NAV: {
   label: string;
 }[] = [
   { key: 'overview',       n: '01', label: 'Overview' },
-  { key: 'territories',    n: '02', label: 'Territories' },
-  { key: 'jaunpur',        n: '03', label: 'Jaunpur' },
-  { key: 'distributors',   n: '04', label: 'Distributors' },
-  { key: 'retailers',      n: '05', label: 'Retailers' },
-  { key: 'profitability',  n: '06', label: 'Profitability' },
-  { key: 'national',       n: '07', label: 'National Scale' },
-  { key: 'working-capital',n: '08', label: 'Working Capital' },
-  { key: 'risks',          n: '09', label: 'Risks' },
-  { key: 'decision',       n: '10', label: 'Decision Centre' },
-  { key: 'notes',          n: '11', label: 'Notes' },
+  { key: 'business-case',  n: '02', label: 'Business Case' },
+  { key: 'territories',    n: '03', label: 'Territories' },
+  { key: 'jaunpur',        n: '04', label: 'Jaunpur' },
+  { key: 'distributors',   n: '05', label: 'Distributors' },
+  { key: 'retailers',      n: '06', label: 'Retailers' },
+  { key: 'profitability',  n: '07', label: 'Profitability' },
+  { key: 'national',       n: '08', label: 'National Scale' },
+  { key: 'working-capital',n: '09', label: 'Working Capital' },
+  { key: 'risks',          n: '10', label: 'Risks' },
+  { key: 'decision',       n: '11', label: 'Decision Centre' },
+  { key: 'notes',          n: '12', label: 'Notes' },
 ];
 
 export default function PlanningPortal({
@@ -155,6 +157,7 @@ export default function PlanningPortal({
             {hydrated && (
               <>
                 {active === 'overview' && <Overview />}
+                {active === 'business-case' && <BusinessCase />}
                 {active === 'territories' && <Territories />}
                 {active === 'jaunpur' && <Jaunpur />}
                 {active === 'distributors' && <Distributors />}
