@@ -155,13 +155,14 @@ export default function BusinessCase() {
             <li data-n="1."><a href="#es">Executive Summary</a></li>
             <li data-n="2."><a href="#opp">The Opportunity</a></li>
             <li data-n="3."><a href="#prop">The Proposition</a></li>
-            <li data-n="4."><a href="#model">Business Model</a></li>
-            <li data-n="5."><a href="#arch">Distribution Architecture</a></li>
-            <li data-n="6."><a href="#pilot">The Pilot: Jaunpur</a></li>
-            <li data-n="7."><a href="#fin">Financial Framework</a></li>
-            <li data-n="8."><a href="#wc">Working Capital Discipline</a></li>
-            <li data-n="9."><a href="#risk">Risk &amp; Mitigation</a></li>
-            <li data-n="10."><a href="#ask">Path to Decision</a></li>
+            <li data-n="4."><a href="#tworoutes">The Two Routes: UDYAM &amp; UDAAN</a></li>
+            <li data-n="5."><a href="#model">Business Model</a></li>
+            <li data-n="6."><a href="#arch">Distribution Architecture</a></li>
+            <li data-n="7."><a href="#pilot">The Pilot: Jaunpur</a></li>
+            <li data-n="8."><a href="#fin">Financial Framework</a></li>
+            <li data-n="9."><a href="#wc">Working Capital Discipline</a></li>
+            <li data-n="10."><a href="#risk">Risk &amp; Mitigation</a></li>
+            <li data-n="11."><a href="#ask">Path to Decision</a></li>
           </ol>
         </div>
 
@@ -274,7 +275,60 @@ export default function BusinessCase() {
           negotiate.
         </p>
 
-        <h2 id="model">4. Business Model</h2>
+        <h2 id="tworoutes">4. The Two Routes: GNS UDYAM &amp; GNS UDAAN</h2>
+        <p>
+          The whole distributable profit pool — the margin left after we pay
+          the supplier for the product — is not treated as a single
+          commission bucket. It is split into two complementary growth
+          routes, in a <strong>70:30 ratio</strong>. Together they form a
+          single ecosystem: one that builds the enterprise, and one that
+          builds the community that fuels it.
+        </p>
+        <h3>GNS UDYAM — 70% of the profit pool · &ldquo;Build your business&rdquo;</h3>
+        <p>
+          <em>Udyam</em> means enterprise or venture. GNS UDYAM is the
+          structured commercial distribution route — the traditional supply
+          chain that physically moves product from the supplier to the
+          consumer. It is designed for people and businesses that want to
+          <strong> build and operate a distribution business or territory</strong>:
+          Regional / State Partners, District Partners, Wholesalers,
+          Distributors, Channel Partners and Retailers. The 70% allocation
+          reflects that this route carries most of the traditional
+          responsibilities — stock, working capital, logistics, territory
+          development, retailer supply, warehousing, sales operations and
+          market coverage.
+        </p>
+        <h3>GNS UDAAN — 30% of the profit pool · &ldquo;Take flight&rdquo;</h3>
+        <p>
+          <em>Udaan</em> means flight, rising, or taking off. GNS UDAAN is
+          the community-led growth route. Its participants — Community
+          Advocates, Retail Coordinators, Micro-Entrepreneurs and Community
+          Entrepreneurs — <strong>create demand, activate retailers,
+          generate orders and grow the brand from the ground up</strong>.
+          They can start small: no warehouse, no fleet, no large territory,
+          low entry barrier. Their income comes from performance and
+          community growth rather than from carrying stock.
+        </p>
+        <div className="callout">
+          <span className="k">The 70:30 principle</span>
+          Of every ₹100 of distributable profit, ₹70 rewards the structured
+          distribution ecosystem (UDYAM) and ₹30 rewards the community growth
+          ecosystem (UDAAN). UDYAM makes sure the product is available.
+          UDAAN creates reasons for people to buy, recommend and promote it.
+          UDAAN can also feed into UDYAM: a customer becomes an advocate,
+          an advocate becomes a coordinator, a coordinator becomes a
+          Channel Partner or Distributor. The two routes are complementary,
+          not competing.
+        </div>
+        <p>
+          The exact allocations inside each pool — how the 70% is split
+          across the six UDYAM roles, and how the 30% is split across the
+          four UDAAN levels — are editable planning inputs in the
+          <em> Price List </em> section of this portal. Change any
+          percentage and every SKU&apos;s payout recalculates instantly.
+        </p>
+
+        <h2 id="model">5. Business Model</h2>
         <p>
           GNS UDYAM is built as seven interlocking engines. Each is
           designed, staffed and measured independently, but they are wired
@@ -300,7 +354,7 @@ export default function BusinessCase() {
           difference is only meaningful if the cash cycle is disciplined.
         </p>
 
-        <h2 id="arch">5. Distribution Architecture</h2>
+        <h2 id="arch">6. Distribution Architecture</h2>
         <p>
           Product flows downward through eight tiers, and data flows
           upward. <strong>GNS UDYAM</strong> sits in the second tier —
@@ -326,7 +380,7 @@ export default function BusinessCase() {
           governance choice in the model.
         </div>
 
-        <h2 id="pilot">6. The Pilot: Jaunpur</h2>
+        <h2 id="pilot">7. The Pilot: Jaunpur</h2>
         <p>
           Jaunpur, in eastern Uttar Pradesh, is the proposed pilot district.
           It is chosen deliberately — not because it is the easiest district
@@ -354,7 +408,7 @@ export default function BusinessCase() {
           replicates.
         </p>
 
-        <h2 id="fin">7. Financial Framework</h2>
+        <h2 id="fin">8. Financial Framework</h2>
         <p>
           Two scenarios frame the economic conversation. Neither is a
           forecast; both are illustrative sizings intended to show how the
@@ -388,7 +442,7 @@ export default function BusinessCase() {
           form for these numbers — they are not to be quoted as facts.
         </p>
 
-        <h2 id="wc">8. Working Capital Discipline</h2>
+        <h2 id="wc">9. Working Capital Discipline</h2>
         <p>
           Distribution businesses fail on working capital more often than
           they fail on strategy. As secondary sales grow, inventory,
@@ -414,7 +468,7 @@ export default function BusinessCase() {
           This is a Committee-level control.
         </div>
 
-        <h2 id="risk">9. Risk &amp; Mitigation</h2>
+        <h2 id="risk">10. Risk &amp; Mitigation</h2>
         <p>
           The risk dashboard within this portal maintains a living register
           of ten categories, each with level, impact, mitigation, owner and
@@ -452,7 +506,7 @@ export default function BusinessCase() {
           clauses and operating cadence documented in the Risks section.
         </p>
 
-        <h2 id="ask">10. Path to Decision</h2>
+        <h2 id="ask">11. Path to Decision</h2>
         <p>
           There are four decisions available to the Committee at the end of
           this review. The Decision Centre inside this portal records the

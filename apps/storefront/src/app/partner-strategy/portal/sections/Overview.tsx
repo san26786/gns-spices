@@ -151,11 +151,15 @@ export default function Overview() {
             categories and geographies.
           </p>
           <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--pt-muted)' }}>
-            <strong style={{ color: 'var(--pt-off)' }}>GNS UDYAM</strong> is
-            the logical distribution &amp; market-development network that
-            moves the tangible product — whether GNS Spices&apos; own or a
-            partner supplier&apos;s such as the proposed Kamdhenu category —
-            from manufacturer to the market.
+            The system runs on <strong style={{ color: 'var(--pt-gold-hi)' }}>two complementary
+            routes</strong>. <strong style={{ color: 'var(--pt-off)' }}>GNS UDYAM</strong>{' '}
+            (70% of the profit pool) is the enterprise route — the structured
+            supply chain that moves product from manufacturer to consumer
+            through Regional Partners, Distributors, Wholesalers and
+            Retailers. <strong style={{ color: 'var(--pt-off)' }}>GNS UDAAN</strong>{' '}
+            (30% of the profit pool) is the community route — advocates,
+            coordinators and micro-entrepreneurs who create demand and
+            activate retailers with a low-entry income opportunity.
           </p>
           <div className="mt-5 grid md:grid-cols-3 gap-3">
             {[

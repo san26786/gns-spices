@@ -219,14 +219,28 @@ export interface PortalState {
     decisionNote: string;
   };
 
-  // Section 03 — GNS UDYAM supply-chain margin split (% of total margin)
-  marginSplit: {
+  // Section 03 — top-level 70:30 profit-pool split
+  topSplit: {
+    udyam: number;   // 70
+    udaan: number;   // 30
+  };
+
+  // Section 03 — GNS UDYAM (enterprise route) — 6 roles sharing the UDYAM pool
+  udyamSplit: {
     regionalPartner: number;
+    districtPartner: number;
     wholesaler: number;
     distributor: number;
     channelPartner: number;
-    retailCoordinator: number;
     retailer: number;
+  };
+
+  // Section 03 — GNS UDAAN (community route) — 4 levels sharing the UDAAN pool
+  udaanSplit: {
+    advocate: number;
+    retailCoordinator: number;
+    microEntrepreneur: number;
+    communityEntrepreneur: number;
   };
 
   // Section 16 — notes
@@ -433,13 +447,23 @@ function baseline(): Omit<PortalState, 'setActive' | 'patch' | 'reset'> {
       status: 'none', decisionNote: '',
     },
 
-    marginSplit: {
+    topSplit: {
+      udyam: 70,
+      udaan: 30,
+    },
+    udyamSplit: {
       regionalPartner: 10,
+      districtPartner: 15,
       wholesaler: 15,
       distributor: 20,
       channelPartner: 15,
-      retailCoordinator: 10,
-      retailer: 30,
+      retailer: 25,
+    },
+    udaanSplit: {
+      advocate: 40,
+      retailCoordinator: 25,
+      microEntrepreneur: 20,
+      communityEntrepreneur: 15,
     },
 
     notes: {

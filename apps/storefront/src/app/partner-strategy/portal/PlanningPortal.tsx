@@ -75,13 +75,15 @@ export default function PlanningPortal({
               className="text-[18px] font-bold leading-none tracking-tight"
               style={{ color: 'var(--pt-off)' }}
             >
-              GNS <span style={{ color: 'var(--pt-gold)' }}>UDYAM</span>
+              GNS <span style={{ color: 'var(--pt-gold)' }}>UDYAM</span>{' '}
+              <span style={{ color: 'var(--pt-muted-2)', fontWeight: 400 }}>+</span>{' '}
+              <span style={{ color: 'var(--pt-emerald-3)' }}>UDAAN</span>
             </div>
             <div
               className="mt-1 text-[11px] leading-snug"
               style={{ color: 'var(--pt-muted-hi)' }}
             >
-              Distribution &amp; Market Development Network
+              Enterprise &amp; Community Growth Network
             </div>
             <div
               className="mt-1 text-[10px] tracking-[0.2em] uppercase"
