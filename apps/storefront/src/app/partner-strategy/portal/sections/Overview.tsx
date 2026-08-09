@@ -44,10 +44,11 @@ export default function Overview() {
         </p>
       </PlainEnglish>
 
-      {/* Prominent link to the written case */}
+      {/* Prominent cross-links */}
+      <div className="grid md:grid-cols-2 gap-3 mb-6">
       <button
         onClick={() => setActive('business-case')}
-        className="w-full text-left mb-6 rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 transition"
+        className="w-full text-left rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 transition"
         style={{
           background: 'linear-gradient(180deg, rgba(176,141,58,0.12) 0%, rgba(176,141,58,0.04) 100%)',
           border: '1px solid rgba(176,141,58,0.40)',
@@ -80,6 +81,43 @@ export default function Overview() {
           →
         </div>
       </button>
+
+      <button
+        onClick={() => setActive('price-list')}
+        className="w-full text-left rounded-xl p-4 md:p-5 flex items-center justify-between gap-4 transition"
+        style={{
+          background: 'linear-gradient(180deg, rgba(21,71,52,0.20) 0%, rgba(21,71,52,0.06) 100%)',
+          border: '1px solid rgba(21,71,52,0.55)',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'linear-gradient(180deg, rgba(21,71,52,0.28) 0%, rgba(21,71,52,0.08) 100%)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'linear-gradient(180deg, rgba(21,71,52,0.20) 0%, rgba(21,71,52,0.06) 100%)')}
+      >
+        <div className="min-w-0">
+          <div
+            className="text-[10px] tracking-[0.35em] uppercase font-bold"
+            style={{ color: 'var(--pt-emerald-3)' }}
+          >
+            Supplier rate card
+          </div>
+          <div
+            className="mt-1 text-base md:text-lg font-semibold truncate"
+            style={{ color: 'var(--pt-off)' }}
+          >
+            Kamdhenu Price List
+          </div>
+          <div className="mt-0.5 text-xs" style={{ color: 'var(--pt-muted)' }}>
+            60+ SKUs · effective 15/07/2026 · Company / distributor / retail
+            rates, MRP and margin · print-ready
+          </div>
+        </div>
+        <div
+          className="shrink-0 text-2xl"
+          style={{ color: 'var(--pt-emerald-3)' }}
+        >
+          →
+        </div>
+      </button>
+      </div>
 
       {/* KPI ROW */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
