@@ -243,6 +243,13 @@ export interface PortalState {
     communityEntrepreneur: number;
   };
 
+  // Section 04 — participant route choice
+  routeChoice: {
+    chosen: 'none' | 'udyam' | 'udaan' | 'exploring';
+    role: string;
+    interestNote: string;
+  };
+
   // Section 16 — notes
   notes: {
     strategic: string;
@@ -464,6 +471,12 @@ function baseline(): Omit<PortalState, 'setActive' | 'patch' | 'reset'> {
       retailCoordinator: 25,
       microEntrepreneur: 20,
       communityEntrepreneur: 15,
+    },
+
+    routeChoice: {
+      chosen: 'none',
+      role: '',
+      interestNote: '',
     },
 
     notes: {

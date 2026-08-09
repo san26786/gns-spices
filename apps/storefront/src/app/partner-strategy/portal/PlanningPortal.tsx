@@ -7,6 +7,8 @@ import { portalCSS } from './ui';
 import Overview from './sections/Overview';
 import BusinessCase from './sections/BusinessCase';
 import PriceList from './sections/PriceList';
+import UdyamRoute from './sections/UdyamRoute';
+import UdaanRoute from './sections/UdaanRoute';
 import Territories from './sections/Territories';
 import Jaunpur from './sections/Jaunpur';
 import Distributors from './sections/Distributors';
@@ -26,16 +28,18 @@ const NAV: {
   { key: 'overview',       n: '01', label: 'Overview' },
   { key: 'business-case',  n: '02', label: 'Business Case' },
   { key: 'price-list',     n: '03', label: 'Price List' },
-  { key: 'territories',    n: '04', label: 'Territories' },
-  { key: 'jaunpur',        n: '05', label: 'Jaunpur' },
-  { key: 'distributors',   n: '06', label: 'Distributors' },
-  { key: 'retailers',      n: '07', label: 'Retailers' },
-  { key: 'profitability',  n: '08', label: 'Profitability' },
-  { key: 'national',       n: '09', label: 'National Scale' },
-  { key: 'working-capital',n: '10', label: 'Working Capital' },
-  { key: 'risks',          n: '11', label: 'Risks' },
-  { key: 'decision',       n: '12', label: 'Decision Centre' },
-  { key: 'notes',          n: '13', label: 'Notes' },
+  { key: 'udyam-route',    n: '04', label: '🏢 UDYAM Route' },
+  { key: 'udaan-route',    n: '05', label: '🚀 UDAAN Route' },
+  { key: 'territories',    n: '06', label: 'Territories' },
+  { key: 'jaunpur',        n: '07', label: 'Jaunpur' },
+  { key: 'distributors',   n: '08', label: 'Distributors' },
+  { key: 'retailers',      n: '09', label: 'Retailers' },
+  { key: 'profitability',  n: '10', label: 'Profitability' },
+  { key: 'national',       n: '11', label: 'National Scale' },
+  { key: 'working-capital',n: '12', label: 'Working Capital' },
+  { key: 'risks',          n: '13', label: 'Risks' },
+  { key: 'decision',       n: '14', label: 'Decision Centre' },
+  { key: 'notes',          n: '15', label: 'Notes' },
 ];
 
 export default function PlanningPortal({
@@ -175,6 +179,8 @@ export default function PlanningPortal({
                 {active === 'overview' && <Overview />}
                 {active === 'business-case' && <BusinessCase />}
                 {active === 'price-list' && <PriceList />}
+                {active === 'udyam-route' && <UdyamRoute />}
+                {active === 'udaan-route' && <UdaanRoute />}
                 {active === 'territories' && <Territories />}
                 {active === 'jaunpur' && <Jaunpur />}
                 {active === 'distributors' && <Distributors />}
