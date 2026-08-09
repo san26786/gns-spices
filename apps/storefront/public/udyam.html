@@ -1189,6 +1189,50 @@ function googleTranslateElementInit() {
     layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
     autoDisplay: false,
   }, 'google_translate_element');
+  reorderLanguageOptions();
+}
+
+// Google renders the dropdown in its own order — we pin English + Hindi
+// at the top, then sort the rest by English-alphabetical order.
+function reorderLanguageOptions() {
+  var ORDER = ['en', 'hi', 'as', 'bn', 'gu', 'kn', 'ml', 'mr', 'or', 'pa', 'ta', 'te', 'ur'];
+  var attempts = 0;
+  function tick() {
+    attempts++;
+    if (attempts > 50) return;
+    var select = document.querySelector('#google_translate_element select.goog-te-combo');
+    if (!select || select.options.length < 2) {
+      setTimeout(tick, 200);
+      return;
+    }
+    if (select.dataset.reordered === 'true') return;
+
+    var currentValue = select.value;
+    var placeholder = select.options[0];
+    var optMap = {};
+    Array.prototype.slice.call(select.options, 1).forEach(function (o) {
+      optMap[o.value] = o;
+    });
+
+    var newOrder = [placeholder];
+    ORDER.forEach(function (code) {
+      if (optMap[code]) {
+        newOrder.push(optMap[code]);
+        delete optMap[code];
+      }
+    });
+    for (var key in optMap) {
+      if (Object.prototype.hasOwnProperty.call(optMap, key)) {
+        newOrder.push(optMap[key]);
+      }
+    }
+
+    newOrder.forEach(function (o) { if (o.parentNode) o.parentNode.removeChild(o); });
+    newOrder.forEach(function (o) { select.appendChild(o); });
+    if (currentValue) select.value = currentValue;
+    select.dataset.reordered = 'true';
+  }
+  setTimeout(tick, 400);
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
