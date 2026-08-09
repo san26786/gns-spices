@@ -295,10 +295,77 @@
 
   /* Prevent iOS bounce inside slide-inner from scrolling body */
   .slide-inner { -webkit-overflow-scrolling: touch; }
+
+  /* ================================================================ */
+  /*  Language selector (Google Translate widget)                      */
+  /* ================================================================ */
+  #lang-select {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    right: 12px;
+    z-index: 60;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 6px 4px 10px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    color: rgba(250,249,246,0.9);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    max-width: 200px;
+  }
+  #lang-select::before {
+    content: '🌐';
+    font-size: 12px; line-height: 1;
+  }
+  /* Kill Google's top banner and its body-offset */
+  body { top: 0 !important; }
+  .goog-te-banner-frame.skiptranslate,
+  .skiptranslate iframe,
+  .goog-logo-link,
+  .goog-te-gadget img { display: none !important; }
+  .goog-te-gadget {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    margin: 0 !important;
+  }
+  .goog-te-gadget .goog-te-combo {
+    background: transparent !important;
+    color: #FAF9F6 !important;
+    border: none !important;
+    outline: none !important;
+    padding: 4px 4px !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    cursor: pointer;
+    max-width: 140px;
+  }
+  .goog-te-gadget .goog-te-combo option {
+    color: #1B211F !important;
+    background: #FAF9F6 !important;
+  }
+  /* Suppress "Original text" pop-up on hover */
+  .goog-tooltip, .goog-tooltip:hover, .goog-text-highlight {
+    background: transparent !important;
+    box-shadow: none !important;
+    position: relative !important;
+  }
 </style>
 </head>
 
 <body>
+
+<!-- Language selector — Google Translate widget -->
+<div id="lang-select" class="notranslate" translate="no" aria-label="Change language">
+  <div id="google_translate_element"></div>
+</div>
 
 <div class="deck" id="deck">
   <div class="stage" id="stage">
@@ -1065,7 +1132,20 @@ function closeModal() {
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeModal();
 });
+
+/* ================================================================ */
+/*  Google Translate widget                                          */
+/* ================================================================ */
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,hi,mr,gu,ta,te,kn,bn,pa,ml,ur,or,as',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false,
+  }, 'google_translate_element');
+}
 </script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
 </body>
 </html>
