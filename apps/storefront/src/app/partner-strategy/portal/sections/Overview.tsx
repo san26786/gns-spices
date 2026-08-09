@@ -1,8 +1,11 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { inrCr, usePortal } from '../store';
 import { IllustrativeTag, KPI, Panel, PlainEnglish, SectionHead } from '../ui';
+
+const DECK_UDAAN_URL = 'https://www.gnsspices.com/udaan.html';
+const DECK_UDYAM_URL = 'https://www.gnsspices.com/udyam.html';
 
 export default function Overview() {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -11,6 +14,17 @@ export default function Overview() {
   const jaunpurBlocks = usePortal((s) => s.jaunpurBlocks);
   const territories = usePortal((s) => s.territories);
   const setActive = usePortal((s) => s.setActive);
+  const [copied, setCopied] = useState<'udaan' | 'udyam' | null>(null);
+
+  async function copy(url: string, which: 'udaan' | 'udyam') {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(which);
+      setTimeout(() => setCopied(null), 1800);
+    } catch {
+      /* clipboard unavailable — no-op */
+    }
+  }
 
   const totalGPs = jaunpurBlocks.reduce((a, b) => a + b.gramPanchayats, 0);
   const totalRetailers = jaunpurBlocks.reduce((a, b) => a + b.estRetailers, 0);
@@ -117,6 +131,147 @@ export default function Overview() {
           →
         </div>
       </button>
+      </div>
+
+      {/* SHAREABLE DECKS · URLs partners can copy into WhatsApp */}
+      <div className="mb-6">
+        <div
+          className="text-[10px] tracking-[0.32em] uppercase font-bold mb-2"
+          style={{ color: 'var(--pt-muted)' }}
+        >
+          Shareable pitch decks · WhatsApp-ready
+        </div>
+        <div className="grid md:grid-cols-2 gap-3">
+          {/* UDAAN card */}
+          <div
+            className="p-4 md:p-5 rounded-xl"
+            style={{
+              background: 'linear-gradient(180deg, rgba(21,71,52,0.18) 0%, rgba(21,71,52,0.04) 100%)',
+              border: '1px solid rgba(21,71,52,0.45)',
+            }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg">🚀</span>
+              <div
+                className="text-[10px] tracking-[0.32em] uppercase font-bold"
+                style={{ color: 'var(--pt-emerald-3)' }}
+              >
+                GNS UDAAN · community pitch
+              </div>
+            </div>
+            <div className="text-sm font-semibold mb-3" style={{ color: 'var(--pt-off)' }}>
+              Start Small. Earn Daily. Grow Without Limits.
+            </div>
+            <div
+              className="flex items-center gap-2 p-2 rounded-md mb-2 font-mono text-xs"
+              style={{
+                background: 'rgba(0,0,0,0.30)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                color: 'var(--pt-muted-hi)',
+                overflow: 'hidden',
+              }}
+            >
+              <span className="truncate flex-1">{DECK_UDAAN_URL}</span>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => copy(DECK_UDAAN_URL, 'udaan')}
+                className="flex-1 py-2 rounded-md text-xs font-semibold uppercase tracking-widest transition"
+                style={{
+                  background:
+                    copied === 'udaan'
+                      ? 'rgba(63,181,123,0.20)'
+                      : 'rgba(255,255,255,0.05)',
+                  border:
+                    copied === 'udaan'
+                      ? '1px solid rgba(63,181,123,0.55)'
+                      : '1px solid var(--pt-line-hi)',
+                  color: copied === 'udaan' ? 'var(--pt-emerald-3)' : 'var(--pt-off)',
+                }}
+              >
+                {copied === 'udaan' ? '✓ Copied' : 'Copy link'}
+              </button>
+              <a
+                href={DECK_UDAAN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2 rounded-md text-xs font-semibold uppercase tracking-widest transition text-center"
+                style={{
+                  background: 'rgba(21,71,52,0.30)',
+                  border: '1px solid rgba(21,71,52,0.55)',
+                  color: 'var(--pt-emerald-3)',
+                }}
+              >
+                Open ↗
+              </a>
+            </div>
+          </div>
+
+          {/* UDYAM card */}
+          <div
+            className="p-4 md:p-5 rounded-xl"
+            style={{
+              background: 'linear-gradient(180deg, rgba(176,141,58,0.14) 0%, rgba(176,141,58,0.03) 100%)',
+              border: '1px solid rgba(176,141,58,0.45)',
+            }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg">🏢</span>
+              <div
+                className="text-[10px] tracking-[0.32em] uppercase font-bold"
+                style={{ color: 'var(--pt-gold-hi)' }}
+              >
+                GNS UDYAM · enterprise pitch
+              </div>
+            </div>
+            <div className="text-sm font-semibold mb-3" style={{ color: 'var(--pt-off)' }}>
+              Build Your Distribution Enterprise.
+            </div>
+            <div
+              className="flex items-center gap-2 p-2 rounded-md mb-2 font-mono text-xs"
+              style={{
+                background: 'rgba(0,0,0,0.30)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                color: 'var(--pt-muted-hi)',
+                overflow: 'hidden',
+              }}
+            >
+              <span className="truncate flex-1">{DECK_UDYAM_URL}</span>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => copy(DECK_UDYAM_URL, 'udyam')}
+                className="flex-1 py-2 rounded-md text-xs font-semibold uppercase tracking-widest transition"
+                style={{
+                  background:
+                    copied === 'udyam'
+                      ? 'rgba(212,160,23,0.20)'
+                      : 'rgba(255,255,255,0.05)',
+                  border:
+                    copied === 'udyam'
+                      ? '1px solid rgba(212,160,23,0.55)'
+                      : '1px solid var(--pt-line-hi)',
+                  color: copied === 'udyam' ? 'var(--pt-gold-hi)' : 'var(--pt-off)',
+                }}
+              >
+                {copied === 'udyam' ? '✓ Copied' : 'Copy link'}
+              </button>
+              <a
+                href={DECK_UDYAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2 rounded-md text-xs font-semibold uppercase tracking-widest transition text-center"
+                style={{
+                  background: 'rgba(176,141,58,0.20)',
+                  border: '1px solid rgba(176,141,58,0.55)',
+                  color: 'var(--pt-gold-hi)',
+                }}
+              >
+                Open ↗
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* KPI ROW */}
