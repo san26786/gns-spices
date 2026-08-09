@@ -5,7 +5,7 @@ import UnlockGate from './UnlockGate';
 import PlanningPortal from './PlanningPortal';
 
 export const metadata: Metadata = {
-  title: 'GNS Spices — Private Partner Strategy Portal',
+  title: 'GNS UDYAM — Private Partner Strategy Portal',
   description: 'Confidential planning environment. Authorised access only.',
   robots: {
     index: false,

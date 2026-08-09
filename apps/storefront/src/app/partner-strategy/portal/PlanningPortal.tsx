@@ -70,14 +70,26 @@ export default function PlanningPortal({
         >
           <div className="p-5">
             <div
-              className="text-[10px] tracking-[0.45em] uppercase font-semibold mb-1"
-              style={{ color: 'var(--pt-muted)' }}
+              className="text-[18px] font-bold leading-none tracking-tight"
+              style={{ color: 'var(--pt-off)' }}
             >
-              GNS Spices
+              GNS <span style={{ color: 'var(--pt-gold)' }}>UDYAM</span>
             </div>
             <div
-              className="text-[13px] font-semibold leading-tight"
-              style={{ color: 'var(--pt-off)' }}
+              className="mt-1 text-[11px] leading-snug"
+              style={{ color: 'var(--pt-muted-hi)' }}
+            >
+              Distribution &amp; Market Development Network
+            </div>
+            <div
+              className="mt-1 text-[10px] tracking-[0.2em] uppercase"
+              style={{ color: 'var(--pt-muted-2)' }}
+            >
+              A GNS Spices platform
+            </div>
+            <div
+              className="mt-4 pt-4 text-[10px] tracking-[0.3em] uppercase font-semibold"
+              style={{ color: 'var(--pt-muted)', borderTop: '1px solid var(--pt-line)' }}
             >
               Partner Strategy Portal
             </div>
@@ -137,7 +149,7 @@ export default function PlanningPortal({
                 className="text-[10px] tracking-[0.3em] uppercase font-semibold"
                 style={{ color: 'var(--pt-muted)' }}
               >
-                Confidential Distribution Strategy
+                GNS UDYAM · Confidential Distribution Strategy
               </div>
               <h1
                 className="mt-1 text-lg md:text-xl font-semibold truncate"
@@ -194,8 +206,8 @@ export default function PlanningPortal({
                 </div>
               </div>
               <div className="md:text-right">
-                GNS Spices · Private Partner Strategy Portal ·{' '}
-                Confidential Planning Environment
+                GNS UDYAM · A GNS Spices platform · Private Partner Strategy
+                Portal · Confidential Planning Environment
               </div>
             </div>
           </footer>

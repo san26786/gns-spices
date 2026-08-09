@@ -107,9 +107,17 @@ export default function Overview() {
           </p>
           <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--pt-muted)' }}>
             The objective is not simply to sell products. The objective is to
-            build a repeatable market-development system that a supplier can
-            plug into, and that GNS Spices can extend across categories and
-            geographies.
+            build a repeatable market-development system —{' '}
+            <strong style={{ color: 'var(--pt-off)' }}>GNS UDYAM</strong> —
+            that a supplier can plug into, and that can be extended across
+            categories and geographies.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--pt-muted)' }}>
+            <strong style={{ color: 'var(--pt-off)' }}>GNS UDYAM</strong> is
+            the logical distribution &amp; market-development network that
+            moves the tangible product — whether GNS Spices&apos; own or a
+            partner supplier&apos;s such as the proposed Kamdhenu category —
+            from manufacturer to the market.
           </p>
           <div className="mt-5 grid md:grid-cols-3 gap-3">
             {[

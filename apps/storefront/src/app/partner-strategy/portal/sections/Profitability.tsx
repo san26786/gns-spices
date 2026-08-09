@@ -74,7 +74,7 @@ function DistributorProfit() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  GNS PROFITABILITY  (three scenarios)                                */
+/*  GNS UDYAM PROFITABILITY  (three scenarios)                          */
 /* ------------------------------------------------------------------ */
 
 function GNSProfit() {
@@ -105,7 +105,7 @@ function GNSProfit() {
     <div>
       <SectionHead
         n="06.b"
-        title="GNS Spices Profitability"
+        title="GNS UDYAM Profitability"
         subtitle="The central business case. Scenario selector re-runs the volume line at conservative, base or growth multiples."
         right={
           <div className="inline-flex rounded-md" style={{ border: '1px solid var(--pt-line)' }}>
@@ -131,7 +131,7 @@ function GNSProfit() {
         <Panel title="Inputs" className="lg:col-span-5">
           <div className="grid grid-cols-2 gap-3">
             <NumberField label="Kamdhenu price (₹/pack)" value={g.kamdhenuPrice} onChange={(v) => patch({ gnsProfit: { ...g, kamdhenuPrice: v } })} />
-            <NumberField label="GNS selling price (₹/pack)" value={g.gnsSellingPrice} onChange={(v) => patch({ gnsProfit: { ...g, gnsSellingPrice: v } })} />
+            <NumberField label="UDYAM selling price (₹/pack)" value={g.gnsSellingPrice} onChange={(v) => patch({ gnsProfit: { ...g, gnsSellingPrice: v } })} />
             <NumberField label="Base monthly volume (packs)" value={g.monthlyVolume} onChange={(v) => patch({ gnsProfit: { ...g, monthlyVolume: v } })} />
             <NumberField label="Supplier incentive %" value={g.supplierIncentive} onChange={(v) => patch({ gnsProfit: { ...g, supplierIncentive: v } })} step={0.25} />
             <NumberField label="Volume incentive %" value={g.volumeIncentive} onChange={(v) => patch({ gnsProfit: { ...g, volumeIncentive: v } })} step={0.25} />
@@ -192,7 +192,7 @@ function RetailerSim() {
             <NumberField label="Number of retailers" value={r.numRetailers} onChange={(v) => patch({ retailerSim: { ...r, numRetailers: v } })} />
             <NumberField label="Avg monthly ₹" value={r.avgMonthlyPurchase} onChange={(v) => patch({ retailerSim: { ...r, avgMonthlyPurchase: v } })} />
             <NumberField label="Active %" value={r.activePct} onChange={(v) => patch({ retailerSim: { ...r, activePct: v } })} step={1} min={0} max={100} />
-            <NumberField label="GNS contribution %" value={r.gnsContribPct} onChange={(v) => patch({ retailerSim: { ...r, gnsContribPct: v } })} step={0.25} />
+            <NumberField label="UDYAM contribution %" value={r.gnsContribPct} onChange={(v) => patch({ retailerSim: { ...r, gnsContribPct: v } })} step={0.25} />
             <NumberField label="Distributor contrib %" value={r.distContribPct} onChange={(v) => patch({ retailerSim: { ...r, distContribPct: v } })} step={0.25} />
             <NumberField label="Retailer GM %" value={r.retailerGrossMarginPct} onChange={(v) => patch({ retailerSim: { ...r, retailerGrossMarginPct: v } })} step={0.5} />
           </div>
@@ -202,7 +202,7 @@ function RetailerSim() {
           <KPI k="Active retailers" v={inr(active)} s={`of ${inr(r.numRetailers)}`} />
           <KPI k="Monthly secondary" v={`₹${inr(monthlySecondary)}`} s={`≈ ₹${inr(monthlySecondary / 10000000, 2)} Cr`} />
           <KPI k="Annual secondary" v={`₹${inr(annualSecondary / 10000000, 2)} Cr`} tone="gold" />
-          <KPI k="GNS contribution" v={`₹${inr(gnsContrib / 10000000, 2)} Cr`} tone="gold" />
+          <KPI k="UDYAM contribution" v={`₹${inr(gnsContrib / 10000000, 2)} Cr`} tone="gold" />
           <KPI k="Distributor contribution" v={`₹${inr(distContrib / 10000000, 2)} Cr`} />
           <KPI k="Retailer gross profit" v={`₹${inr(retailerGross / 10000000, 2)} Cr`} />
         </div>
@@ -232,7 +232,7 @@ export default function Profitability() {
         <p className="mt-2">
           The <strong>first</strong> calculates a distributor&apos;s
           profitability at a chosen volume, price and cost structure. The
-          <strong> second</strong> calculates GNS Spices&apos; own
+          <strong> second</strong> calculates GNS UDYAM&apos;s own
           profitability, with a scenario selector —
           <em> Conservative · Base · Growth </em> — that scales volume up or
           down to test sensitivity. The <strong>third</strong> simulates a

@@ -132,9 +132,11 @@ export default function BusinessCase() {
         <div className="eyebrow" style={{ marginBottom: 8 }}>Confidential — Working business case</div>
         <h1>Kamdhenu — India Market Development</h1>
         <p className="lead">
-          A proposal to build a structured, technology-enabled distribution
-          network across India, using the Kamdhenu category as the anchor
-          working case. Prepared for authorised partner review.
+          A proposal to launch <strong>GNS UDYAM</strong> — a structured,
+          technology-enabled distribution &amp; market-development network
+          across India, operated by GNS Spices — with the Kamdhenu category
+          positioned as the anchor working case. Prepared for authorised
+          partner review.
         </p>
 
         <div className="meta">
@@ -177,14 +179,17 @@ export default function BusinessCase() {
           metric.
         </p>
         <p>
-          GNS Spices proposes to build the platform that answers those
-          questions systematically: a national distribution and market
-          development engine that maps opportunity, appoints distributors
-          against a scoring model, activates retailers into revenue and closes
-          the loop with technology and data. The first working case is the
-          proposed Kamdhenu category, treated in this document as a
-          <em> confidential — working business case </em> — not a confirmed
-          commercial relationship.
+          GNS Spices proposes to launch <strong>GNS UDYAM</strong> — the
+          platform that answers those questions systematically. GNS UDYAM is
+          a national distribution and market-development network that maps
+          opportunity, appoints distributors against a scoring model,
+          activates retailers into revenue and closes the loop with
+          technology and data. GNS Spices is the parent company and product
+          brand; GNS UDYAM is the logical distribution network that carries
+          product from manufacturer to market. The first working case being
+          modelled through UDYAM is the proposed Kamdhenu category, treated
+          in this document as a <em> confidential — working business case </em>
+          — not a confirmed commercial relationship.
         </p>
         <p>
           We are asking authorised reviewers to evaluate three things: whether
@@ -239,13 +244,14 @@ export default function BusinessCase() {
 
         <h2 id="prop">3. The Proposition</h2>
         <p>
-          GNS Spices is designed to be that coordination layer. The
-          proposition is deliberately narrow and defensible: we are not
-          another distributor competing on price, and we are not a marketing
-          agency competing on ideas. We are a
-          <strong> distribution and market-development platform </strong>
-          that turns a supplier&apos;s product into distributed, activated,
-          measured retail volume across defined territories.
+          <strong>GNS UDYAM</strong> is designed to be that coordination
+          layer. The proposition is deliberately narrow and defensible: it is
+          not another distributor competing on price, and it is not a
+          marketing agency competing on ideas. It is a
+          <strong> distribution and market-development network </strong>
+          — operated by GNS Spices — that turns a supplier&apos;s product
+          into distributed, activated, measured retail volume across defined
+          territories.
         </p>
         <p>
           For the supplier, the value is a single accountable partner for
@@ -260,7 +266,7 @@ export default function BusinessCase() {
         </p>
         <p>
           The Kamdhenu category is being considered as the anchor product
-          around which this platform is first built. Nothing in this document
+          around which GNS UDYAM is first built. Nothing in this document
           implies a signed relationship, exclusivity or pricing; those are
           matters for a separate commercial agreement. The purpose of this
           case is to test whether the platform is viable if such an agreement
@@ -270,7 +276,7 @@ export default function BusinessCase() {
 
         <h2 id="model">4. Business Model</h2>
         <p>
-          The platform is built as seven interlocking engines. Each is
+          GNS UDYAM is built as seven interlocking engines. Each is
           designed, staffed and measured independently, but they are wired
           together so that a decision in one — say, upgrading a distributor
           from Preferred to Strategic — flows through pricing, incentives,
@@ -297,11 +303,11 @@ export default function BusinessCase() {
         <h2 id="arch">5. Distribution Architecture</h2>
         <p>
           Product flows downward through eight tiers, and data flows
-          upward. GNS Spices sits in the second tier — deliberately distinct
-          from the manufacturer above it and the regional distributors below
-          — because the market-development function needs a different
-          accountability, a different balance sheet posture and a different
-          measurement framework from either.
+          upward. <strong>GNS UDYAM</strong> sits in the second tier —
+          deliberately distinct from the manufacturer above it and the
+          regional distributors below — because the market-development
+          function needs a different accountability, a different balance
+          sheet posture and a different measurement framework from either.
         </p>
         <p>
           Every downstream tier operates under an earned rather than
@@ -358,21 +364,21 @@ export default function BusinessCase() {
           At the <strong>pilot district level</strong>, five hundred active
           retailers purchasing an average of thirty thousand rupees per month
           produce one and a half crore of monthly secondary sales, or
-          eighteen crore annualised. GNS contribution at three to ten percent
-          of secondary sales — depending on category depth and negotiated
-          terms — sits between fifty-four lakh and one crore eighty lakh.
-          That range is wide by design: it is the sensitivity partners should
-          be reviewing.
+          eighteen crore annualised. UDYAM contribution at three to ten
+          percent of secondary sales — depending on category depth and
+          negotiated terms — sits between fifty-four lakh and one crore
+          eighty lakh. That range is wide by design: it is the sensitivity
+          partners should be reviewing.
         </p>
         <p>
           At a <strong>mature national network</strong>, ten thousand active
           retailers at an average monthly purchase of fifty thousand rupees
           produce fifty crore of monthly secondary sales, or six hundred
           crore annualised. Contribution economics at the same range would
-          place GNS contribution in a middle-to-high nine-figure rupee band.
-          This is a mature-state illustrative scenario, and the intervening
-          years require capital, operational build-out and category
-          extension.
+          place UDYAM contribution in a middle-to-high nine-figure rupee
+          band. This is a mature-state illustrative scenario, and the
+          intervening years require capital, operational build-out and
+          category extension.
         </p>
         <p>
           The interactive dashboard in this portal exposes every input to the
@@ -496,15 +502,25 @@ export default function BusinessCase() {
 
         <div className="signoff">
           <div style={{ fontWeight: 700, color: 'var(--pt-off)', marginBottom: 6 }}>
-            Confidentiality
+            Naming &amp; confidentiality
           </div>
-          Kamdhenu is treated throughout this document as a
-          <em> confidential — working business case </em>. Nothing in this
-          document implies a formal appointment, exclusivity or commercial
-          agreement unless separately verified in writing. This portal is
-          accessible only to holders of an authorised access code, and its
-          contents are proprietary planning information of GNS Spices. Not
-          for redistribution.
+          <p style={{ margin: '0 0 8px' }}>
+            <strong>GNS Spices</strong> is the products and parent company
+            brand. <strong>GNS UDYAM</strong> is the trading name for the
+            logical distribution &amp; market-development network being
+            developed under this proposition. GNS UDYAM moves tangible
+            product — GNS Spices&apos; own or a partner supplier&apos;s such
+            as the proposed Kamdhenu category — from manufacturer to market.
+          </p>
+          <p style={{ margin: 0 }}>
+            Kamdhenu is treated throughout this document as a
+            <em> confidential — working business case </em>. Nothing in this
+            document implies a formal appointment, exclusivity or commercial
+            agreement unless separately verified in writing. This portal is
+            accessible only to holders of an authorised access code, and its
+            contents are proprietary planning information of GNS Spices. Not
+            for redistribution.
+          </p>
         </div>
       </article>
     </div>

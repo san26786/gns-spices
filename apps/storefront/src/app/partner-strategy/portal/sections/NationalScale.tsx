@@ -46,7 +46,7 @@ export default function NationalScale() {
           National — each of which fills in reasonable numbers for how many
           states, districts, distributors and retailers that stage implies.
           The outputs show total distributors, total retailers, monthly and
-          annual sales in crores, and estimated contribution to GNS.
+          annual sales in crores, and estimated contribution to GNS UDYAM.
         </p>
         <p className="mt-2">
           Below, a <strong>five-year roadmap</strong> steps through Year 1 to
@@ -91,7 +91,7 @@ export default function NationalScale() {
               <NumberField label="Avg dist / district" value={s.avgDistPerDistrict} onChange={(v) => patch({ nationalSim: { ...s, avgDistPerDistrict: v } })} />
               <NumberField label="Avg retailers / dist" value={s.avgRetailersPerDist} onChange={(v) => patch({ nationalSim: { ...s, avgRetailersPerDist: v } })} />
               <NumberField label="Avg monthly / retailer ₹" value={s.avgMonthlyRetailerPurchase} onChange={(v) => patch({ nationalSim: { ...s, avgMonthlyRetailerPurchase: v } })} />
-              <NumberField label="GNS contribution %" value={s.gnsContribPct} onChange={(v) => patch({ nationalSim: { ...s, gnsContribPct: v } })} step={0.25} />
+              <NumberField label="UDYAM contribution %" value={s.gnsContribPct} onChange={(v) => patch({ nationalSim: { ...s, gnsContribPct: v } })} step={0.25} />
             </div>
           </Panel>
           <div className="lg:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-3 content-start">
@@ -99,7 +99,7 @@ export default function NationalScale() {
             <KPI k="Total retailers" v={inr(totalRet)} />
             <KPI k="Monthly sales" v={`₹${inr(monthlySales / 10000000, 2)} Cr`} />
             <KPI k="Annual sales" v={`₹${inr(annualSales / 10000000, 2)} Cr`} tone="gold" />
-            <KPI k="GNS contribution" v={`₹${inr(gnsContrib / 10000000, 2)} Cr`} tone="gold" />
+            <KPI k="UDYAM contribution" v={`₹${inr(gnsContrib / 10000000, 2)} Cr`} tone="gold" />
             <KPI k="Retailers / district" v={inr(s.avgDistPerDistrict * s.avgRetailersPerDist)} s="Density check" />
           </div>
         </div>

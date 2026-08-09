@@ -46,12 +46,24 @@ export default function UnlockGate() {
       <div className="w-full max-w-md">
         <div className="mb-14 text-center">
           <div
-            className="text-[10px] tracking-[0.45em] uppercase font-semibold"
-            style={{ color: '#8B9994' }}
+            className="text-[26px] font-bold leading-none tracking-tight"
+            style={{ color: '#F5F1E8' }}
           >
-            GNS Spices
+            GNS <span style={{ color: '#B08D3A' }}>UDYAM</span>
           </div>
-          <div className="mt-4">
+          <div
+            className="mt-2 text-[13px]"
+            style={{ color: '#B7BFB8' }}
+          >
+            Distribution &amp; Market Development Network
+          </div>
+          <div
+            className="mt-1 text-[10px] tracking-[0.25em] uppercase"
+            style={{ color: '#6E7A73' }}
+          >
+            A GNS Spices platform
+          </div>
+          <div className="mt-8">
             <div
               className="text-[10px] tracking-[0.35em] uppercase font-semibold"
               style={{ color: '#B08D3A' }}

@@ -52,14 +52,14 @@ const NODES: NodeMeta[] = [
   },
   {
     key: 'gns',
-    title: 'GNS Spices',
-    chip: 'Distribution & Market Development Partner',
-    role: 'Owns the India route-to-market: territory strategy, distributor development, retailer activation, incentive design, data.',
+    title: 'GNS UDYAM',
+    chip: 'Distribution & Market Development Network · a GNS Spices platform',
+    role: 'Owns the India route-to-market: territory strategy, distributor development, retailer activation, incentive design, data. Moves product from the manufacturer to the market, whether that product is GNS Spices’ own or a partner supplier’s.',
     revenue: 'Distribution margin, market-development fees, incentive pools, data services.',
     cost: 'Field sales, technology platform, working capital, marketing support.',
     kpi: 'Coverage · distribution density · active retailers · growth.',
     risk: 'Execution risk and working-capital scaling.',
-    target: 'A scalable, repeatable market-development platform.',
+    target: 'A scalable, repeatable market-development platform across categories.',
   },
   {
     key: 'regional',
@@ -162,14 +162,15 @@ export default function Distributors() {
         </p>
         <p className="mt-2">
           The <strong>architecture</strong> on the left shows the eight tiers
-          our product passes through — from the supplier (Kamdhenu) down to
-          the consumer. Click any tier to see that layer&apos;s role, revenue
-          model, cost, KPI and risk. The <strong>scoring engine</strong> further
-          down is how we evaluate a candidate distributor: nine criteria such
-          as existing network, working capital, warehouse and technology,
-          each scored against a maximum weight. The total decides whether a
-          candidate is recommended as Strategic, Preferred, Eligible or Not
-          Recommended.
+          the product passes through — from the supplier (Kamdhenu) down to
+          the consumer. <strong>GNS UDYAM</strong> sits in the second tier as
+          the distribution &amp; market-development network operated by GNS
+          Spices. Click any tier to see its role, revenue model, cost, KPI
+          and risk. The <strong>scoring engine</strong> further down is how
+          we evaluate a candidate distributor: nine criteria such as existing
+          network, working capital, warehouse and technology, each scored
+          against a maximum weight. The total decides whether a candidate is
+          recommended as Strategic, Preferred, Eligible or Not Recommended.
         </p>
         <p className="mt-2">
           The <strong>pipeline</strong> at the bottom shows the eight steps

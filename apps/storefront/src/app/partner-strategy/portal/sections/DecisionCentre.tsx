@@ -109,7 +109,7 @@ export default function DecisionCentre() {
             <div className="label mb-2">Derived from other sections (for cross-check)</div>
             <div className="grid sm:grid-cols-3 gap-3 text-sm">
               <Row label="National sim · annual sales" v={`₹${inr(annualSalesCr, 2)} Cr`} />
-              <Row label="National sim · GNS contribution" v={`₹${inr(gnsContribCr, 2)} Cr`} />
+              <Row label="National sim · UDYAM contribution" v={`₹${inr(gnsContribCr, 2)} Cr`} />
               <Row label="Working capital · net" v={`₹${inr(wcCr, 2)} Cr`} />
             </div>
           </div>
