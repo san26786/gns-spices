@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+/>
+<title>GNS UDYAM — Build Your Distribution Enterprise</title>
+<meta name="description" content="GNS UDYAM — Acquire Territory Rights, Scale FMCG Volume, and Build a Cash-Generative Asset. The supply engine for Kamdhenu FMCG infrastructure." />
+
+<!-- WhatsApp / Open Graph -->
+<meta property="og:title" content="GNS UDYAM — Build Your Distribution Enterprise" />
+<meta property="og:description" content="Acquire Territory Rights, Scale FMCG Volume, and Build a Cash-Generative Asset. The supply engine for Kamdhenu FMCG infrastructure." />
+<meta property="og:image" content="https://www.gnsspices.com/brand/logo.png" />
+<meta property="og:image:alt" content="GNS UDYAM" />
+<meta property="og:url" content="https://www.gnsspices.com/udyam.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="GNS UDYAM" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#1A365D" />
+
+<link rel="icon" href="/brand/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy:    { 950: '#08172C', 900: '#0F2340', 800: '#1A365D', 700: '#254A7A', 600: '#2C5282', 500: '#3B6BAA' },
+          gold:    { 700: '#8B6A0F', 600: '#A67F1D', 500: '#C59B27', 400: '#DDB84A', 300: '#EFD37A' },
+          ivory:   { 50: '#FAF9F6', 100: '#F1EFE7' },
+          slate:   { 700: '#334155', 600: '#475569', 500: '#64748B', 400: '#94A3B8' },
+          ink:     { 900: '#0B0F0E', 800: '#1B211F', 700: '#333B37' },
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #FAF9F6;
+    color: #1B211F;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: pan-y;
+  }
+  * { -webkit-tap-highlight-color: transparent; }
+
+  /* Deck container */
+  .deck { position: fixed; inset: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .stage { position: relative; flex: 1; overflow: hidden; }
+  .track {
+    position: absolute; inset: 0;
+    display: flex;
+    transition: transform 480ms cubic-bezier(.22,.61,.36,1);
+    will-change: transform;
+  }
+  .slide {
+    flex: 0 0 100%;
+    height: 100%;
+    display: flex; flex-direction: column;
+    padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+    overflow: hidden;
+    position: relative;
+  }
+  .slide-inner {
+    flex: 1;
+    display: flex; flex-direction: column;
+    padding: 24px 22px 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slide-inner::-webkit-scrollbar { display: none; }
+  @media (min-width: 768px) {
+    .slide-inner { padding: 48px 64px 32px; }
+  }
+
+  /* Theme variants */
+  .theme-navy {
+    background: radial-gradient(120% 100% at 10% 0%, #254A7A 0%, #1A365D 45%, #0F2340 100%);
+    color: #FAF9F6;
+  }
+  .theme-navy-deep {
+    background:
+      radial-gradient(60% 45% at 15% 15%, rgba(197,155,39,0.16) 0%, transparent 60%),
+      radial-gradient(60% 45% at 95% 100%, rgba(44,82,130,0.35) 0%, transparent 60%),
+      linear-gradient(160deg, #08172C 0%, #0F2340 55%, #050D1B 100%);
+    color: #FAF9F6;
+  }
+  .theme-ivory { background: #FAF9F6; color: #1B211F; }
+  .theme-slate {
+    background: linear-gradient(160deg, #1A365D 0%, #08172C 100%);
+    color: #FAF9F6;
+  }
+
+  /* Utility */
+  .eyebrow {
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 700;
+  }
+  .num { font-variant-numeric: tabular-nums; }
+  .gradient-gold {
+    background: linear-gradient(180deg, #EFD37A 0%, #C59B27 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .divider-gold {
+    height: 2px; width: 44px;
+    background: linear-gradient(90deg, #C59B27, #EFD37A);
+    border-radius: 999px;
+  }
+  .btn-gold {
+    background: linear-gradient(180deg, #DDB84A 0%, #C59B27 100%);
+    color: #08172C;
+    font-weight: 700;
+    padding: 14px 22px;
+    border-radius: 999px;
+    box-shadow: 0 12px 30px rgba(197,155,39,0.35);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 16px 40px rgba(197,155,39,0.45); }
+  .btn-navy {
+    background: linear-gradient(180deg, #254A7A 0%, #1A365D 100%);
+    color: #FAF9F6;
+    font-weight: 700;
+    padding: 14px 22px;
+    border-radius: 999px;
+    box-shadow: 0 12px 30px rgba(26,54,93,0.45);
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.20);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  }
+  .chip-gold {
+    background: rgba(197,155,39,0.14);
+    border: 1px solid rgba(197,155,39,0.40);
+    color: #EFD37A;
+  }
+  .chip-navy {
+    background: rgba(26,54,93,0.08);
+    border: 1px solid rgba(26,54,93,0.30);
+    color: #1A365D;
+  }
+
+  /* Cards */
+  .card-lift {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(6px);
+    border-radius: 18px;
+  }
+  .card-ivory {
+    background: #FFFFFF;
+    border: 1px solid #E9E5DA;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(15,35,64,0.06);
+  }
+  .card-gold {
+    background: linear-gradient(180deg, rgba(197,155,39,0.10) 0%, rgba(197,155,39,0.02) 100%);
+    border: 1px solid rgba(197,155,39,0.45);
+    border-radius: 18px;
+  }
+  .card-navy-tint {
+    background: linear-gradient(180deg, rgba(26,54,93,0.06) 0%, rgba(26,54,93,0.02) 100%);
+    border: 1px solid rgba(26,54,93,0.30);
+    border-radius: 18px;
+  }
+
+  /* Nav */
+  .nav-bar {
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0));
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(15,35,64,0.10);
+  }
+  .nav-bar.on-dark {
+    background: rgba(8,23,44,0.65);
+    border-top-color: rgba(255,255,255,0.10);
+  }
+  .nav-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 999px;
+    background: #1A365D; color: #FAF9F6;
+    box-shadow: 0 6px 18px rgba(26,54,93,0.45);
+    transition: transform 150ms ease, opacity 150ms ease;
+  }
+  .nav-btn:disabled { opacity: 0.3; }
+  .nav-btn:active { transform: scale(0.95); }
+  .progress {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(15,35,64,0.10);
+    overflow: hidden;
+  }
+  .on-dark .progress { background: rgba(255,255,255,0.14); }
+  .progress > i {
+    display: block; height: 100%;
+    background: linear-gradient(90deg, #C59B27, #EFD37A);
+    transition: width 400ms ease;
+  }
+  .slide-count {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    color: #1A365D;
+    min-width: 58px; text-align: right;
+  }
+  .on-dark .slide-count { color: #EFD37A; }
+
+  /* Heading sizes */
+  h1.hero { font-size: clamp(30px, 8vw, 62px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; }
+  h2.slide-title { font-size: clamp(22px, 5.5vw, 40px); font-weight: 800; line-height: 1.1; letter-spacing: -0.015em; }
+  .subhead { font-size: clamp(15px, 3.6vw, 20px); line-height: 1.5; font-weight: 500; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(8,20,40,0.7);
+    backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 24px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    max-width: 440px; width: 100%;
+    background: #FAF9F6; color: #1B211F;
+    border-radius: 22px; padding: 26px 22px;
+    border: 1px solid #E9E5DA;
+    box-shadow: 0 30px 80px rgba(10,20,40,0.6);
+  }
+
+  /* Fade-in */
+  .slide[data-active="true"] .fade-up { animation: fadeUp 640ms cubic-bezier(.2,.65,.3,1) both; }
+  .slide[data-active="true"] .fade-up.d1 { animation-delay: 120ms; }
+  .slide[data-active="true"] .fade-up.d2 { animation-delay: 220ms; }
+  .slide[data-active="true"] .fade-up.d3 { animation-delay: 320ms; }
+  .slide[data-active="true"] .fade-up.d4 { animation-delay: 420ms; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Progression chevron */
+  .chev {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid rgba(26,54,93,0.20);
+    box-shadow: 0 2px 8px rgba(15,35,64,0.05);
+  }
+  .chev .num-badge {
+    width: 34px; height: 34px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px;
+    background: #1A365D; color: #FAF9F6;
+    flex: 0 0 auto;
+  }
+  .chev.final .num-badge {
+    background: linear-gradient(180deg, #DDB84A, #C59B27); color: #08172C;
+  }
+  .chev .mt-badge {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 10px; padding: 3px 8px; border-radius: 4px;
+    background: rgba(26,54,93,0.08); color: #1A365D; font-weight: 700;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .chev.final .mt-badge {
+    background: rgba(197,155,39,0.16); color: #8B6A0F;
+  }
+  .chev-conn {
+    height: 12px; margin-left: 24px;
+    border-left: 2px dashed rgba(26,54,93,0.25);
+  }
+</style>
+</head>
+
+<body>
+
+<div class="deck" id="deck">
+  <div class="stage" id="stage">
+    <div class="track" id="track">
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 1 · TITLE -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy-deep" data-theme="dark">
+        <div class="slide-inner justify-between">
+          <div class="fade-up">
+            <div class="chip chip-gold">GNS UDYAM · उद्यम</div>
+          </div>
+          <div class="my-auto">
+            <h1 class="hero fade-up d1">
+              BUILD YOUR<br/>
+              <span class="gradient-gold">DISTRIBUTION</span><br/>
+              ENTERPRISE.
+            </h1>
+            <p class="subhead mt-6 fade-up d2" style="color:rgba(250,249,246,0.85); max-width:640px">
+              Acquire territory rights. Scale FMCG volume. Build a
+              cash-generative asset that compounds year after year.
+            </p>
+            <div class="mt-6 fade-up d3">
+              <div class="divider-gold mb-3"></div>
+              <p class="text-base md:text-lg font-semibold" style="color:#EFD37A; letter-spacing:0.02em">
+                The supply engine for Kamdhenu FMCG infrastructure.
+              </p>
+            </div>
+          </div>
+          <div class="fade-up d4">
+            <button class="btn-gold w-full md:w-auto" onclick="go(1)">
+              Explore Enterprise Opportunity →
+            </button>
+            <p class="mt-3 text-xs text-center md:text-left" style="color:rgba(250,249,246,0.55)">
+              A GNS Spices programme · Confidential preview for territory partners
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 2 · STRATEGIC DISTINCTION -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#1A365D">The strategic distinction</span>
+            <h2 class="slide-title mt-2">Not just reselling — build a business asset.</h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <!-- Formula highlight -->
+          <div class="mt-5 card-navy-tint p-4 md:p-5 fade-up d1">
+            <p class="eyebrow" style="color:#1A365D">The UDYAM asset formula</p>
+            <p class="mt-2 text-sm md:text-base font-bold text-ink-800 leading-snug">
+              Products + Defined Territory + Retail Network + Built-in Demand
+              <span class="mx-1 text-slate-500">=</span>
+              <span style="color:#1A365D">Enterprise Asset Value</span>
+            </p>
+          </div>
+
+          <!-- 4 distinctions -->
+          <div class="mt-4 grid gap-3 md:grid-cols-2 fade-up d2">
+            <div class="card-ivory p-4 md:p-5">
+              <p class="eyebrow" style="color:#1A365D">01</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Exclusive territory rights</p>
+              <p class="text-xs md:text-sm mt-1" style="color:#475569">
+                Block, Tehsil, District or State — earned and protected,
+                not sold and forgotten.
+              </p>
+            </div>
+            <div class="card-ivory p-4 md:p-5">
+              <p class="eyebrow" style="color:#1A365D">02</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Defined commercial margins</p>
+              <p class="text-xs md:text-sm mt-1" style="color:#475569">
+                Buy → Distribute → Sell → Earn. Every layer's economics
+                are written, not negotiated at the counter.
+              </p>
+            </div>
+            <div class="card-ivory p-4 md:p-5">
+              <p class="eyebrow" style="color:#1A365D">03</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Built-in demand generation</p>
+              <p class="text-xs md:text-sm mt-1" style="color:#475569">
+                Fulfil demand created by the UDAAN community network —
+                you don't create demand alone.
+              </p>
+            </div>
+            <div class="card-ivory p-4 md:p-5">
+              <p class="eyebrow" style="color:#1A365D">04</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Enterprise asset creation</p>
+              <p class="text-xs md:text-sm mt-1" style="color:#475569">
+                Recurring B2B reorders build a business worth valuing —
+                not a commission worth collecting.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 3 · PORTFOLIO -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#1A365D">A proven FMCG portfolio</span>
+            <h2 class="slide-title mt-2">High-velocity portfolio ready for distribution.</h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-3 fade-up d1">
+            <div class="card-ivory p-5 md:p-6">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(197,155,39,0.14); border:1px solid rgba(197,155,39,0.35); color:#8B6A0F; font-weight:800">
+                ★
+              </div>
+              <p class="eyebrow" style="color:#8B6A0F">Portfolio 01</p>
+              <p class="mt-1 text-lg font-bold text-ink-800">Blended &amp; special masalas</p>
+              <p class="text-sm mt-2" style="color:#475569">
+                KLM Chatpat, Goda Masala, Sunday Masala, Shahi Biryani,
+                Chicken &amp; Meat Masala, Sambar — the high-value,
+                high-margin drivers of the range.
+              </p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                <span class="chip chip-navy" style="font-size:10px">1 kg</span>
+                <span class="chip chip-navy" style="font-size:10px">500 g</span>
+                <span class="chip chip-navy" style="font-size:10px">200 g</span>
+              </div>
+            </div>
+            <div class="card-ivory p-5 md:p-6">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(26,54,93,0.10); border:1px solid rgba(26,54,93,0.35); color:#1A365D; font-weight:800">
+                ⌘
+              </div>
+              <p class="eyebrow" style="color:#1A365D">Portfolio 02</p>
+              <p class="mt-1 text-lg font-bold text-ink-800">Daily kitchen staples</p>
+              <p class="text-sm mt-2" style="color:#475569">
+                Chilli, turmeric, coriander, cumin, mustard — 1 kg jars
+                to ₹5 &amp; ₹10 sachets. The high-velocity volume turners
+                every retailer reorders weekly.
+              </p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                <span class="chip chip-navy" style="font-size:10px">1 kg</span>
+                <span class="chip chip-navy" style="font-size:10px">200 g</span>
+                <span class="chip chip-navy" style="font-size:10px">₹5 / ₹10 sachets</span>
+              </div>
+            </div>
+            <div class="card-ivory p-5 md:p-6">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(44,82,130,0.10); border:1px solid rgba(44,82,130,0.30); color:#2C5282; font-weight:800">
+                ✦
+              </div>
+              <p class="eyebrow" style="color:#2C5282">Portfolio 03</p>
+              <p class="mt-1 text-lg font-bold text-ink-800">Regional speciality delicacies</p>
+              <p class="text-sm mt-2" style="color:#475569">
+                Papads, pickles, chundas, murabbas. High retention on the
+                shelf, festive demand, gifting upsell — deepens the basket
+                on every reorder.
+              </p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                <span class="chip chip-navy" style="font-size:10px">5 kg</span>
+                <span class="chip chip-navy" style="font-size:10px">1 kg</span>
+                <span class="chip chip-navy" style="font-size:10px">500 g / 200 g</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-6 text-xs md:text-sm text-center fade-up d2" style="color:#64748B">
+            Underlying rates from the Kamdhenu supplier price list · effective 15/07/2026.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 4 · 70:30 PROFITABILITY -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#EFD37A">The 70:30 profitability engine</span>
+            <h2 class="slide-title mt-2">Transparent commercial economics.</h2>
+            <div class="divider-gold mt-3"></div>
+            <p class="mt-3 subhead" style="color:rgba(250,249,246,0.85); max-width:640px">
+              Every ₹100 of distributable margin is allocated to the six
+              UDYAM roles. No hidden layers. No mystery bonuses.
+            </p>
+          </div>
+
+          <!-- 70% chip -->
+          <div class="mt-5 flex items-center gap-3 fade-up d1">
+            <div class="chip chip-gold" style="font-size:11px">GNS UDYAM SUPPLY POOL</div>
+            <div class="text-2xl md:text-3xl font-black gradient-gold num">70% of margin</div>
+          </div>
+
+          <!-- Allocations -->
+          <div class="mt-4 card-lift p-4 md:p-5 fade-up d2">
+            <div class="space-y-2.5">
+              <!-- U1 -->
+              <div class="flex items-center gap-3">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U1</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">Master Partner</p>
+                  <p class="text-[11px] text-white/60 truncate">Brand · infrastructure · marketing · management</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹20</div>
+                  <div class="num text-[11px] text-gold-300">28.6%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:100%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- U2 -->
+              <div class="flex items-center gap-3">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U2</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">Regional / State Partner</p>
+                  <p class="text-[11px] text-white/60 truncate">Territory development</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹12</div>
+                  <div class="num text-[11px] text-gold-300">17.1%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:60%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- U3 -->
+              <div class="flex items-center gap-3">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U3</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">District Distributor</p>
+                  <p class="text-[11px] text-white/60 truncate">Distribution &amp; stock</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹12</div>
+                  <div class="num text-[11px] text-gold-300">17.1%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:60%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- U4 -->
+              <div class="flex items-center gap-3">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U4</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">Wholesaler / Channel</p>
+                  <p class="text-[11px] text-white/60 truncate">Local market penetration</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹10</div>
+                  <div class="num text-[11px] text-gold-300">14.3%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:50%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- U5 -->
+              <div class="flex items-center gap-3">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U5</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">Retailer Growth Benefit</p>
+                  <p class="text-[11px] text-white/60 truncate">Retailer profitability &amp; promotions</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹10</div>
+                  <div class="num text-[11px] text-gold-300">14.3%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:50%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- U6 -->
+              <div class="flex items-center gap-3 pt-2 mt-2" style="border-top:1px solid rgba(255,255,255,0.10)">
+                <span class="mono text-[11px] font-bold text-gold-300" style="width:24px">U6</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm md:text-base font-semibold text-white truncate">Performance Growth Pool</p>
+                  <p class="text-[11px] text-white/60 truncate">Volume · reorder · performance bonuses</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="num text-base md:text-lg font-extrabold text-white">₹6</div>
+                  <div class="num text-[11px] text-gold-300">8.6%</div>
+                </div>
+                <div class="hidden sm:block w-24 h-1.5 rounded-full overflow-hidden" style="background:rgba(255,255,255,0.10)">
+                  <div class="h-full" style="width:30%; background:linear-gradient(90deg,#C59B27,#EFD37A)"></div>
+                </div>
+              </div>
+              <!-- Total -->
+              <div class="flex items-center gap-3 pt-3" style="border-top:1px solid rgba(255,255,255,0.20)">
+                <span class="text-white font-bold text-sm md:text-base flex-1">UDYAM total per ₹100 margin pool</span>
+                <div class="text-right">
+                  <div class="num text-lg md:text-xl font-black gradient-gold">₹70</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[10px] md:text-xs text-center fade-up d3" style="color:rgba(250,249,246,0.60)">
+            Remaining ₹30 (30%) is allocated to the UDAAN community pool — see UDAAN deck.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 5 · 5-TONNE DISTRICT MODEL -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#1A365D">The benchmark model</span>
+            <h2 class="slide-title mt-2">The 5-tonne district stockist.</h2>
+            <div class="divider-gold mt-3"></div>
+            <p class="mt-3 subhead" style="color:#475569; max-width:640px">
+              The standard commercial profile GNS UDYAM appoints at
+              district level. Use it as your planning baseline.
+            </p>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-2 fade-up d1">
+            <div class="card-ivory p-5 md:p-6">
+              <p class="eyebrow" style="color:#1A365D">Rolling inventory</p>
+              <p class="num text-3xl md:text-4xl font-black mt-2" style="color:#1A365D">5,000 kg</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                Baseline stock kept in-district. Sized for stable
+                24–48 hour retailer fulfilment across the target territory.
+              </p>
+            </div>
+            <div class="card-gold p-5 md:p-6">
+              <p class="eyebrow" style="color:#8B6A0F">Capital requirement</p>
+              <p class="num text-3xl md:text-4xl font-black mt-2" style="color:#8B6A0F">~₹10.55 L</p>
+              <p class="text-xs mt-2" style="color:#7A6828">
+                Estimated working-capital deployment at appointment.
+                Illustrative — final quantum agreed at commercial signing.
+              </p>
+            </div>
+            <div class="card-ivory p-5 md:p-6">
+              <p class="eyebrow" style="color:#1A365D">Storage infrastructure</p>
+              <p class="num text-3xl md:text-4xl font-black mt-2" style="color:#1A365D">800 sq ft</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                Minimum warehouse footprint. Racked, dry, secure — with
+                dispatch and load-out access.
+              </p>
+            </div>
+            <div class="card-ivory p-5 md:p-6">
+              <p class="eyebrow" style="color:#1A365D">Local SLA</p>
+              <p class="num text-3xl md:text-4xl font-black mt-2" style="color:#1A365D">24–48 hrs</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                Contracted delivery window to local Kirana outlets.
+                Adherence tracked as a scorecard metric.
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-5 text-xs md:text-sm text-center fade-up d2" style="color:#64748B">
+            Higher tiers scale linearly — see the progression pathway (Slide 7).
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 6 · UDAAN SYMBIOSIS -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#EFD37A">Built-in demand guarantee</span>
+            <h2 class="slide-title mt-2">We don't just give you product — we help build demand.</h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-2 items-stretch fade-up d1">
+            <div class="rounded-2xl p-5 md:p-6 flex flex-col"
+                 style="background:linear-gradient(180deg,rgba(47,168,114,0.14) 0%, rgba(15,81,50,0.06) 100%); border:1px solid rgba(47,168,114,0.35)">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="chip" style="background:rgba(47,168,114,0.20); border-color:rgba(47,168,114,0.45); color:#7ED9A6">🚀 UDAAN</span>
+              </div>
+              <p class="text-base md:text-lg font-bold text-white">Creates demand</p>
+              <ul class="mt-3 space-y-1.5 text-xs md:text-sm text-white/85">
+                <li>› Community advocates in every town</li>
+                <li>› Retail Coordinators onboarding Kirana stores</li>
+                <li>› Consumer trials via ₹5 &amp; ₹10 sachets</li>
+                <li>› Reorder generation at the retail counter</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl p-5 md:p-6 flex flex-col"
+                 style="background:linear-gradient(180deg,rgba(197,155,39,0.14) 0%, rgba(139,106,15,0.06) 100%); border:1px solid rgba(197,155,39,0.45)">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="chip chip-gold">🏢 UDYAM</span>
+              </div>
+              <p class="text-base md:text-lg font-bold text-white">Fulfils the orders</p>
+              <ul class="mt-3 space-y-1.5 text-xs md:text-sm text-white/85">
+                <li>› District inventory maintained</li>
+                <li>› Same-day dispatch, next-day delivery</li>
+                <li>› Territorial logistics controlled by you</li>
+                <li>› Every reorder = your recurring revenue</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-5 card-lift p-4 md:p-5 text-center fade-up d2">
+            <p class="text-sm md:text-base font-semibold text-white">
+              You focus on <span class="gradient-gold font-black">stocking and logistics</span> —
+              UDAAN drives the <span class="gradient-gold font-black">retail order velocity</span>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 7 · TERRITORY PROGRESSION -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#1A365D">Multi-tier territory progression</span>
+            <h2 class="slide-title mt-2">Six tiers. Six scales.</h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-5 fade-up d1">
+            <div class="chev">
+              <div class="num-badge">1</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold text-ink-800">Retailer / Channel Partner</p>
+                <p class="text-xs" style="color:#64748B">Local market penetration</p>
+              </div>
+            </div>
+            <div class="chev-conn"></div>
+            <div class="chev">
+              <div class="num-badge">2</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold text-ink-800">Tehsil / Block Stockist</p>
+                <p class="text-xs" style="color:#64748B">Sub-district coverage</p>
+              </div>
+              <span class="mt-badge">1.5 MT</span>
+            </div>
+            <div class="chev-conn"></div>
+            <div class="chev">
+              <div class="num-badge">3</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold text-ink-800">District Partner</p>
+                <p class="text-xs" style="color:#64748B">Full district territory</p>
+              </div>
+              <span class="mt-badge">5 MT</span>
+            </div>
+            <div class="chev-conn"></div>
+            <div class="chev">
+              <div class="num-badge">4</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold text-ink-800">Divisional Regional Partner</p>
+                <p class="text-xs" style="color:#64748B">Multi-district / divisional</p>
+              </div>
+              <span class="mt-badge">20 MT</span>
+            </div>
+            <div class="chev-conn"></div>
+            <div class="chev">
+              <div class="num-badge">5</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold text-ink-800">State Distribution Director</p>
+                <p class="text-xs" style="color:#64748B">Full state coverage</p>
+              </div>
+              <span class="mt-badge">50 MT</span>
+            </div>
+            <div class="chev-conn"></div>
+            <div class="chev final">
+              <div class="num-badge">6</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm md:text-base font-bold" style="color:#8B6A0F">Master Enterprise Director</p>
+                <p class="text-xs" style="color:#8B7A38">National / multi-state authority</p>
+              </div>
+              <span class="mt-badge">100 MT+</span>
+            </div>
+          </div>
+
+          <p class="mt-5 text-xs md:text-sm text-center fade-up d2" style="color:#64748B">
+            Higher tiers are earned through demonstrated scorecard performance — not paid for.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 8 · U6 GROWTH POOL -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy-deep" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#EFD37A">Beyond commission</span>
+            <h2 class="slide-title mt-2">Unlock the UDYAM performance growth pool.</h2>
+            <div class="divider-gold mt-3"></div>
+            <p class="mt-3 subhead" style="color:rgba(250,249,246,0.85); max-width:640px">
+              The 8.6% U6 pool is not paid as automatic margin. It is
+              released against measurable enterprise performance.
+            </p>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-2 fade-up d1">
+            <div class="card-gold p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Volume growth bonuses</p>
+              <p class="text-lg md:text-xl font-extrabold mt-1" style="color:#EFD37A">₹2 L · ₹10 L · ₹50 L · ₹1 Cr+</p>
+              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.85)">
+                Bonuses stack as your absolute throughput crosses band
+                thresholds. Bigger business = better economics.
+              </p>
+            </div>
+            <div class="card-gold p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Territory expansion</p>
+              <p class="text-lg md:text-xl font-extrabold mt-1" style="color:#EFD37A">Coverage incentives</p>
+              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.85)">
+                Open new blocks, activate new tehsils, expand the district
+                grid — every measured expansion earns from U6.
+              </p>
+            </div>
+            <div class="card-gold p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Retail outlet activation</p>
+              <p class="text-lg md:text-xl font-extrabold mt-1" style="color:#EFD37A">Onboarding rewards</p>
+              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.85)">
+                Every net-new Kirana outlet activated (and productive)
+                pays into your U6 pool.
+              </p>
+            </div>
+            <div class="card-gold p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Reorder &amp; retention</p>
+              <p class="text-lg md:text-xl font-extrabold mt-1" style="color:#EFD37A">Retention stipends</p>
+              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.85)">
+                Sustained retailer reorder rates unlock retention
+                stipends — the reward for building a real book of business.
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-5 text-xs md:text-sm text-center fade-up d2" style="color:rgba(250,249,246,0.60)">
+            Unused intermediate-tier margins flow back into U6 — see Slide 9.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 9 · COMPLIANCE & GOVERNANCE -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#1A365D">How your territory is protected</span>
+            <h2 class="slide-title mt-2">Commercial governance &amp; territory security.</h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-3 fade-up d1">
+            <div class="card-ivory p-5">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(26,54,93,0.10); border:1px solid rgba(26,54,93,0.30)">
+                <span class="text-lg">🛡️</span>
+              </div>
+              <p class="eyebrow" style="color:#1A365D">01 · Territory protection</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">One distributor per 1M pop</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                Single-distributor allocation per approximately one million
+                population. No overlap. No cannibalisation. Your quota is
+                yours to develop.
+              </p>
+            </div>
+            <div class="card-ivory p-5">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(197,155,39,0.14); border:1px solid rgba(197,155,39,0.35)">
+                <span class="text-lg">₹</span>
+              </div>
+              <p class="eyebrow" style="color:#8B6A0F">02 · MRP &amp; price integrity</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Mandatory trade rate adherence</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                Trade rates are contracted, not negotiated. Strict
+                anti-predatory pricing rules protect every layer from
+                being undercut by another.
+              </p>
+            </div>
+            <div class="card-ivory p-5">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3"
+                   style="background:rgba(44,82,130,0.10); border:1px solid rgba(44,82,130,0.30)">
+                <span class="text-lg">🔁</span>
+              </div>
+              <p class="eyebrow" style="color:#2C5282">03 · Non-pipelining reclamation</p>
+              <p class="mt-1 text-base md:text-lg font-bold text-ink-800">Unclaimed margin returns to U6</p>
+              <p class="text-xs mt-2" style="color:#475569">
+                When an intermediate tier is absent for a given sale, that
+                tier&apos;s margin doesn&apos;t leak — it returns to the
+                U6 Performance Pool.
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-6 text-xs md:text-sm text-center fade-up d2" style="color:#64748B">
+            Territory rights are earned through performance and protected by contract.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- SLIDE 10 · CTA -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy-deep" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="chip chip-gold">Ready to build?</span>
+            <h2 class="hero mt-3" style="font-size:clamp(28px,7vw,54px)">
+              Lock your <span class="gradient-gold">district territory</span> today.
+            </h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-3 fade-up d1">
+            <div class="card-lift p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Step 01</p>
+              <p class="text-lg font-extrabold mt-1 text-white">Choose territory scope</p>
+              <p class="text-xs md:text-sm mt-1" style="color:rgba(250,249,246,0.75)">
+                Block, tehsil, district, division or state — based on
+                your capacity and ambition.
+              </p>
+            </div>
+            <div class="card-lift p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Step 02</p>
+              <p class="text-lg font-extrabold mt-1 text-white">Submit qualifier</p>
+              <p class="text-xs md:text-sm mt-1" style="color:rgba(250,249,246,0.75)">
+                Complete the scorecard — capital, warehouse, network,
+                team. Review typically completes within 5 working days.
+              </p>
+            </div>
+            <div class="card-lift p-4 md:p-5">
+              <p class="eyebrow" style="color:#EFD37A">Step 03</p>
+              <p class="text-lg font-extrabold mt-1 text-white">Activate stocking</p>
+              <p class="text-xs md:text-sm mt-1" style="color:rgba(250,249,246,0.75)">
+                90-day probation → performance territory → preferred →
+                exclusive. Earned, not granted.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-7 fade-up d2">
+            <button class="btn-gold w-full text-sm md:text-lg" onclick="openModal()">
+              APPLY FOR UDYAM DISTRICT TERRITORY RIGHT →
+            </button>
+          </div>
+
+          <div class="mt-6 grid grid-cols-3 gap-2 text-center fade-up d3">
+            <a href="mailto:enterprise@gnsspices.com" class="card-lift p-3">
+              <div class="text-lg">🏢</div>
+              <p class="eyebrow mt-1" style="color:#EFD37A">Enterprise Desk</p>
+              <p class="text-xs mt-0.5" style="color:rgba(250,249,246,0.80)">Director office</p>
+            </a>
+            <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="card-lift p-3">
+              <div class="text-lg">💬</div>
+              <p class="eyebrow mt-1" style="color:#EFD37A">B2B WhatsApp</p>
+              <p class="text-xs mt-0.5" style="color:rgba(250,249,246,0.80)">Helpline</p>
+            </a>
+            <a href="https://www.gnsspices.com" target="_blank" rel="noopener" class="card-lift p-3">
+              <div class="text-lg">🌐</div>
+              <p class="eyebrow mt-1" style="color:#EFD37A">Web portal</p>
+              <p class="text-xs mt-0.5" style="color:rgba(250,249,246,0.80)">gnsspices.com</p>
+            </a>
+          </div>
+
+          <p class="mt-6 text-[11px] text-center fade-up d4" style="color:rgba(250,249,246,0.50)">
+            GNS UDYAM · a GNS Spices programme · confidential preview for territory partners
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-bar" id="navBar">
+    <button class="nav-btn" id="prevBtn" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="progress" aria-hidden="true"><i id="progressFill" style="width:10%"></i></div>
+    <div class="slide-count num" id="slideCount">01 / 10</div>
+    <button class="nav-btn" id="nextBtn" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Application modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <p class="eyebrow" style="color:#1A365D">Apply for UDYAM territory</p>
+        <p class="text-lg font-bold mt-1 text-ink-800">Reach the enterprise desk.</p>
+      </div>
+      <button onclick="closeModal()" aria-label="Close" class="text-2xl leading-none" style="color:#64748B">×</button>
+    </div>
+    <p class="text-sm" style="color:#333B37">
+      District and higher-tier territories are allocated by application
+      and scorecard qualifier. Reach the enterprise desk via any of the
+      below and share your target territory, capital plan and current
+      distribution profile.
+    </p>
+    <div class="mt-4 space-y-2">
+      <a href="mailto:enterprise@gnsspices.com"
+         class="flex items-center gap-3 p-3 rounded-xl"
+         style="background:rgba(26,54,93,0.06); border:1px solid rgba(26,54,93,0.30); color:#1A365D">
+        <span class="text-xl">🏢</span>
+        <div>
+          <p class="text-sm font-bold">enterprise@gnsspices.com</p>
+          <p class="text-xs" style="color:#4B5A72">Enterprise Director Desk</p>
+        </div>
+      </a>
+      <a href="https://wa.me/919000000000" target="_blank" rel="noopener"
+         class="flex items-center gap-3 p-3 rounded-xl"
+         style="background:rgba(197,155,39,0.08); border:1px solid rgba(197,155,39,0.35); color:#8B6A0F">
+        <span class="text-xl">💬</span>
+        <div>
+          <p class="text-sm font-bold">B2B WhatsApp helpline</p>
+          <p class="text-xs" style="color:#7A6828">Business hours · English &amp; Hindi</p>
+        </div>
+      </a>
+      <a href="https://www.gnsspices.com" target="_blank" rel="noopener"
+         class="flex items-center gap-3 p-3 rounded-xl"
+         style="background:rgba(44,82,130,0.06); border:1px solid rgba(44,82,130,0.30); color:#2C5282">
+        <span class="text-xl">🌐</span>
+        <div>
+          <p class="text-sm font-bold">gnsspices.com</p>
+          <p class="text-xs" style="color:#4B5A72">Web portal &amp; brand</p>
+        </div>
+      </a>
+    </div>
+    <p class="mt-4 text-[11px]" style="color:#64748B">
+      Note: contact details above are placeholders for this preview. Replace with operational addresses before public distribution.
+    </p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const track = document.getElementById('track');
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressFill = document.getElementById('progressFill');
+  const slideCount = document.getElementById('slideCount');
+  const navBar = document.getElementById('navBar');
+  const total = slides.length;
+  let idx = 0;
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function update() {
+    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+    slides.forEach((s, i) => s.setAttribute('data-active', i === idx ? 'true' : 'false'));
+    const pct = ((idx + 1) / total) * 100;
+    progressFill.style.width = pct + '%';
+    slideCount.textContent = pad(idx + 1) + ' / ' + pad(total);
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+
+    const theme = slides[idx].getAttribute('data-theme');
+    if (theme === 'dark') navBar.classList.add('on-dark');
+    else navBar.classList.remove('on-dark');
+  }
+
+  window.go = function (i) {
+    idx = Math.max(0, Math.min(total - 1, i));
+    update();
+  };
+  function next() { window.go(idx + 1); }
+  function prev() { window.go(idx - 1); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { window.go(0); }
+    else if (e.key === 'End') { window.go(total - 1); }
+  });
+
+  let startX = 0, startY = 0, tracking = false, startTime = 0;
+  const stage = document.getElementById('stage');
+  stage.addEventListener('touchstart', function (e) {
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    startTime = Date.now();
+    tracking = true;
+  }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    const dt = Date.now() - startTime;
+    const isSwipe =
+      Math.abs(dx) > 60 &&
+      Math.abs(dx) > Math.abs(dy) * 1.4 &&
+      dt < 700;
+    if (isSwipe) {
+      if (dx < 0) next(); else prev();
+    }
+  }, { passive: true });
+
+  document.body.addEventListener('touchmove', function (e) {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+
+  update();
+})();
+
+function openModal() {
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
