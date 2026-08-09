@@ -46,6 +46,26 @@
   };
 </script>
 
+<script>
+  /* Apply ?lang= URL param via googtrans cookie BEFORE Google Translate loads */
+  (function () {
+    try {
+      var m = window.location.search.match(/[?&]lang=([a-z-]+)/i);
+      if (!m) return;
+      var lang = m[1].toLowerCase();
+      if (lang === 'en') return;
+      var value = '/en/' + lang;
+      var maxAge = 60 * 60 * 24;
+      document.cookie = 'googtrans=' + value + '; path=/; max-age=' + maxAge;
+      var host = window.location.hostname;
+      if (host.indexOf('.') > 0) {
+        var domain = '.' + host.replace(/^www\./, '');
+        document.cookie = 'googtrans=' + value + '; path=/; domain=' + domain + '; max-age=' + maxAge;
+      }
+    } catch (e) {}
+  })();
+</script>
+
 <style>
   html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
   body {
@@ -292,13 +312,17 @@
   }
 
   /* ================================================================ */
-  /*  Language selector (Google Translate widget)                      */
+  /*  Deck tools · language selector + share                          */
   /* ================================================================ */
-  #lang-select {
+  #deck-tools {
     position: fixed;
     top: calc(env(safe-area-inset-top, 0px) + 12px);
     right: 12px;
     z-index: 60;
+    display: flex; align-items: center; gap: 6px;
+    max-width: calc(100vw - 24px);
+  }
+  #lang-select {
     display: inline-flex; align-items: center; gap: 4px;
     padding: 4px 6px 4px 10px;
     background: rgba(8,23,44,0.65);
@@ -310,11 +334,57 @@
     color: rgba(250,249,246,0.9);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
-    max-width: 200px;
+    max-width: 180px;
   }
   #lang-select::before {
     content: '🌐';
     font-size: 12px; line-height: 1;
+  }
+  #share-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px;
+    background: rgba(8,23,44,0.65);
+    border: 1px solid rgba(197,155,39,0.35);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.30);
+    color: rgba(250,249,246,0.9);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+    white-space: nowrap;
+  }
+  #share-btn:hover { background: rgba(8,23,44,0.85); border-color: rgba(197,155,39,0.55); }
+  #share-btn.copied {
+    background: rgba(63,181,123,0.30);
+    border-color: rgba(63,181,123,0.55);
+    color: #7ED9A6;
+  }
+  #toast {
+    position: fixed;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(26,54,93,0.95);
+    color: #FAF9F6;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px; font-weight: 600;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: opacity 200ms ease, transform 200ms ease;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+    white-space: nowrap;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
   body { top: 0 !important; }
   .goog-te-banner-frame.skiptranslate,
@@ -355,9 +425,14 @@
 
 <body>
 
-<!-- Language selector — Google Translate widget -->
-<div id="lang-select" class="notranslate" translate="no" aria-label="Change language">
-  <div id="google_translate_element"></div>
+<!-- Deck tools · language selector + share link -->
+<div id="deck-tools" class="notranslate" translate="no">
+  <button id="share-btn" onclick="copyShareLink()" aria-label="Copy shareable link with current language">
+    <span aria-hidden="true">🔗</span><span>Share</span>
+  </button>
+  <div id="lang-select" aria-label="Change language">
+    <div id="google_translate_element"></div>
+  </div>
 </div>
 
 <div class="deck" id="deck">
@@ -1233,6 +1308,67 @@ function reorderLanguageOptions() {
     select.dataset.reordered = 'true';
   }
   setTimeout(tick, 400);
+}
+
+/* ================================================================ */
+/*  Share link with current language                                 */
+/* ================================================================ */
+var LANG_NAMES = {
+  en: 'English', hi: 'Hindi', mr: 'Marathi', gu: 'Gujarati',
+  ta: 'Tamil', te: 'Telugu', kn: 'Kannada', bn: 'Bengali',
+  pa: 'Punjabi', ml: 'Malayalam', ur: 'Urdu', or: 'Odia', as: 'Assamese'
+};
+function getCurrentLang() {
+  var select = document.querySelector('#google_translate_element select.goog-te-combo');
+  if (select && select.value) return select.value;
+  var m = document.cookie.match(/googtrans=\/en\/([a-z-]+)/);
+  return m ? m[1] : 'en';
+}
+function buildShareUrl(lang) {
+  var link = window.location.origin + window.location.pathname;
+  if (lang && lang !== 'en') link += '?lang=' + lang;
+  return link;
+}
+function showToast(text) {
+  var el = document.getElementById('toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(function () { el.classList.remove('show'); }, 2400);
+}
+function copyShareLink() {
+  var lang = getCurrentLang() || 'en';
+  var link = buildShareUrl(lang);
+  var name = LANG_NAMES[lang] || lang;
+  var btn = document.getElementById('share-btn');
+  function done(success) {
+    if (success) {
+      if (btn) {
+        btn.classList.add('copied');
+        setTimeout(function () { btn.classList.remove('copied'); }, 1800);
+      }
+      showToast('✓ Link copied — opens in ' + name);
+    } else {
+      showToast('Copy failed — long-press to copy the address bar');
+    }
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(link).then(function () { done(true); }, function () { done(false); });
+  } else {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = link; document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(ok);
+    } catch (e) { done(false); }
+  }
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
