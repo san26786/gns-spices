@@ -219,6 +219,16 @@ export interface PortalState {
     decisionNote: string;
   };
 
+  // Section 03 — GNS UDYAM supply-chain margin split (% of total margin)
+  marginSplit: {
+    regionalPartner: number;
+    wholesaler: number;
+    distributor: number;
+    channelPartner: number;
+    retailCoordinator: number;
+    retailer: number;
+  };
+
   // Section 16 — notes
   notes: {
     strategic: string;
@@ -421,6 +431,15 @@ function baseline(): Omit<PortalState, 'setActive' | 'patch' | 'reset'> {
       breakEvenMonth: 14, expectedROI: 32, paybackMonths: 30,
       activeRetailers: 400, districtsCovered: 1,
       status: 'none', decisionNote: '',
+    },
+
+    marginSplit: {
+      regionalPartner: 10,
+      wholesaler: 15,
+      distributor: 20,
+      channelPartner: 15,
+      retailCoordinator: 10,
+      retailer: 30,
     },
 
     notes: {

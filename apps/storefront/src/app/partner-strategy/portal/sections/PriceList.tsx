@@ -9,7 +9,74 @@ import {
   WEIGHTS_TABLE,
   WeightRow,
 } from '../data/kamdhenuPriceList';
+import { usePortal } from '../store';
 import { IllustrativeTag, Panel, PlainEnglish, SectionHead } from '../ui';
+
+/* ------------------------------------------------------------------ */
+/*  SUPPLY-CHAIN MARGIN WALK                                            */
+/* ------------------------------------------------------------------ */
+
+type RoleKey =
+  | 'regionalPartner'
+  | 'wholesaler'
+  | 'distributor'
+  | 'channelPartner'
+  | 'retailCoordinator'
+  | 'retailer';
+
+const ROLES: { key: RoleKey; label: string; short: string }[] = [
+  { key: 'regionalPartner',   label: 'Regional Partner',   short: 'Reg. Partner' },
+  { key: 'wholesaler',        label: 'Wholesaler',          short: 'Wholesaler'   },
+  { key: 'distributor',       label: 'Distributor',         short: 'Distributor'  },
+  { key: 'channelPartner',    label: 'Channel Partner',     short: 'Channel Ptr.' },
+  { key: 'retailCoordinator', label: 'Retail Coordinator',  short: 'Retail Coord.' },
+  { key: 'retailer',          label: 'Retailer',            short: 'Retailer'      },
+];
+
+type Walk = {
+  landing: number;
+  mrp: number;
+  totalMargin: number;
+  totalMarginPct: number;
+  steps: {
+    role: RoleKey;
+    label: string;
+    short: string;
+    buyingCost: number;
+    marginPctOfTotal: number;
+    marginRupees: number;
+    sellingPrice: number;
+  }[];
+};
+
+function walkSupplyChain(
+  row: PriceRow,
+  split: Record<RoleKey, number>,
+): Walk {
+  const landing = row.distLanding;
+  const mrp = row.mrp;
+  const totalMargin = mrp - landing;
+  const totalMarginPct = landing > 0 ? (totalMargin / landing) * 100 : 0;
+
+  let cumulativeCost = landing;
+  const steps = ROLES.map((r) => {
+    const buyingCost = cumulativeCost;
+    const marginPctOfTotal = split[r.key] ?? 0;
+    const marginRupees = (totalMargin * marginPctOfTotal) / 100;
+    const sellingPrice = buyingCost + marginRupees;
+    cumulativeCost = sellingPrice;
+    return {
+      role: r.key,
+      label: r.label,
+      short: r.short,
+      buyingCost,
+      marginPctOfTotal,
+      marginRupees,
+      sellingPrice,
+    };
+  });
+  return { landing, mrp, totalMargin, totalMarginPct, steps };
+}
 
 const printCSS = `
 @media print {
@@ -35,6 +102,8 @@ const printCSS = `
 
 export default function PriceList() {
   const [query, setQuery] = useState('');
+  const split = usePortal((s) => s.marginSplit);
+  const patch = usePortal((s) => s.patch);
 
   const q = query.trim().toLowerCase();
   const match = (r: PriceRow) =>
@@ -53,6 +122,20 @@ export default function PriceList() {
 
   const totalRows = PRICE_LIST_1_16.length + PRICE_LIST_17_30.length;
   const totalShowing = filtered1_16.length + filtered17_30.length;
+
+  const splitTotal =
+    split.regionalPartner +
+    split.wholesaler +
+    split.distributor +
+    split.channelPartner +
+    split.retailCoordinator +
+    split.retailer;
+  const splitOk = Math.abs(splitTotal - 100) < 0.001;
+
+  const combinedFiltered = useMemo(
+    () => [...filtered1_16, ...filtered17_30],
+    [filtered1_16, filtered17_30],
+  );
 
   return (
     <div>
@@ -199,7 +282,200 @@ export default function PriceList() {
         commercial agreement with Kamdhenu Pickles &amp; Spices Ind. Pvt. Ltd.
         unless separately verified in writing.
       </IllustrativeTag>
+
+      {/* ============================================================ */}
+      {/*  GNS UDYAM SUPPLY-CHAIN COST WALK                             */}
+      {/* ============================================================ */}
+      <div className="divider" style={{ margin: '36px 0 24px' }} />
+
+      <SectionHead
+        n="03.b"
+        title="GNS UDYAM · Supply-chain cost walk"
+        subtitle="The Kamdhenu margin — the gap between what GNS UDYAM pays the supplier (Landing) and the consumer MRP — split across the six roles in our distribution network. Change the split; every row recalculates instantly."
+      />
+
+      <PlainEnglish>
+        <p>
+          Kamdhenu&apos;s rate card leaves a certain <strong>Total Margin</strong>{' '}
+          on every SKU — the difference between what we pay them (
+          <em> Landing</em>) and what the consumer pays (<em>MRP</em>). That
+          margin has to be split across the six layers of GNS UDYAM&apos;s
+          supply chain, because each layer needs to earn something to keep
+          moving the product.
+        </p>
+        <p className="mt-2">
+          The panel below lets you set the split as percentages that
+          <strong> sum to 100</strong>. Each row of the table beneath it then
+          shows, for every SKU, what each role in the chain pays to buy
+          the product — Regional Partner buys at Landing, Wholesaler pays
+          the Regional Partner&apos;s selling price, and so on until the
+          Retailer, whose selling price is the consumer MRP.
+        </p>
+      </PlainEnglish>
+
+      <Panel
+        title="Margin split configuration"
+        right={
+          <span
+            className="tag"
+            style={{
+              color: splitOk ? 'var(--pt-emerald-3)' : 'var(--pt-warn)',
+              borderColor: splitOk ? 'rgba(63,181,123,0.4)' : 'rgba(240,177,64,0.4)',
+              background: splitOk ? 'rgba(63,181,123,0.08)' : 'rgba(240,177,64,0.08)',
+            }}
+          >
+            Total: {splitTotal.toFixed(1)}%{splitOk ? ' ✓' : ' — must equal 100%'}
+          </span>
+        }
+      >
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {ROLES.map((r) => (
+            <label key={r.key} className="block">
+              <span className="label">{r.label}</span>
+              <div className="flex items-center gap-2 mt-1.5">
+                <input
+                  type="number"
+                  min={0}
+                  max={100}
+                  step={0.5}
+                  className="input mono"
+                  style={{ textAlign: 'right' }}
+                  value={split[r.key]}
+                  onChange={(e) =>
+                    patch({
+                      marginSplit: {
+                        ...split,
+                        [r.key]: Number(e.target.value) || 0,
+                      },
+                    })
+                  }
+                />
+                <span
+                  className="text-xs"
+                  style={{ color: 'var(--pt-muted-2)' }}
+                >
+                  %
+                </span>
+              </div>
+              <div className="mt-1.5 progress">
+                <i style={{ width: `${Math.max(0, Math.min(100, split[r.key]))}%` }} />
+              </div>
+            </label>
+          ))}
+        </div>
+      </Panel>
+
+      <div className="mt-6">
+        <div
+          className="flex items-center gap-2 mb-2 text-[11px] uppercase tracking-widest font-semibold"
+          style={{ color: 'var(--pt-gold)' }}
+        >
+          <span>Table 4</span>
+          <span style={{ color: 'var(--pt-muted-2)' }}>·</span>
+          <span style={{ color: 'var(--pt-text)' }}>
+            Per-SKU cost walk across the GNS UDYAM supply chain
+          </span>
+        </div>
+        <SupplyChainTable rows={combinedFiltered} split={split} />
+      </div>
+
+      <IllustrativeTag>
+        Cost walk is derived from Kamdhenu&apos;s Landing and MRP values
+        combined with GNS UDYAM&apos;s configurable margin split. Both are
+        planning inputs — final commercials must be secured with the supplier
+        and each downstream partner before commitment.
+      </IllustrativeTag>
     </div>
+  );
+}
+
+function SupplyChainTable({
+  rows,
+  split,
+}: {
+  rows: PriceRow[];
+  split: Record<RoleKey, number>;
+}) {
+  return (
+    <Panel padded={false}>
+      <div className="scroll-x">
+        <table className="data row-alt">
+          <thead>
+            <tr>
+              <th style={{ minWidth: 40 }}>Sr</th>
+              <th style={{ minWidth: 200 }}>Product</th>
+              <th>Size</th>
+              <th style={{ textAlign: 'right' }}>Landing (₹)</th>
+              <th style={{ textAlign: 'right' }}>MRP (₹)</th>
+              <th style={{ textAlign: 'right' }}>Total Margin (₹)</th>
+              {ROLES.map((r) => (
+                <th key={r.key} style={{ textAlign: 'right' }}>
+                  {r.short} pays
+                </th>
+              ))}
+              <th style={{ textAlign: 'right' }}>Retailer sells @</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={6 + ROLES.length + 1}
+                  style={{ textAlign: 'center', color: 'var(--pt-muted)', padding: 20 }}
+                >
+                  No rows match the current search.
+                </td>
+              </tr>
+            ) : (
+              rows.map((r, i) => {
+                const w = walkSupplyChain(r, split);
+                const retailerSells = w.steps[w.steps.length - 1].sellingPrice;
+                const marginMatches = Math.abs(retailerSells - r.mrp) < 0.5;
+                return (
+                  <tr key={`${r.sr}-${r.product}-${r.size}-${i}`}>
+                    <td className="mono" style={{ color: 'var(--pt-muted-2)' }}>{r.sr}</td>
+                    <td style={{ color: 'var(--pt-off)', fontWeight: 600 }}>{r.product}</td>
+                    <td style={{ color: 'var(--pt-gold-hi)', fontWeight: 500 }}>{r.size}</td>
+                    <td className="mono" style={{ textAlign: 'right' }}>{fmt(w.landing)}</td>
+                    <td className="mono" style={{ textAlign: 'right', color: 'var(--pt-off)', fontWeight: 700 }}>
+                      {fmt(w.mrp, 0)}
+                    </td>
+                    <td className="mono" style={{ textAlign: 'right', color: 'var(--pt-emerald-3)', fontWeight: 700 }}>
+                      {fmt(w.totalMargin)}
+                    </td>
+                    {w.steps.map((s) => (
+                      <td
+                        key={s.role}
+                        className="mono"
+                        style={{ textAlign: 'right' }}
+                        title={`${s.label} pays ${fmt(s.buyingCost)}, adds ${s.marginPctOfTotal.toFixed(1)}% of margin = ₹${fmt(s.marginRupees)}, sells at ₹${fmt(s.sellingPrice)}`}
+                      >
+                        {fmt(s.buyingCost)}
+                      </td>
+                    ))}
+                    <td
+                      className="mono"
+                      style={{
+                        textAlign: 'right',
+                        color: marginMatches ? 'var(--pt-emerald-3)' : 'var(--pt-warn)',
+                        fontWeight: 700,
+                      }}
+                      title={
+                        marginMatches
+                          ? 'Ties out to MRP.'
+                          : `Retailer selling price (${fmt(retailerSells)}) differs from MRP (${fmt(r.mrp)}) — margin split may not equal 100%.`
+                      }
+                    >
+                      {fmt(retailerSells)}
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </Panel>
   );
 }
 
