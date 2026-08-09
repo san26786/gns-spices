@@ -1,7 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { usePortal } from '../store';
 import { Panel, SectionHead } from '../ui';
+
+const UDYAM_DECK_URL = 'https://www.gnsspices.com/udyam.html';
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                                */
@@ -110,18 +113,72 @@ const COMPARE: [string, string, string][] = [
 export default function UdyamRoute() {
   const routeChoice = usePortal((s) => s.routeChoice);
   const patch = usePortal((s) => s.patch);
+  const [copied, setCopied] = useState(false);
+
+  async function copyDeckUrl() {
+    try {
+      await navigator.clipboard.writeText(UDYAM_DECK_URL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-6 no-print">
-        <div />
-        <button
-          onClick={() => window.print()}
-          className="btn btn-primary"
-          style={{ fontSize: 11 }}
+      <div className="flex items-start justify-between mb-6 no-print gap-3 flex-wrap">
+        <div
+          className="flex items-center gap-2 text-[10px] tracking-[0.24em] uppercase font-semibold"
+          style={{ color: 'var(--pt-muted)' }}
         >
-          Print / Save PDF
-        </button>
+          <span
+            className="inline-block w-1.5 h-1.5 rounded-full"
+            style={{ background: 'var(--pt-gold-hi)' }}
+          />
+          Shareable deck ready
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <a
+            href={UDYAM_DECK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn"
+            style={{
+              fontSize: 11,
+              color: 'var(--pt-gold-hi)',
+              borderColor: 'rgba(176,141,58,0.45)',
+              background: 'rgba(176,141,58,0.08)',
+            }}
+            title={UDYAM_DECK_URL}
+          >
+            Open deck ↗
+          </a>
+          <button
+            onClick={copyDeckUrl}
+            className="btn"
+            style={{
+              fontSize: 11,
+              color: copied ? 'var(--pt-emerald-3)' : 'var(--pt-off)',
+              borderColor: copied
+                ? 'rgba(63,181,123,0.55)'
+                : 'var(--pt-line-hi)',
+              background: copied
+                ? 'rgba(63,181,123,0.10)'
+                : 'rgba(255,255,255,0.02)',
+            }}
+            title="Copy the deck URL to clipboard"
+          >
+            {copied ? '✓ Copied' : 'Copy link'}
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="btn btn-primary"
+            style={{ fontSize: 11 }}
+          >
+            Print / Save PDF
+          </button>
+        </div>
       </div>
 
       <SectionHead
