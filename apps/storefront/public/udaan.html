@@ -427,6 +427,44 @@
     box-shadow: none !important;
     position: relative !important;
   }
+
+  /* ================================================================ */
+  /*  Interactive reason cards (Dream sequence)                        */
+  /* ================================================================ */
+  .reason-card {
+    transition: background 200ms ease, border-color 200ms ease,
+                transform 200ms ease, box-shadow 200ms ease;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+  }
+  .reason-card:hover {
+    background: rgba(255,255,255,0.10) !important;
+    border-color: rgba(255,255,255,0.24) !important;
+  }
+  .reason-card.reason-selected {
+    background: linear-gradient(180deg, rgba(197,155,39,0.30) 0%, rgba(197,155,39,0.10) 100%) !important;
+    border-color: rgba(197,155,39,0.65) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(197,155,39,0.28);
+  }
+  .reason-card.reason-selected .reason-title {
+    color: #EFD37A !important;
+  }
+  .reveal-on-select {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 350ms ease, transform 350ms ease;
+  }
+  .reveal-on-select.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 </style>
 </head>
 
@@ -602,48 +640,235 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- SLIDE 2 · THE DREAM (aspirational spark)                      -->
+      <!-- DREAM A · THE PERSONAL QUESTION (minimal, whitespace-heavy)   -->
       <!-- ============================================================ -->
       <section class="slide theme-title" data-theme="dark">
-        <div class="slide-inner">
+        <div class="slide-inner justify-between">
           <div class="fade-up">
             <div class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">
-              The dream
+              Your dream · Your UDAAN
             </div>
-            <h2 class="slide-title mt-3">
-              Beyond survival —<br/>
-              <span class="gradient-gold">what is your real dream?</span>
-            </h2>
-            <div class="divider-gold mt-3"></div>
-            <p class="mt-4 subhead" style="color:rgba(250,249,246,0.85); max-width:640px">
-              Whether you want to secure your family&apos;s future or
-              build a modest enterprise of your own, ambition deserves
-              a system that actually works for it.
+          </div>
+          <div class="my-auto">
+            <h1 class="hero fade-up d1" style="font-size:clamp(30px,7vw,54px); line-height:1.1">
+              What would a little<br/>more income<br/>
+              <span class="gradient-gold">change for you?</span>
+            </h1>
+            <p class="mt-8 fade-up d2 subhead" style="color:rgba(250,249,246,0.88); max-width:600px">
+              Maybe it isn&apos;t about becoming rich.
+            </p>
+            <p class="mt-3 fade-up d3 subhead" style="color:rgba(250,249,246,0.75); max-width:600px">
+              Maybe it&apos;s about a little more choice, a little
+              less financial pressure, and the confidence that you
+              are building something for your future.
             </p>
           </div>
-          <div class="mt-6 space-y-3 fade-up d1">
-            <div class="card-lift p-4 md:p-5">
-              <div class="eyebrow mb-2" style="color:#EFD37A">You want</div>
-              <div class="text-base md:text-lg font-bold" style="color:#F5F1E8">
-                Financial independence — without asking permission.
-              </div>
-              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.80)">
-                Daily earnings. Flexible hours. Not tied to a single
-                income stream. Not risking your hard-earned savings.
-              </p>
+          <div class="fade-up d4 text-center">
+            <div class="inline-flex items-center gap-2 text-[11px] uppercase tracking-widest font-semibold" style="color:rgba(239,211,122,0.70)">
+              <span>Take a moment · then swipe on</span>
+              <span>→</span>
             </div>
-            <div class="card-lift p-4 md:p-5">
-              <div class="eyebrow mb-2" style="color:#EFD37A">You want</div>
-              <div class="text-base md:text-lg font-bold" style="color:#F5F1E8">
-                Something of your own — with your dignity intact.
-              </div>
-              <p class="text-sm mt-2" style="color:rgba(250,249,246,0.80)">
-                Helping local stores. Serving your community. Building
-                slowly, honestly. Not hiding stock under your bed. Not
-                begging friends to buy.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- DREAM B · WHAT MATTERS TO YOU (interactive)                   -->
+      <!-- ============================================================ -->
+      <section class="slide theme-emerald" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#EFD37A">Make it personal</span>
+            <h2 class="slide-title mt-2">
+              What would extra income mean to <span class="gradient-gold">you?</span>
+            </h2>
+            <div class="divider-gold mt-3"></div>
+            <p class="mt-3 subhead" style="color:rgba(250,249,246,0.85); max-width:640px">
+              Everyone has a different reason. Tap yours.
+            </p>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-2 fade-up d1">
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'home', 'A better home starts with small, steady steps toward a stronger household.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">🏠</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">Better home</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">A little more comfort for the people I love.</div>
+            </button>
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'children', 'Building more choices for your family&apos;s future starts with one small step.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">🎓</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">Children&apos;s future</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">More choices for education and opportunity.</div>
+            </button>
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'pressure', 'A little more breathing room can change how a family lives.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">💳</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">Less pressure</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">More breathing room around everyday bills.</div>
+            </button>
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'savings', 'Small, steady additions compound into real security over time.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">💰</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">More savings</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">Build a stronger financial cushion.</div>
+            </button>
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'experiences', 'Time together grows richer when there&apos;s a little more room to enjoy it.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">✈️</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">Family experiences</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">Create more memories together.</div>
+            </button>
+            <button type="button" class="reason-card rounded-xl p-3"
+                    onclick="selectReason(this, 'business', 'Every business starts somewhere. UDAAN gives you a place to begin.')"
+                    style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14)">
+              <div class="text-2xl mb-2">🌱</div>
+              <div class="reason-title text-xs md:text-sm font-bold text-white">Something of my own</div>
+              <div class="text-[11px] mt-1" style="color:rgba(250,249,246,0.70)">An income or business I can grow.</div>
+            </button>
+          </div>
+
+          <div id="reason-message-wrap" class="reveal-on-select mt-5">
+            <div class="rounded-2xl p-4 md:p-5" style="background:rgba(197,155,39,0.10); border-left:3px solid #C59B27">
+              <p class="text-[10px] tracking-widest uppercase font-bold" style="color:#EFD37A">That&apos;s your reason.</p>
+              <p id="reason-message" class="mt-2 text-sm md:text-base leading-relaxed" style="color:rgba(250,249,246,0.95)"></p>
+              <p class="mt-3 text-xs" style="color:rgba(250,249,246,0.70)">
+                Now let&apos;s show you how UDAAN can help you start.
               </p>
             </div>
           </div>
+
+          <div id="reason-cta-wrap" class="reveal-on-select mt-4 text-center">
+            <button type="button" onclick="reasonNext()" class="btn-gold">
+              Show me how →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- DREAM C · FROM DREAM TO POSSIBILITY                           -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#0F5132">From spending to growing</span>
+            <h2 class="slide-title mt-2">You already spend to live.</h2>
+            <div class="divider-gold mt-3"></div>
+            <p class="mt-4 fade-up d1" style="font-size:clamp(20px,4.5vw,32px); font-weight:800; line-height:1.15; color:#0F5132">
+              What if some of that spending<br/>
+              <span style="color:#8B6A0F">could help you grow?</span>
+            </p>
+            <p class="mt-4 subhead fade-up d2" style="color:#4B5A53; max-width:640px">
+              Every month, your household already buys food, spices
+              and everyday essentials. Normally the transaction ends
+              when you receive the product. UDAAN asks a different
+              question — can that consumption create more value for
+              the household?
+            </p>
+          </div>
+
+          <div class="mt-6 grid gap-3 md:grid-cols-2 fade-up d3">
+            <div class="rounded-2xl p-4 md:p-5" style="background:#F1EFE7; border:1px solid #DED8C7">
+              <div class="text-[10px] tracking-widest uppercase font-bold" style="color:#6B7570">The old way</div>
+              <div class="mt-3 space-y-1.5 text-sm text-center" style="color:#333B37">
+                <div class="font-semibold">Money</div>
+                <div style="color:#8B7A38">↓</div>
+                <div class="font-semibold">Purchase</div>
+                <div style="color:#8B7A38">↓</div>
+                <div class="font-semibold">Product</div>
+                <div style="color:#8B7A38">↓</div>
+                <div class="font-semibold" style="color:#5A4E1F">End</div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl p-4 md:p-5" style="background:rgba(15,81,50,0.08); border:1px solid rgba(15,81,50,0.40)">
+              <div class="text-[10px] tracking-widest uppercase font-bold" style="color:#0F5132">The UDAAN way</div>
+              <div class="mt-3 space-y-1.5 text-sm text-center" style="color:#0F3323">
+                <div class="font-semibold">Money</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold">Everyday product</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold">Savings</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold">Sharing</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold">Repeat purchases</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold">Rewards &amp; opportunity</div>
+                <div style="color:#0F5132">↓</div>
+                <div class="font-semibold" style="color:#8B6A0F">Growth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- DREAM D · THE UDAAN PROMISE (BUY → SAVE → SHARE → EARN → GROW)-->
+      <!-- ============================================================ -->
+      <section class="slide theme-emerald" data-theme="dark">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="eyebrow" style="color:#EFD37A">The UDAAN promise</span>
+            <h2 class="slide-title mt-2">
+              Start with what you <span class="gradient-gold">already buy.</span>
+            </h2>
+            <div class="divider-gold mt-3"></div>
+          </div>
+
+          <div class="mt-6 fade-up d1">
+            <div class="grid grid-cols-5 gap-1 md:gap-2">
+              <div class="text-center rounded-lg py-2 text-[10px] md:text-sm font-black" style="background:rgba(255,255,255,0.10); color:#F5F1E8; letter-spacing:0.06em">BUY</div>
+              <div class="text-center rounded-lg py-2 text-[10px] md:text-sm font-black" style="background:rgba(255,255,255,0.10); color:#F5F1E8; letter-spacing:0.06em">SAVE</div>
+              <div class="text-center rounded-lg py-2 text-[10px] md:text-sm font-black" style="background:rgba(255,255,255,0.10); color:#F5F1E8; letter-spacing:0.06em">SHARE</div>
+              <div class="text-center rounded-lg py-2 text-[10px] md:text-sm font-black" style="background:rgba(197,155,39,0.20); color:#EFD37A; letter-spacing:0.06em; border:1px solid rgba(197,155,39,0.55)">EARN</div>
+              <div class="text-center rounded-lg py-2 text-[10px] md:text-sm font-black" style="background:rgba(197,155,39,0.32); color:#EFD37A; letter-spacing:0.06em; border:1px solid rgba(197,155,39,0.55)">GROW</div>
+            </div>
+          </div>
+
+          <div class="mt-5 space-y-2 fade-up d2">
+            <div class="card-lift p-3">
+              <div class="flex items-baseline gap-3">
+                <div class="text-[11px] font-black" style="color:#EFD37A; letter-spacing:0.06em; min-width:56px">BUY</div>
+                <div class="text-xs md:text-sm text-white/85">Everyday products you already need.</div>
+              </div>
+            </div>
+            <div class="card-lift p-3">
+              <div class="flex items-baseline gap-3">
+                <div class="text-[11px] font-black" style="color:#EFD37A; letter-spacing:0.06em; min-width:56px">SAVE</div>
+                <div class="text-xs md:text-sm text-white/85">Access member savings and promotional benefits.</div>
+              </div>
+            </div>
+            <div class="card-lift p-3">
+              <div class="flex items-baseline gap-3">
+                <div class="text-[11px] font-black" style="color:#EFD37A; letter-spacing:0.06em; min-width:56px">SHARE</div>
+                <div class="text-xs md:text-sm text-white/85">Introduce products you genuinely value to people you know.</div>
+              </div>
+            </div>
+            <div class="card-lift p-3">
+              <div class="flex items-baseline gap-3">
+                <div class="text-[11px] font-black" style="color:#EFD37A; letter-spacing:0.06em; min-width:56px">EARN</div>
+                <div class="text-xs md:text-sm text-white/85">Qualifying genuine purchases and repeat orders can create rewards and income opportunity.</div>
+              </div>
+            </div>
+            <div class="card-lift p-3">
+              <div class="flex items-baseline gap-3">
+                <div class="text-[11px] font-black" style="color:#EFD37A; letter-spacing:0.06em; min-width:56px">GROW</div>
+                <div class="text-xs md:text-sm text-white/85">Build customers, retailers, community activity — and potentially a larger business.</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[11px] text-center fade-up d3" style="color:rgba(250,249,246,0.60)">
+            Rewards and income are opportunity-based — driven by
+            genuine product sales and repeat orders. Not guaranteed.
+          </p>
         </div>
       </section>
 
@@ -2827,6 +3052,30 @@ function copyShareLink() {
       done(ok);
     } catch (e) { done(false); }
   }
+}
+
+/* ================================================================ */
+/*  Interactive dream/reason selector (Dream sequence)               */
+/* ================================================================ */
+function selectReason(cardEl, reason, microcopy) {
+  try {
+    var container = cardEl.parentElement;
+    var siblings = container.querySelectorAll('.reason-card');
+    for (var i = 0; i < siblings.length; i++) {
+      siblings[i].classList.remove('reason-selected');
+    }
+    cardEl.classList.add('reason-selected');
+    window.udaanReason = reason;
+
+    var msgEl = document.getElementById('reason-message');
+    if (msgEl) msgEl.textContent = microcopy;
+    var reveal = document.querySelectorAll('#reason-message-wrap, #reason-cta-wrap');
+    for (var j = 0; j < reveal.length; j++) reveal[j].classList.add('show');
+  } catch (e) { /* no-op */ }
+}
+function reasonNext() {
+  var btn = document.getElementById('nextBtn');
+  if (btn) btn.click();
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
