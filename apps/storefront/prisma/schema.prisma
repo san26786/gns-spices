@@ -13,9 +13,15 @@ model User {
   id               String    @id @default(cuid())
   email            String    @unique
   passwordHash     String    @map("password_hash")
+  /// Honorific · Mr / Mrs / Ms / Miss / Mx / Dr / Prof / Other.
+  title            String?
   firstName        String?   @map("first_name")
   lastName         String?   @map("last_name")
   phone            String?
+  /// Short free-text city / area, eg 'Bangalore', 'Delhi NCR'.
+  location         String?
+  /// Full postal address (multi-line, includes postcode) as free text.
+  address          String?   @db.Text
   /// Set when the user has clicked the verification link in their email.
   emailVerifiedAt  DateTime? @map("email_verified_at")
   /// Freezes access without deleting the row.
@@ -29,6 +35,19 @@ model User {
   passwordResetTokens   PasswordResetToken[]
 
   @@map("users")
+}
+
+/// Rate-limit ledger for /api/auth/signup and /api/auth/resend-verification.
+/// One row per attempt; retention pruning is handled inside the endpoints.
+model SignupAttempt {
+  id         String   @id @default(cuid())
+  ip         String
+  email      String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([ip, createdAt])
+  @@index([email, createdAt])
+  @@map("signup_attempts")
 }
 
 model Session {
