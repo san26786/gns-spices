@@ -24,7 +24,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -92,7 +92,7 @@
   .track {
     position: absolute; inset: 0;
     display: flex;
-    transition: transform 480ms cubic-bezier(.22,.61,.36,1);
+    transition: transform 220ms cubic-bezier(.22,.61,.36,1);
     will-change: transform;
   }
   .slide {
@@ -102,6 +102,13 @@
     padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
     overflow: hidden;
     position: relative;
+    /* Skip layout + paint for off-screen slides — huge perf win with 34 slides */
+    content-visibility: auto;
+    contain-intrinsic-size: 100vh 100vw;
+    contain: layout paint style;
+  }
+  .slide[data-active="true"] {
+    content-visibility: visible;
   }
   .slide-inner {
     flex: 1;
@@ -215,12 +222,11 @@
   .nav-bar {
     padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0));
     display: flex; align-items: center; gap: 10px;
-    background: rgba(255,255,255,0.65);
-    backdrop-filter: blur(12px);
+    background: #FAF9F6;
     border-top: 1px solid rgba(15,35,64,0.10);
   }
   .nav-bar.on-dark {
-    background: rgba(11,15,14,0.55);
+    background: #0B0F0E;
     border-top-color: rgba(255,255,255,0.10);
   }
   .nav-btn {
@@ -275,15 +281,20 @@
     box-shadow: 0 30px 80px rgba(10,20,15,0.6);
   }
 
-  /* Fade-in on slide enter */
-  .slide[data-active="true"] .fade-up { animation: fadeUp 640ms cubic-bezier(.2,.65,.3,1) both; }
-  .slide[data-active="true"] .fade-up.d1 { animation-delay: 120ms; }
-  .slide[data-active="true"] .fade-up.d2 { animation-delay: 220ms; }
-  .slide[data-active="true"] .fade-up.d3 { animation-delay: 320ms; }
-  .slide[data-active="true"] .fade-up.d4 { animation-delay: 420ms; }
+  /* Fade-in on slide enter — tight timings so content lands almost with the swipe */
+  .slide[data-active="true"] .fade-up { animation: fadeUp 220ms cubic-bezier(.2,.65,.3,1) both; }
+  .slide[data-active="true"] .fade-up.d1 { animation-delay: 40ms; }
+  .slide[data-active="true"] .fade-up.d2 { animation-delay: 90ms; }
+  .slide[data-active="true"] .fade-up.d3 { animation-delay: 140ms; }
+  .slide[data-active="true"] .fade-up.d4 { animation-delay: 190ms; }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+  /* Respect motion-reduce users — no fade/transition delay at all */
+  @media (prefers-reduced-motion: reduce) {
+    .track { transition: none; }
+    .slide[data-active="true"] .fade-up { animation: none; }
   }
 
   /* Staircase */
@@ -476,6 +487,7 @@
     <span aria-hidden="true">🔗</span><span>Share</span>
   </button>
   <div id="lang-select" aria-label="Change language">
+    <span id="lang-placeholder" style="font-size:11px;font-weight:700;letter-spacing:0.06em;padding:2px 6px 2px 0;color:rgba(250,249,246,0.9)">English ▾</span>
     <div id="google_translate_element"></div>
   </div>
 </div>
@@ -3098,7 +3110,51 @@ function reasonNext() {
   if (btn) btn.click();
 }
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+<script>
+/* ================================================================ */
+/*  Google Translate — lazy loader                                   */
+/*  Only fetch the widget when the user actually wants it (or when   */
+/*  they arrived via a ?lang= shared link). Saves ~200ms of parse    */
+/*  time and eliminates page-wide mutation observers on cold load.   */
+/* ================================================================ */
+(function () {
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true;
+    document.body.appendChild(s);
+    // Hide the placeholder once GT has painted its own <select>
+    var poll = setInterval(function () {
+      var sel = document.querySelector('#google_translate_element select.goog-te-combo');
+      if (!sel) return;
+      clearInterval(poll);
+      var ph = document.getElementById('lang-placeholder');
+      if (ph) ph.style.display = 'none';
+    }, 120);
+    setTimeout(function () { clearInterval(poll); }, 8000);
+  }
+  // Eager-load if a non-English googtrans cookie is present (shared ?lang= link)
+  if (/googtrans=%2Fen%2F(?!en\b)/.test(document.cookie) ||
+      /googtrans=\/en\/(?!en\b)/.test(document.cookie)) {
+    load();
+    return;
+  }
+  var chip = document.getElementById('lang-select');
+  if (!chip) return;
+  var trigger = function () {
+    load();
+    chip.removeEventListener('pointerdown', trigger, true);
+    chip.removeEventListener('focusin', trigger, true);
+    chip.removeEventListener('mouseenter', trigger, true);
+  };
+  chip.addEventListener('pointerdown', trigger, true);
+  chip.addEventListener('focusin', trigger, true);
+  chip.addEventListener('mouseenter', trigger, true);
+})();
+</script>
 
 </body>
 </html>
