@@ -520,7 +520,7 @@
     <div class="track" id="track">
 
       <!-- ============================================================ -->
-      <!-- OPENING 1/3 · LANDING (What is GNS UDAAN?)                    -->
+      <!-- ACT 1 · LANDING (What is GNS UDAAN?)                          -->
       <!-- ============================================================ -->
       <section class="slide theme-title" data-theme="dark">
         <div class="slide-inner justify-between">
@@ -552,10 +552,10 @@
 
           <div class="fade-up d4">
             <button class="btn-gold w-full md:w-auto" onclick="go(1)">
-              See how it works (2-min guide) →
+              Start the story →
             </button>
             <p class="mt-3 text-xs text-center md:text-left" style="color:rgba(250,249,246,0.55)">
-              GNS UDAAN · a GNS Spices programme
+              GNS UDAAN · a GNS Spices programme &nbsp;·&nbsp; swipe or press → to move
             </p>
           </div>
         </div>
@@ -786,7 +786,7 @@
       </section>
 
       <!-- ============================================================ -->
-      <!-- OPENING 2/3 · HOW IT WORKS (3-step mechanic)                  -->
+      <!-- ACT 1 · HOW IT WORKS (4-step mechanic) — followed by Emotional chapter -->
       <!-- ============================================================ -->
       <section class="slide theme-ivory" data-theme="light">
         <div class="slide-inner">
@@ -850,7 +850,7 @@
           </div>
 
           <div class="mt-4 md:mt-5 fade-up d2 text-center">
-            <button onclick="go(2)"
+            <button onclick="document.getElementById('nextBtn').click()"
                     class="inline-flex items-center justify-center px-6 py-3 rounded-full font-bold uppercase tracking-widest text-sm"
                     style="background:linear-gradient(180deg,#1B8A54 0%,#0F5132 100%); color:#FAF9F6; box-shadow:0 12px 30px rgba(15,81,50,0.35); border:1px solid rgba(197,155,39,0.30)">
               Explore your earnings potential →
@@ -1327,19 +1327,19 @@
       <!-- END · UDAAN EMOTIONAL TRANSFORMATION CHAPTER -->
 
       <!-- ============================================================ -->
-      <!-- OPENING 3/3 · ROUTE SELECTION (Who is this for?)              -->
+      <!-- ACT 1 · ROUTE SELECTION (Who is this for?) — closes the concept arc -->
       <!-- ============================================================ -->
       <section class="slide theme-emerald" data-theme="dark">
         <div class="slide-inner">
           <div class="fade-up">
-            <span class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">Which route fits you?</span>
+            <span class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">Now — which runway fits you?</span>
             <h2 class="slide-title mt-3">
-              No capital needed. <span class="gradient-gold">No recruitment fees.</span>
+              Choose the <span class="gradient-gold">runway</span> that fits your life.
             </h2>
             <div class="divider-gold mt-3"></div>
             <p class="mt-3 subhead" style="color:rgba(250,249,246,0.85); max-width:640px">
-              100% product-driven earnings from real everyday FMCG
-              movement.
+              Two ways to start — both grounded in the same real
+              everyday FMCG movement. Zero joining fees, either route.
             </p>
           </div>
 
@@ -1364,8 +1364,8 @@
           </div>
 
           <div class="mt-6 fade-up d2 text-center">
-            <button onclick="go(3)" class="btn-gold w-full md:w-auto">
-              Start full presentation →
+            <button onclick="document.getElementById('nextBtn').click()" class="btn-gold w-full md:w-auto">
+              Continue the story →
             </button>
             <p class="mt-3 text-xs" style="color:rgba(250,249,246,0.55)">
               You can also pick a route later — the full deck walks
@@ -1495,6 +1495,8 @@
 
       <!-- ============================================================ -->
       <!-- DREAM C · FROM DREAM TO POSSIBILITY                           -->
+      <!-- HIDDEN · same old-vs-UDAAN chain now carried by the Question/Possibility opener + Emotional H -->
+      <template id="archived-dream-c-spending-vs-growing">
       <!-- ============================================================ -->
       <section class="slide theme-ivory" data-theme="light">
         <div class="slide-inner">
@@ -1555,9 +1557,12 @@
           </p>
         </div>
       </section>
+      </template>
 
       <!-- ============================================================ -->
       <!-- DREAM D · THE UDAAN PROMISE (BUY → SAVE → SHARE → EARN → GROW)-->
+      <!-- HIDDEN · 5-step mechanic is covered by How-it-works (slide 4) + closing chapter -->
+      <template id="archived-dream-d-udaan-promise">
       <!-- ============================================================ -->
       <section class="slide theme-emerald" data-theme="dark">
         <div class="slide-inner">
@@ -1618,6 +1623,7 @@
           </p>
         </div>
       </section>
+      </template>
 
       <!-- ============================================================ -->
       <!-- SLIDE 3 · GNS IS NOT AN MLM (plain-English positioning)       -->
@@ -3025,25 +3031,11 @@
             </div>
           </div>
 
-          <!-- Product ladder -->
-          <div class="mt-4 md:mt-5 fade-up d4">
-            <div class="flex flex-wrap items-center justify-center gap-1.5">
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:linear-gradient(90deg,#C59B27,#EFD37A);color:#08172C">🌶️ SPICES</span>
-              <span style="color:rgba(255,255,255,0.55)">→</span>
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:rgba(255,255,255,0.14);color:#F5F1E8">🍚 Essential foods</span>
-              <span style="color:rgba(255,255,255,0.55)">→</span>
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:rgba(255,255,255,0.14);color:#F5F1E8">🏠 Household</span>
-              <span style="color:rgba(255,255,255,0.55)">→</span>
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:rgba(255,255,255,0.14);color:#F5F1E8">👕 Clothing</span>
-              <span style="color:rgba(255,255,255,0.55)">→</span>
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:rgba(255,255,255,0.14);color:#F5F1E8">🌾 Agri</span>
-              <span style="color:rgba(255,255,255,0.55)">→</span>
-              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-bold" style="background:rgba(255,255,255,0.14);color:#F5F1E8">🛒 Everyday</span>
-            </div>
-          </div>
-
-          <p class="mt-4 md:mt-5 text-center fade-up d4" style="color:#EFD37A; font-size:clamp(13px,3.2vw,18px); font-weight:900; letter-spacing:1px">
+          <p class="mt-5 md:mt-6 text-center fade-up d4" style="color:#EFD37A; font-size:clamp(13px,3.2vw,18px); font-weight:900; letter-spacing:1px">
             FROM THE KITCHEN → TO THE HOME → TO EVERYDAY LIFE
+          </p>
+          <p class="mt-1 text-center fade-up d4" style="color:rgba(250,249,246,0.60); font-size:clamp(10px,2vw,12px)">
+            the full category roadmap follows &darr;
           </p>
         </div>
       </section>
@@ -4032,6 +4024,8 @@
 
       <!-- ============================================================ -->
       <!-- SKEHAS · SLIDE B · 6 PILLARS                                  -->
+      <!-- HIDDEN · least-differentiated middle beat; bridge (A) and matrix (C) carry the meaning -->
+      <template id="archived-skehas-b-6-pillars">
       <!-- ============================================================ -->
       <section class="slide theme-ivory" data-theme="light">
         <div class="slide-inner">
@@ -4133,6 +4127,7 @@
           </div>
         </div>
       </section>
+      </template>
 
       <!-- ============================================================ -->
       <!-- SKEHAS · SLIDE C · STRATEGIC ALIGNMENT MATRIX                 -->
