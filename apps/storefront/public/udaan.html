@@ -4752,85 +4752,125 @@ function showToast(text) {
   el._t = setTimeout(function () { el.classList.remove('show'); }, 2400);
 }
 /* One-click PDF download.
-   Lazy-loads html2pdf.js (~400KB) from cdnjs on first click, flips
-   the deck into vertical page-per-slide layout, renders each slide
-   to a canvas + JPEG, stitches them into a jsPDF document, saves
-   as GNS-UDAAN.pdf. Progress reported on the button label.
-   Falls back to the native print dialog if the library fails to load
-   (blocked network, offline, etc.). */
+   Robust multi-CDN loader for html2pdf.js. If ANY CDN is reachable,
+   the PDF is generated in-browser and downloaded directly - no
+   print dialog. Only falls back to window.print() when EVERY CDN
+   fails (offline, corporate firewall blocks all three). */
+
+var _udaanPdfLibReady = null;
+function _udaanLoadPdfLib() {
+  if (_udaanPdfLibReady) return _udaanPdfLibReady;
+  if (typeof window.html2pdf !== 'undefined') {
+    _udaanPdfLibReady = Promise.resolve();
+    return _udaanPdfLibReady;
+  }
+  var sources = [
+    'https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
+    'https://unpkg.com/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js'
+  ];
+  _udaanPdfLibReady = (async function () {
+    for (var i = 0; i < sources.length; i++) {
+      try {
+        await new Promise(function (resolve, reject) {
+          var s = document.createElement('script');
+          s.src = sources[i];
+          s.async = true;
+          var to = setTimeout(function () { reject(new Error('timeout')); }, 15000);
+          s.onload = function () {
+            clearTimeout(to);
+            if (typeof window.html2pdf !== 'undefined') resolve();
+            else reject(new Error('globals-missing'));
+          };
+          s.onerror = function () { clearTimeout(to); reject(new Error('net-error')); };
+          document.head.appendChild(s);
+        });
+        return; // success
+      } catch (err) {
+        console.warn('[udaan] PDF source ' + (i + 1) + '/' + sources.length + ' failed:', err.message);
+      }
+    }
+    throw new Error('all-cdns-failed');
+  })();
+  return _udaanPdfLibReady;
+}
+
+/* Warm-load the PDF library the moment the user hovers/focuses the
+   button so the click itself is fast. */
+document.addEventListener('DOMContentLoaded', function () {
+  var btn = document.getElementById('pdf-btn');
+  if (!btn) return;
+  var warm = function () { _udaanLoadPdfLib().catch(function () {}); };
+  btn.addEventListener('mouseenter', warm, { once: true });
+  btn.addEventListener('focusin', warm, { once: true });
+});
+
 async function udaanDownloadPdf() {
   var btn = document.getElementById('pdf-btn');
   if (!btn) return;
   var originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<span aria-hidden="true">⏳</span><span>Preparing…</span>';
 
   var htmlEl = document.documentElement;
-  var libLoaded = (typeof window.html2pdf !== 'undefined')
-    && (typeof window.jspdf !== 'undefined')
-    && (typeof window.html2canvas !== 'undefined');
+  var step = 'init';
 
   try {
-    if (!libLoaded) {
-      btn.innerHTML = '<span aria-hidden="true">⏳</span><span>Loading…</span>';
-      await new Promise(function (resolve, reject) {
-        var s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-        s.crossOrigin = 'anonymous';
-        s.onload = resolve;
-        s.onerror = function () { reject(new Error('lib-load-failed')); };
-        document.head.appendChild(s);
-      });
-    }
+    step = 'load-lib';
+    btn.innerHTML = '<span aria-hidden="true">⏳</span><span>Loading…</span>';
+    await _udaanLoadPdfLib();
 
-    // Flip the deck to vertical page-per-slide layout
+    step = 'prepare-layout';
+    btn.innerHTML = '<span aria-hidden="true">⏳</span><span>Preparing…</span>';
     htmlEl.classList.add('udaan-printing');
-    // One paint frame + a tick for content-visibility promotion
     await new Promise(function (r) { requestAnimationFrame(r); });
-    await new Promise(function (r) { setTimeout(r, 250); });
+    await new Promise(function (r) { setTimeout(r, 400); });
 
-    var slides = Array.from(document.querySelectorAll('.track > .slide'));
-    var total = slides.length;
-    if (total === 0) throw new Error('no-slides');
+    step = 'render';
+    btn.innerHTML = '<span aria-hidden="true">⏳</span><span>Rendering (30–60s)…</span>';
 
-    var pageW = 1200, pageH = 750;
-    var pdf = new window.jspdf.jsPDF({
-      unit: 'px',
-      format: [pageW, pageH],
-      orientation: 'landscape',
-      compress: true
-    });
+    var track = document.getElementById('track');
+    if (!track) throw new Error('track-missing');
 
-    for (var i = 0; i < total; i++) {
-      btn.innerHTML = '<span aria-hidden="true">⏳</span><span>' + (i + 1) + '/' + total + '</span>';
-      var canvas = await window.html2canvas(slides[i], {
-        scale: 1.35,
+    var opt = {
+      margin: 0,
+      filename: 'GNS-UDAAN.pdf',
+      image: { type: 'jpeg', quality: 0.85 },
+      html2canvas: {
+        scale: 1.25,
         useCORS: true,
-        backgroundColor: null,
-        logging: false,
         allowTaint: false,
-        windowWidth: pageW,
-        windowHeight: pageH
-      });
-      var imgData = canvas.toDataURL('image/jpeg', 0.88);
-      if (i > 0) pdf.addPage([pageW, pageH], 'landscape');
-      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, pageH, undefined, 'FAST');
-      // Yield to the event loop so the button label repaints
-      await new Promise(function (r) { setTimeout(r, 5); });
-    }
+        backgroundColor: '#0A1830',
+        logging: false,
+        letterRendering: true,
+        removeContainer: true
+      },
+      jsPDF: {
+        unit: 'px',
+        format: [1200, 750],
+        orientation: 'landscape',
+        compress: true
+      },
+      pagebreak: { mode: ['css', 'legacy'], after: '.slide' }
+    };
 
-    pdf.save('GNS-UDAAN.pdf');
-    showToast('PDF saved · ' + total + ' pages');
+    await window.html2pdf().set(opt).from(track).save();
+    showToast('PDF saved · GNS-UDAAN.pdf');
   } catch (e) {
-    // Fall back to the browser's native print dialog
-    console.error('[udaan] PDF export failed, falling back to print:', e);
-    showToast('Using browser print · choose Save as PDF');
-    var originalTitle = document.title;
-    document.title = 'GNS-UDAAN';
-    setTimeout(function () {
-      try { window.print(); } catch (_) {}
-      setTimeout(function () { document.title = originalTitle; }, 400);
-    }, 600);
+    var reason = (e && e.message) ? e.message : 'unknown';
+    console.error('[udaan] PDF failed at step "' + step + '":', e);
+    // Only fall back to print if the library itself never loaded.
+    // Rendering errors after load should surface a clear message.
+    if (step === 'load-lib') {
+      showToast('Cannot reach PDF library — using browser print');
+      var originalTitle = document.title;
+      document.title = 'GNS-UDAAN';
+      setTimeout(function () {
+        try { window.print(); } catch (_) {}
+        setTimeout(function () { document.title = originalTitle; }, 500);
+      }, 800);
+    } else {
+      showToast('PDF error at "' + step + '" (' + reason + ') — try again or refresh');
+    }
   } finally {
     htmlEl.classList.remove('udaan-printing');
     btn.disabled = false;
