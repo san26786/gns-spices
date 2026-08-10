@@ -4576,77 +4576,52 @@
   }
 
   /* Auto-fit the active slide so its content NEVER needs scrolling.
-     Measures scrollHeight vs clientHeight and applies a
-     transform: scale() ONLY when the desired scale differs from
-     what's already applied - no reset-then-re-apply flicker. */
+     Measures scrollHeight vs clientHeight and, only if the content
+     overflows, applies a transform: scale() so everything is visible.
+     Floor at 0.55 so text never becomes unreadable. */
   function fitActiveSlide() {
     if (document.documentElement.classList.contains('udaan-printing')) return;
     var active = slides[idx];
     if (!active) return;
     var inner = active.querySelector('.slide-inner');
     if (!inner) return;
-
-    // Wait for slide-transition + content-visibility promotion to settle
-    // before measuring, so scrollHeight is stable
-    setTimeout(function () {
-      // Temporarily disable transition so the measure phase is invisible
-      var savedTransition = inner.style.transition;
-      inner.style.transition = 'none';
-      // Snapshot current inline scale so we can restore on no-op
-      var prevTransform = inner.style.transform;
-      var prevWidth = inner.style.width;
-
-      // Reset to natural to measure true content height
-      inner.style.transform = '';
-      inner.style.width = '';
-      // Force reflow before reading
-      var avail = active.clientHeight;
-      var natural = inner.scrollHeight;
-
-      var targetScale = 1;
-      if (natural > avail + 6 && avail > 0) {
-        targetScale = avail / natural;
-        if (targetScale < 0.55) targetScale = 0.55;
-      }
-
-      // Parse the scale we had before the reset
-      var currentScale = 1;
-      if (prevTransform) {
-        var m = prevTransform.match(/scale\(([^)]+)\)/);
-        if (m) currentScale = parseFloat(m[1]) || 1;
-      }
-
-      // If the target hasn't changed (within 0.5%), keep the existing
-      // transform so nothing visibly moves
-      if (Math.abs(currentScale - targetScale) < 0.005) {
-        inner.style.transform = prevTransform;
-        inner.style.width = prevWidth;
-      } else if (targetScale < 1) {
-        inner.style.transform = 'scale(' + targetScale + ')';
-        inner.style.width = (100 / targetScale) + '%';
-      }
-      // If targetScale === 1 and previously scaled, we've cleared to natural
-
-      // Restore the transition (next scale-change will animate)
-      // Two rAFs so the previous style change flushes without animation
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          inner.style.transition = savedTransition;
-        });
-      });
-    }, 260);   // > track transition (220ms) so slide is fully in view
+    // Reset any prior scaling before we re-measure
+    inner.style.transform = '';
+    inner.style.width = '';
+    // Wait for layout (content-visibility promotion + fade-up start)
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        var avail = active.clientHeight;
+        var natural = inner.scrollHeight;
+        // 6px tolerance so tiny sub-pixel overflows don't scale
+        if (natural > avail + 6 && avail > 0) {
+          var scale = avail / natural;
+          if (scale < 0.55) scale = 0.55;
+          inner.style.transform = 'scale(' + scale + ')';
+          inner.style.width = (100 / scale) + '%';
+        }
+      }, 40);
+    });
   }
 
-  // Re-fit on window/orientation resize only (debounced).
-  // No polling - it caused visible flicker every 1.5s.
+  // Re-fit on window/orientation resize (debounced)
   var _fitTimer;
   window.addEventListener('resize', function () {
     clearTimeout(_fitTimer);
-    _fitTimer = setTimeout(fitActiveSlide, 200);
+    _fitTimer = setTimeout(fitActiveSlide, 150);
   });
   window.addEventListener('orientationchange', function () {
     clearTimeout(_fitTimer);
-    _fitTimer = setTimeout(fitActiveSlide, 350);
+    _fitTimer = setTimeout(fitActiveSlide, 300);
+  });
+  // Re-fit when Google Translate finishes injecting translated text
+  // (fires ~200ms after language change on average)
+  document.addEventListener('DOMContentLoaded', function () {
+    setInterval(function () {
+      // Cheap re-fit every 1.5s handles translate + font-load reflows
+      // Only runs the measurement; scale is only applied when needed.
+      fitActiveSlide();
+    }, 1500);
   });
 
   window.go = function (i) {
