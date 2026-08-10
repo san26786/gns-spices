@@ -2328,38 +2328,101 @@
               <strong style="color:#EFD37A">SKEHAS</strong>.
             </p>
           </div>
-          <div class="mt-6 space-y-3 fade-up d1">
-            <div class="rounded-2xl p-4 md:p-5" style="background:rgba(47,168,114,0.10); border:1px solid rgba(47,168,114,0.35)">
-              <div class="text-[10px] tracking-widest uppercase font-bold" style="color:#7ED9A6">Starting bank</div>
-              <p class="text-base md:text-lg font-bold mt-1 text-white">Your ambition</p>
-              <p class="text-xs md:text-sm mt-1" style="color:rgba(250,249,246,0.85)">
-                Financial independence. Respect in your trade. Schedule
-                flexibility. A business asset that grows over time.
-              </p>
-            </div>
-            <div class="text-center" style="color:rgba(250,249,246,0.45); font-size:22px">↓</div>
-            <div class="rounded-2xl p-4 md:p-5" style="background:linear-gradient(180deg,rgba(197,155,39,0.16),rgba(139,106,15,0.04)); border:2px solid rgba(197,155,39,0.55)">
-              <div class="text-[10px] tracking-widest uppercase font-bold" style="color:#EFD37A">The GNS bridge · UDYAM + UDAAN</div>
-              <p class="text-base md:text-lg font-bold mt-1 text-white">Anchored by 6 pillars of SKEHAS</p>
-              <div class="mt-3 grid grid-cols-3 gap-1.5 text-[10px] md:text-xs">
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">S</b> Support</div>
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">K</b> Knowledge</div>
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">E</b> Empowerment</div>
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">H</b> Harmony</div>
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">A</b> Asset</div>
-                <div class="p-1.5 text-center rounded" style="background:rgba(255,255,255,0.06); color:rgba(250,249,246,0.85)"><b class="text-white">S</b> Sustainability</div>
-              </div>
-            </div>
-            <div class="text-center" style="color:rgba(250,249,246,0.45); font-size:22px">↓</div>
-            <div class="rounded-2xl p-4 md:p-5" style="background:rgba(197,155,39,0.12); border:1px solid rgba(197,155,39,0.45)">
-              <div class="text-[10px] tracking-widest uppercase font-bold" style="color:#EFD37A">Destination bank</div>
-              <p class="text-base md:text-lg font-bold mt-1 text-white">Your reality</p>
-              <p class="text-xs md:text-sm mt-1" style="color:rgba(250,249,246,0.85)">
-                A territory distribution business (UDYAM) — or recurring
-                daily income from essential kitchen staples (UDAAN).
-              </p>
-            </div>
+          <!-- SVG BRIDGE VISUAL -->
+          <div class="mt-4 fade-up d1" style="max-width:900px;margin-left:auto;margin-right:auto">
+            <svg viewBox="0 0 800 210" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block" role="img" aria-label="Bridge from your ambition to your reality carried by 6 SKEHAS hexagon pillars">
+              <defs>
+                <linearGradient id="deckGrad" x1="0" x2="1"><stop offset="0" stop-color="#2FA872"/><stop offset="0.5" stop-color="#96A85E"/><stop offset="1" stop-color="#C59B27"/></linearGradient>
+                <linearGradient id="hexS1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3AA76F"/><stop offset="1" stop-color="#0F5132"/></linearGradient>
+                <linearGradient id="hexK"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#57B77E"/><stop offset="1" stop-color="#1F7A4A"/></linearGradient>
+                <linearGradient id="hexE"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FB77A"/><stop offset="1" stop-color="#4E7A48"/></linearGradient>
+                <linearGradient id="hexH"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C2B15D"/><stop offset="1" stop-color="#7A6B2E"/></linearGradient>
+                <linearGradient id="hexA"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DBBB52"/><stop offset="1" stop-color="#9F7E22"/></linearGradient>
+                <linearGradient id="hexS2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFD37A"/><stop offset="1" stop-color="#8B6A0F"/></linearGradient>
+                <linearGradient id="bankL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#146E42"/><stop offset="1" stop-color="#0A3D26"/></linearGradient>
+                <linearGradient id="bankR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A67F1D"/><stop offset="1" stop-color="#6D521A"/></linearGradient>
+              </defs>
+
+              <!-- Water shadow beneath bridge -->
+              <ellipse cx="400" cy="188" rx="320" ry="7" fill="rgba(0,0,0,0.40)"/>
+
+              <!-- Suspension arch -->
+              <path d="M 95,155 Q 400,25 705,155" stroke="url(#deckGrad)" stroke-width="2.5" fill="none" opacity="0.55"/>
+
+              <!-- Vertical suspension cables from arch down to hex tops -->
+              <g stroke="rgba(255,255,255,0.30)" stroke-width="1">
+                <line x1="138" y1="97" x2="138" y2="78"/>
+                <line x1="234" y1="97" x2="234" y2="50"/>
+                <line x1="330" y1="97" x2="330" y2="33"/>
+                <line x1="426" y1="97" x2="426" y2="33"/>
+                <line x1="522" y1="97" x2="522" y2="50"/>
+                <line x1="618" y1="97" x2="618" y2="78"/>
+              </g>
+
+              <!-- Bridge deck -->
+              <rect x="88" y="153" width="624" height="5" fill="url(#deckGrad)" rx="2"/>
+
+              <!-- LEFT BANK · YOUR AMBITION -->
+              <rect x="0" y="55" width="90" height="128" fill="url(#bankL)" rx="6"/>
+              <rect x="0" y="55" width="90" height="4" fill="#2FA872"/>
+              <text x="45" y="95"  text-anchor="middle" font-size="9"  font-weight="800" fill="#7ED9A6" letter-spacing="2">YOUR</text>
+              <text x="45" y="120" text-anchor="middle" font-size="15" font-weight="900" fill="#FAF9F6" letter-spacing="1">AMBITION</text>
+              <text x="45" y="145" text-anchor="middle" font-size="7"  fill="rgba(250,249,246,0.75)" font-weight="600">Independence</text>
+              <text x="45" y="157" text-anchor="middle" font-size="7"  fill="rgba(250,249,246,0.75)" font-weight="600">Respect · Asset</text>
+              <text x="45" y="172" text-anchor="middle" font-size="6.5" fill="rgba(250,249,246,0.55)">flexibility that grows</text>
+
+              <!-- RIGHT BANK · YOUR REALITY -->
+              <rect x="710" y="55" width="90" height="128" fill="url(#bankR)" rx="6"/>
+              <rect x="710" y="55" width="90" height="4" fill="#EFD37A"/>
+              <text x="755" y="95"  text-anchor="middle" font-size="9"  font-weight="800" fill="#EFD37A" letter-spacing="2">YOUR</text>
+              <text x="755" y="120" text-anchor="middle" font-size="15" font-weight="900" fill="#FAF9F6" letter-spacing="1">REALITY</text>
+              <text x="755" y="145" text-anchor="middle" font-size="7"  fill="rgba(250,249,246,0.80)" font-weight="600">UDYAM territory</text>
+              <text x="755" y="157" text-anchor="middle" font-size="7"  fill="rgba(250,249,246,0.80)" font-weight="600">or UDAAN income</text>
+              <text x="755" y="172" text-anchor="middle" font-size="6.5" fill="rgba(250,249,246,0.55)">recurring &amp; real</text>
+
+              <!-- 6 HEXAGON PILLARS · SKEHAS -->
+              <!-- S — Support -->
+              <g>
+                <text x="138" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#7ED9A6" letter-spacing="1">SUPPORT</text>
+                <polygon points="138,97 162,111 162,139 138,153 114,139 114,111" fill="url(#hexS1)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="138" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#FAF9F6">S</text>
+              </g>
+              <!-- K — Knowledge -->
+              <g>
+                <text x="234" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#9CD6A9" letter-spacing="1">KNOWLEDGE</text>
+                <polygon points="234,97 258,111 258,139 234,153 210,139 210,111" fill="url(#hexK)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="234" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#FAF9F6">K</text>
+              </g>
+              <!-- E — Empowerment -->
+              <g>
+                <text x="330" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#C4D89C" letter-spacing="1">EMPOWERMENT</text>
+                <polygon points="330,97 354,111 354,139 330,153 306,139 306,111" fill="url(#hexE)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="330" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#FAF9F6">E</text>
+              </g>
+              <!-- H — Harmony -->
+              <g>
+                <text x="426" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#E5D48F" letter-spacing="1">HARMONY</text>
+                <polygon points="426,97 450,111 450,139 426,153 402,139 402,111" fill="url(#hexH)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="426" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#FAF9F6">H</text>
+              </g>
+              <!-- A — Asset -->
+              <g>
+                <text x="522" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#EFD37A" letter-spacing="1">ASSET</text>
+                <polygon points="522,97 546,111 546,139 522,153 498,139 498,111" fill="url(#hexA)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="522" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#0A3D26">A</text>
+              </g>
+              <!-- S — Sustainability -->
+              <g>
+                <text x="618" y="82" text-anchor="middle" font-size="8" font-weight="800" fill="#EFD37A" letter-spacing="1">SUSTAINABILITY</text>
+                <polygon points="618,97 642,111 642,139 618,153 594,139 594,111" fill="url(#hexS2)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+                <text x="618" y="132" text-anchor="middle" font-size="22" font-weight="900" fill="#0A3D26">S</text>
+              </g>
+            </svg>
           </div>
+
+          <p class="mt-3 text-center italic fade-up d2" style="color:rgba(250,249,246,0.75); font-size:clamp(11px,2.6vw,13px); max-width:760px; margin-left:auto; margin-right:auto">
+            Six pillars of <strong style="color:#EFD37A">SKEHAS</strong> — support, knowledge, empowerment, harmony, asset, sustainability — carry every step from ambition to reality.
+          </p>
         </div>
       </section>
 
