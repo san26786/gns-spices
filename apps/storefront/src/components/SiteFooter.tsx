@@ -50,9 +50,19 @@ export default function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/5">
-        <p className="max-w-7xl mx-auto px-6 py-5 text-center text-xs text-zinc-500">
-          © {new Date().getFullYear()} GNS Spices. Crafted in India. Shipped worldwide.
-        </p>
+        <div className="max-w-7xl mx-auto px-6 py-6 text-center text-xs text-zinc-500 leading-relaxed">
+          <p className="text-zinc-500">
+            GNS Spices is a trading name of{' '}
+            <span className="text-zinc-400 font-medium">GNS Kitchens Limited</span>,
+            registered in England and Wales · CRN{' '}
+            <span className="text-zinc-400 font-medium">14295740</span>.
+            Registered office:{' '}
+            <span className="text-zinc-400">71–75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom</span>.
+          </p>
+          <p className="mt-2 text-zinc-500">
+            © 2026–27 GNS Spices. Crafted in India. Shipped worldwide.
+          </p>
+        </div>
       </div>
     </footer>
   );
