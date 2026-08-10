@@ -546,6 +546,230 @@
       </section>
 
       <!-- ============================================================ -->
+      <!-- NEW SLIDE 2: QUESTION THE TRANSACTION                          -->
+      <!-- ============================================================ -->
+      <section class="slide theme-navy-deep" data-theme="dark" style="background:linear-gradient(160deg,#0F2340 0%,#0A1830 55%,#060F22 100%);color:#FAF9F6">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">
+              Let me ask you a simple question…
+            </span>
+            <h2 class="slide-title mt-2" style="font-size:clamp(22px,5vw,34px); line-height:1.15">
+              When you buy your everyday products,<br/>
+              <span class="gradient-gold">what do you actually get back?</span>
+            </h2>
+            <div class="divider-gold mt-2"></div>
+            <p class="mt-2" style="color:rgba(250,249,246,0.85); max-width:720px; font-size:clamp(12px,2.6vw,14px); line-height:1.45">
+              Think about the spices, groceries and household essentials
+              you already buy every month — from Everest, MDH or other
+              household brands.
+            </p>
+          </div>
+
+          <!-- The transaction as it happens today -->
+          <div class="mt-3 md:mt-4 fade-up d1">
+            <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2.5">
+              <span class="rounded-full px-3 py-1.5 text-[11px] md:text-xs font-bold" style="background:rgba(220,53,69,0.16);border:1px solid rgba(220,53,69,0.35);color:#FCA5A5">💳 YOU PAY</span>
+              <span style="color:rgba(255,255,255,0.35)">→</span>
+              <span class="rounded-full px-3 py-1.5 text-[11px] md:text-xs font-bold" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(250,249,246,0.85)">🛒 YOU GET THE PRODUCT</span>
+              <span style="color:rgba(255,255,255,0.35)">→</span>
+              <span class="rounded-full px-3 py-1.5 text-[11px] md:text-xs font-bold" style="background:rgba(220,53,69,0.14);border:1px solid rgba(220,53,69,0.35);color:#FCA5A5">🛑 TRANSACTION ENDS</span>
+            </div>
+          </div>
+
+          <p class="mt-3 text-center italic fade-up d2" style="color:#EFD37A; font-size:clamp(13px,3vw,17px); font-weight:700">
+            But what else do you get?
+          </p>
+
+          <!-- Interactive question cards — tap to reveal answer -->
+          <div class="mt-3 grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-2 fade-up d3">
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">💰</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">More savings?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">Usually not.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">Your purchase ends with the product itself.</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">🎟️</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">Coupons?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">Rarely.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">Today's purchase seldom reduces the cost of your next one.</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">🎁</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">Future vouchers?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">Almost never.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">Your spending rarely builds value you can use later.</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">⭐</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">Loyalty rewards?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">Rarely meaningful.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">Occasional points that seldom add up to real value.</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">🤝</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">Value for recommending?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">Not for you.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">You recommend — the value stays with the brand.</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="udaanFlipCard(this)" class="udaan-flip text-left rounded-xl p-2.5 md:p-3 transition" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);cursor:pointer">
+              <div class="udaan-flip-front">
+                <div class="text-base md:text-lg">💸</div>
+                <div class="text-[10px] md:text-[11px] font-black uppercase tracking-wider mt-1" style="color:#EFD37A">Income opportunity?</div>
+                <div class="text-[9px] mt-1" style="color:rgba(250,249,246,0.50)">tap to see</div>
+              </div>
+              <div class="udaan-flip-back" hidden>
+                <div class="text-[10px] md:text-[11px] font-bold" style="color:#FCA5A5">None at all.</div>
+                <div class="text-[10px] mt-1" style="color:rgba(250,249,246,0.85); line-height:1.4">Your normal household spend rarely creates one.</div>
+              </div>
+            </button>
+          </div>
+
+          <!-- Bottom statement + CTA -->
+          <div class="mt-3 md:mt-4 fade-up d4 text-center">
+            <p class="text-[10px] md:text-xs tracking-widest uppercase font-black" style="color:rgba(250,249,246,0.60); letter-spacing:0.2em">
+              You paid · You received the product · The transaction ended
+            </p>
+            <p class="mt-1.5" style="color:#EFD37A; font-size:clamp(15px,4vw,22px); font-weight:800; font-style:italic">
+              But does it have to?
+            </p>
+            <button onclick="document.getElementById('nextBtn').click()" class="mt-2.5 btn-gold" style="padding:10px 22px; font-size:12px">
+              What if there was another way? →
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- NEW SLIDE 3: IMAGINE A BETTER TRANSACTION                     -->
+      <!-- ============================================================ -->
+      <section class="slide theme-ivory" data-theme="light">
+        <div class="slide-inner">
+          <div class="fade-up">
+            <span class="chip chip-gold" style="color:#8B6A0F; border-color:rgba(197,155,39,0.55); background:rgba(197,155,39,0.10)">
+              What if your everyday spending could do more?
+            </span>
+            <h2 class="slide-title mt-2" style="font-size:clamp(20px,4.6vw,30px); line-height:1.15">
+              What if you could buy the same kinds of products you already need…
+            </h2>
+            <p class="gradient-gold mt-1" style="font-size:clamp(22px,5.4vw,34px); font-weight:900; line-height:1.1; letter-spacing:-0.01em">
+              without adding another household expense?
+            </p>
+            <div class="divider-gold mt-2"></div>
+            <p class="mt-2" style="color:#4B5A53; max-width:760px; font-size:clamp(12px,2.6vw,14px); line-height:1.45">
+              What if changing where you buy some of your everyday
+              essentials could give you access to more value — without
+              asking you to invent another household need?
+            </p>
+          </div>
+
+          <!-- The new purchase journey · 8 steps -->
+          <div class="mt-3 fade-up d1">
+            <div class="flex flex-wrap items-center justify-center gap-1 md:gap-1.5">
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#0F5132;color:#FAF9F6">🛒 BUY</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#1B8A54;color:#FAF9F6">💰 SAVE</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#10A88C;color:#FAF9F6">🎟️ RECEIVE</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#E07856;color:#FAF9F6">🤝 SHARE</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#C77A3D;color:#FAF9F6">🎁 REWARD</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#4B6BB4;color:#FAF9F6">🔄 REORDER</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-2.5 py-1 text-[10px] md:text-[11px] font-black" style="background:#C59B27;color:#FAF9F6">💸 EARN</span>
+              <span style="color:#8B6A0F">→</span>
+              <span class="rounded-full px-3 py-1 text-[10px] md:text-[11px] font-black" style="background:linear-gradient(90deg,#0F5132,#8B6A0F);color:#FAF9F6;box-shadow:0 3px 12px rgba(139,106,15,0.30)">🚀 GROW</span>
+            </div>
+          </div>
+
+          <!-- 3 What-if illustrative cards -->
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2 fade-up d2">
+            <div class="card-ivory p-3">
+              <div class="text-[9px] tracking-widest uppercase font-bold" style="color:#8B6A0F">Illustrative example</div>
+              <p class="text-sm md:text-base font-black mt-1" style="color:#0F5132">What if ₹5 could come back?</p>
+              <p class="text-[11px] mt-1" style="color:#333B37; line-height:1.4">Buy an eligible product and receive a ₹5 promotional coupon toward a future qualifying purchase.</p>
+            </div>
+            <div class="card-ivory p-3">
+              <div class="text-[9px] tracking-widest uppercase font-bold" style="color:#8B6A0F">Illustrative example</div>
+              <p class="text-sm md:text-base font-black mt-1" style="color:#0F5132">What if ₹20 created ₹10 of future value?</p>
+              <p class="text-[11px] mt-1" style="color:#333B37; line-height:1.4">Make an eligible ₹20 purchase and receive a ₹10 promotional voucher toward another qualifying purchase.</p>
+            </div>
+            <div class="p-3 rounded-2xl" style="background:linear-gradient(180deg, rgba(197,155,39,0.10), rgba(197,155,39,0.02)); border:1.5px solid rgba(197,155,39,0.55); box-shadow:0 4px 16px rgba(197,155,39,0.10)">
+              <div class="text-[9px] tracking-widest uppercase font-bold" style="color:#8B6A0F">Illustrative example</div>
+              <p class="text-sm md:text-base font-black mt-1" style="color:#0F5132">What if your normal ₹1,000 monthly spend could do more?</p>
+              <p class="text-[11px] mt-1" style="color:#333B37; line-height:1.4">Instead of just spending ~₹1,000 on products you already need, those purchases could contribute toward <b style="color:#8B6A0F">savings + rewards + additional income opportunity</b>.</p>
+            </div>
+          </div>
+
+          <!-- Big decision · A vs B comparison -->
+          <div class="mt-3 grid grid-cols-2 gap-2 fade-up d3">
+            <div class="rounded-xl p-2.5" style="background:#F1EFE7; border:1px solid #D8D2C2">
+              <div class="text-[9px] tracking-widest uppercase font-black" style="color:#6B7570">Option A · Just buy</div>
+              <div class="mt-1.5 flex flex-wrap items-center gap-1 text-[10px] md:text-[11px] font-semibold" style="color:#4B554F">
+                <span>Pay</span><span style="color:#B8B0A0">→</span><span>Product</span><span style="color:#B8B0A0">→</span><span class="font-black" style="color:#8B7A38">End</span>
+              </div>
+            </div>
+            <div class="rounded-xl p-2.5" style="background:linear-gradient(160deg, rgba(15,81,50,0.10), rgba(197,155,39,0.16)); border:1.5px solid rgba(197,155,39,0.55); box-shadow:0 6px 22px rgba(197,155,39,0.15)">
+              <div class="text-[9px] tracking-widest uppercase font-black" style="color:#8B6A0F">Option B · Buy + get more</div>
+              <div class="mt-1.5 flex flex-wrap items-center gap-x-1 gap-y-1 text-[10px] md:text-[11px] font-black" style="color:#0F5132">
+                <span>Buy</span><span>→</span><span>Save</span><span>→</span><span>Benefits</span><span>→</span><span>Share</span><span>→</span><span>Reorder</span><span>→</span><span>Earn</span><span>→</span><span style="color:#8B6A0F">Grow</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verdict + CTAs -->
+          <div class="mt-3 text-center fade-up d4">
+            <p class="text-[10px] md:text-xs tracking-widest uppercase font-black" style="color:#0F5132; letter-spacing:0.18em">
+              Same household need · Similar everyday spend · More potential value
+            </p>
+            <p class="mt-1.5" style="color:#8B6A0F; font-size:clamp(14px,3.6vw,20px); font-weight:800; font-style:italic">
+              Would that be a better trade?
+            </p>
+            <div class="mt-2 flex flex-wrap justify-center gap-2">
+              <button onclick="document.getElementById('nextBtn').click()" class="btn-gold" style="padding:9px 20px; font-size:12px">Yes — show me how →</button>
+              <button onclick="document.getElementById('nextBtn').click()" class="rounded-full font-bold" style="padding:9px 20px; font-size:12px; background:#0F5132; color:#FAF9F6; border:0">I want to understand more</button>
+            </div>
+            <p class="mt-2" style="color:#6B7570; font-size:9.5px; line-height:1.4; max-width:760px; margin-left:auto; margin-right:auto">
+              Illustrative examples only. Actual coupons, vouchers, rewards and earnings depend on applicable UDAAN programme terms, qualifying purchases, genuine sales and promotional conditions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
       <!-- OPENING 2/3 · HOW IT WORKS (3-step mechanic)                  -->
       <!-- ============================================================ -->
       <section class="slide theme-ivory" data-theme="light">
@@ -3093,6 +3317,27 @@ function selectReason(cardEl, reason, microcopy) {
 function reasonNext() {
   var btn = document.getElementById('nextBtn');
   if (btn) btn.click();
+}
+
+/* Tap-to-reveal for the "Question" slide answer cards */
+function udaanFlipCard(el) {
+  try {
+    var front = el.querySelector('.udaan-flip-front');
+    var back = el.querySelector('.udaan-flip-back');
+    if (!front || !back) return;
+    var showingBack = !back.hasAttribute('hidden');
+    if (showingBack) {
+      back.setAttribute('hidden', '');
+      front.removeAttribute('hidden');
+      el.style.background = 'rgba(255,255,255,0.05)';
+      el.style.borderColor = 'rgba(255,255,255,0.12)';
+    } else {
+      front.setAttribute('hidden', '');
+      back.removeAttribute('hidden');
+      el.style.background = 'rgba(220,53,69,0.10)';
+      el.style.borderColor = 'rgba(220,53,69,0.40)';
+    }
+  } catch (e) { /* no-op */ }
 }
 </script>
 <script>
