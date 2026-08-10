@@ -396,6 +396,24 @@
     white-space: nowrap;
   }
   #share-btn:hover { background: rgba(0,0,0,0.75); }
+  #pdf-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 11px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    color: rgba(250,249,246,0.9);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+    white-space: nowrap;
+  }
+  #pdf-btn:hover { background: rgba(0,0,0,0.75); }
+  #pdf-btn:disabled { opacity: 0.6; cursor: wait; }
   #share-btn.copied {
     background: rgba(63,181,123,0.30);
     border-color: rgba(63,181,123,0.55);
@@ -488,6 +506,58 @@
   .reason-card.reason-selected .reason-title {
     color: #EFD37A !important;
   }
+  /* ================================================================ */
+  /*  Print / Save-as-PDF stylesheet                                   */
+  /*  Un-freezes the horizontal deck into a vertical page-per-slide    */
+  /*  layout so the reader gets a clean 41-page PDF.                   */
+  /* ================================================================ */
+  @media print {
+    @page { size: A4 landscape; margin: 0; }
+    html, body {
+      overflow: visible !important;
+      height: auto !important;
+      background: #FAF9F6 !important;
+    }
+    .deck, .stage, .track {
+      position: static !important;
+      display: block !important;
+      transform: none !important;
+      overflow: visible !important;
+      height: auto !important;
+      width: 100% !important;
+      inset: auto !important;
+    }
+    .slide {
+      content-visibility: visible !important;
+      contain: none !important;
+      display: block !important;
+      width: 100% !important;
+      min-height: 100vh !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      overflow: hidden !important;
+      position: relative !important;
+      flex: none !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .slide:last-child { page-break-after: auto !important; }
+    /* Hide UI chrome that doesn't belong on paper */
+    #deck-tools, .nav-bar, .modal-backdrop, #google_translate_element, .goog-te-banner-frame {
+      display: none !important;
+    }
+    /* Force all fade-in content to be fully visible */
+    .fade-up {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    /* Templates already invisible — belt & braces */
+    template { display: none !important; }
+    /* Make every SVG scale to available width */
+    svg { max-width: 100% !important; height: auto !important; }
+  }
+
   .reveal-on-select {
     opacity: 0;
     transform: translateY(10px);
@@ -504,8 +574,11 @@
 
 <body>
 
-<!-- Deck tools · language selector + share link -->
+<!-- Deck tools · PDF · share · language selector -->
 <div id="deck-tools" class="notranslate" translate="no">
+  <button id="pdf-btn" onclick="udaanDownloadPdf()" aria-label="Download deck as PDF" title="Opens your browser's print dialog — choose &quot;Save as PDF&quot; to download all 41 slides">
+    <span aria-hidden="true">📄</span><span>PDF</span>
+  </button>
   <button id="share-btn" onclick="copyShareLink()" aria-label="Copy shareable link with current language">
     <span aria-hidden="true">🔗</span><span>Share</span>
   </button>
@@ -4640,6 +4713,30 @@ function showToast(text) {
   clearTimeout(el._t);
   el._t = setTimeout(function () { el.classList.remove('show'); }, 2400);
 }
+/* Trigger the browser's print/save-as-PDF dialog for the whole deck.
+   Renames the document title first so the default filename in the
+   Save-as-PDF dialog becomes "GNS-UDAAN.pdf" instead of the long
+   marketing title. Restores the title after the dialog closes. */
+function udaanDownloadPdf() {
+  var btn = document.getElementById('pdf-btn');
+  if (btn) { btn.disabled = true; }
+  var originalTitle = document.title;
+  document.title = 'GNS-UDAAN';
+  showToast('Opening print dialog — choose "Save as PDF"');
+  // Give the toast one frame to render before the modal blocks
+  requestAnimationFrame(function () {
+    setTimeout(function () {
+      try { window.print(); } catch (e) { /* no-op */ }
+      // Restore after the dialog closes (Chrome fires this synchronously,
+      // Firefox / Safari slightly later — a small delay covers both).
+      setTimeout(function () {
+        document.title = originalTitle;
+        if (btn) { btn.disabled = false; }
+      }, 400);
+    }, 60);
+  });
+}
+
 function copyShareLink() {
   var lang = getCurrentLang() || 'en';
   var link = buildShareUrl(lang);
