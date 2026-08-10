@@ -113,14 +113,17 @@
   .slide-inner {
     flex: 1;
     display: flex; flex-direction: column;
-    padding: 24px 22px 16px;
+    padding: 18px 20px 14px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
+    /* Origin used when JS auto-fit scales the slide down */
+    transform-origin: top left;
+    transition: transform 180ms ease;
   }
   .slide-inner::-webkit-scrollbar { display: none; }
   @media (min-width: 768px) {
-    .slide-inner { padding: 48px 64px 32px; }
+    .slide-inner { padding: 32px 56px 22px; }
   }
 
   /* Theme variants */
@@ -4568,7 +4571,58 @@
     const theme = slides[idx].getAttribute('data-theme');
     if (theme === 'dark') navBar.classList.add('on-dark');
     else navBar.classList.remove('on-dark');
+
+    fitActiveSlide();
   }
+
+  /* Auto-fit the active slide so its content NEVER needs scrolling.
+     Measures scrollHeight vs clientHeight and, only if the content
+     overflows, applies a transform: scale() so everything is visible.
+     Floor at 0.55 so text never becomes unreadable. */
+  function fitActiveSlide() {
+    if (document.documentElement.classList.contains('udaan-printing')) return;
+    var active = slides[idx];
+    if (!active) return;
+    var inner = active.querySelector('.slide-inner');
+    if (!inner) return;
+    // Reset any prior scaling before we re-measure
+    inner.style.transform = '';
+    inner.style.width = '';
+    // Wait for layout (content-visibility promotion + fade-up start)
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        var avail = active.clientHeight;
+        var natural = inner.scrollHeight;
+        // 6px tolerance so tiny sub-pixel overflows don't scale
+        if (natural > avail + 6 && avail > 0) {
+          var scale = avail / natural;
+          if (scale < 0.55) scale = 0.55;
+          inner.style.transform = 'scale(' + scale + ')';
+          inner.style.width = (100 / scale) + '%';
+        }
+      }, 40);
+    });
+  }
+
+  // Re-fit on window/orientation resize (debounced)
+  var _fitTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_fitTimer);
+    _fitTimer = setTimeout(fitActiveSlide, 150);
+  });
+  window.addEventListener('orientationchange', function () {
+    clearTimeout(_fitTimer);
+    _fitTimer = setTimeout(fitActiveSlide, 300);
+  });
+  // Re-fit when Google Translate finishes injecting translated text
+  // (fires ~200ms after language change on average)
+  document.addEventListener('DOMContentLoaded', function () {
+    setInterval(function () {
+      // Cheap re-fit every 1.5s handles translate + font-load reflows
+      // Only runs the measurement; scale is only applied when needed.
+      fitActiveSlide();
+    }, 1500);
+  });
 
   window.go = function (i) {
     idx = Math.max(0, Math.min(total - 1, i));
