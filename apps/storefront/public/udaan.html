@@ -4850,19 +4850,32 @@ async function udaanDownloadPdf() {
     await new Promise(function (r) { setTimeout(r, 400); });
 
     step = 'render';
-    var pageW = 1200, pageH = 750;
+    // Use A4 landscape in points — jsPDF's most reliable format.
+    // Custom [w, h] + orientation combos are known to rotate pages in some
+    // jsPDF versions. Reading the page size from jsPDF at runtime removes
+    // all ambiguity about width vs height.
     var pdf = new jsPDFCtor({
-      unit: 'px',
-      format: [pageW, pageH],
+      unit: 'pt',
+      format: 'a4',
       orientation: 'landscape',
-      compress: true,
-      hotfixes: ['px_scaling']
+      compress: true
     });
+    var pageW = pdf.internal.pageSize.getWidth();   // 842 pt on landscape A4
+    var pageH = pdf.internal.pageSize.getHeight();  // 595 pt on landscape A4
+    console.log('[udaan] pdf page:', pageW, 'x', pageH, 'pt · rendering', total, 'slides');
+
+    // Canvas capture size — kept at 1200x750 (16:10) for crisp text; A4
+    // landscape is ~1.414:1 so we letterbox with a matching background fill
+    // rather than distorting the aspect ratio.
+    var capW = 1200, capH = 750;
+    var scale = Math.min(pageW / capW, pageH / capH);
+    var imgW = capW * scale;
+    var imgH = capH * scale;
+    var offX = (pageW - imgW) / 2;
+    var offY = (pageH - imgH) / 2;
 
     for (var i = 0; i < total; i++) {
       btn.innerHTML = '<span aria-hidden="true">⏳</span><span>' + (i + 1) + '/' + total + '</span>';
-      // Use each slide's actual background as the canvas fill so gradients
-      // don't turn into flat white on blank patches
       var slide = slides[i];
       slide.scrollIntoView({ block: 'start', behavior: 'auto' });
       await new Promise(function (r) { setTimeout(r, 60); });
@@ -4878,10 +4891,10 @@ async function udaanDownloadPdf() {
         logging: false,
         letterRendering: true,
         removeContainer: true,
-        width: pageW,
-        height: pageH,
-        windowWidth: pageW,
-        windowHeight: pageH,
+        width: capW,
+        height: capH,
+        windowWidth: capW,
+        windowHeight: capH,
         foreignObjectRendering: false
       });
 
@@ -4891,14 +4904,20 @@ async function udaanDownloadPdf() {
       }
 
       var imgData = canvas.toDataURL('image/jpeg', 0.85);
-      if (i > 0) pdf.addPage([pageW, pageH], 'landscape');
-      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, pageH, undefined, 'FAST');
+      if (i > 0) pdf.addPage('a4', 'landscape');
+      // Paint the letterbox background so the un-imaged edges match the slide
+      pdf.setFillColor(bg);
+      pdf.rect(0, 0, pageW, pageH, 'F');
+      pdf.addImage(imgData, 'JPEG', offX, offY, imgW, imgH, undefined, 'FAST');
       await new Promise(function (r) { setTimeout(r, 5); });
     }
 
+    var actualPages = pdf.internal.getNumberOfPages();
+    console.log('[udaan] pdf built with', actualPages, 'pages');
+
     step = 'save';
     pdf.save('GNS-UDAAN.pdf');
-    showToast('PDF saved · ' + total + ' pages');
+    showToast('PDF saved · ' + actualPages + ' pages');
   } catch (e) {
     var reason = (e && e.message) ? e.message : 'unknown';
     console.error('[udaan] PDF failed at step "' + step + '":', e);
