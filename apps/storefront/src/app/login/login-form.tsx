@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export function LoginForm({ next }: { next: string }) {
@@ -15,13 +16,16 @@ export function LoginForm({ next }: { next: string }) {
     setPending(true);
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/v1/auth/login`, {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         credentials: 'include',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      if (!res.ok) throw new Error((await res.json()).detail ?? 'Login failed');
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || body.ok === false) {
+        throw new Error(body.error ?? 'Login failed');
+      }
       router.push(next);
       router.refresh();
     } catch (e) {
@@ -39,6 +43,9 @@ export function LoginForm({ next }: { next: string }) {
       <button type="submit" disabled={pending} className="btn-primary w-full">
         {pending ? 'Signing in…' : 'Sign in'}
       </button>
+      <p className="text-xs text-zinc-500 text-center">
+        <Link href="/forgot-password" className="hover:text-amber-400 transition">Forgot password?</Link>
+      </p>
     </form>
   );
 }
