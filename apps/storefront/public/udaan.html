@@ -2381,17 +2381,35 @@
       <!-- ============================================================ -->
       <section class="slide theme-navy-deep" data-theme="dark" style="background:linear-gradient(160deg,#0F2340 0%,#0A1830 55%,#060F22 100%);color:#FAF9F6">
         <div class="slide-inner">
-          <div class="fade-up">
-            <span class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">The market</span>
-            <h2 class="slide-title mt-2" style="font-size:clamp(22px,5vw,36px); line-height:1.1">
-              One country. Millions of kitchens.<br/>
-              <span class="gradient-gold">One everyday need.</span>
-            </h2>
-            <div class="divider-gold mt-2"></div>
+        <!-- Two-column layout on md+ so title+chips+closing sit next to the India SVG · fits without scrolling -->
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-4 md:gap-8 items-center">
+          <div>
+            <div class="fade-up">
+              <span class="chip chip-gold" style="color:#EFD37A; border-color:rgba(239,211,122,0.45); background:rgba(197,155,39,0.14)">The market</span>
+              <h2 class="slide-title mt-2" style="font-size:clamp(22px,4.6vw,36px); line-height:1.1">
+                One country. Millions of kitchens.<br/>
+                <span class="gradient-gold">One everyday need.</span>
+              </h2>
+              <div class="divider-gold mt-2"></div>
+            </div>
+
+            <!-- Product chips -->
+            <div class="mt-3 md:mt-4 flex flex-wrap gap-1.5 fade-up d2">
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌶️ Chilli</span>
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🟡 Turmeric</span>
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌿 Coriander</span>
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌱 Cumin</span>
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🍛 Masalas</span>
+              <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌶️ Everyday spices</span>
+            </div>
+
+            <p class="mt-3 md:mt-4 fade-up d3" style="color:#EFD37A; font-size:clamp(15px,3vw,22px); font-weight:900; font-style:italic; letter-spacing:0.3px; line-height:1.2">
+              Every kitchen is a potential customer.
+            </p>
           </div>
 
-          <!-- India + household dots visual -->
-          <div class="mt-3 md:mt-4 fade-up d1 svg-holder" style="max-width:720px;margin-left:auto;margin-right:auto">
+          <!-- India + household dots visual · right column on desktop -->
+          <div class="fade-up d1 svg-holder" style="max-width:520px;margin-left:auto;margin-right:auto">
             <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <linearGradient id="indiaFill" x1="0" y1="0" x2="0" y2="1">
@@ -2441,20 +2459,7 @@
             <div class="svg-lbl" style="left:48.33%;top:56%;color:rgba(250,249,246,0.90);font-size:clamp(7px,1.4vw,12px);font-weight:800;letter-spacing:2px">HOUSEHOLDS</div>
             <div class="svg-lbl" style="left:48.33%;top:98%;color:rgba(250,249,246,0.60);font-size:clamp(7px,1.2vw,10px);font-weight:600">planning base · illustrative</div>
           </div>
-
-          <!-- Product chips + bottom statement -->
-          <div class="mt-3 md:mt-4 flex flex-wrap justify-center gap-1.5 fade-up d2">
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌶️ Chilli</span>
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🟡 Turmeric</span>
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌿 Coriander</span>
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌱 Cumin</span>
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🍛 Masalas</span>
-            <span class="chip" style="background:rgba(197,155,39,0.15); color:#EFD37A; border-color:rgba(197,155,39,0.35)">🌶️ Everyday spices</span>
-          </div>
-
-          <p class="mt-3 md:mt-4 text-center fade-up d3" style="color:#EFD37A; font-size:clamp(15px,3.6vw,22px); font-weight:900; font-style:italic; letter-spacing:0.5px">
-            Every kitchen is a potential customer.
-          </p>
+        </div>
         </div>
       </section>
 
