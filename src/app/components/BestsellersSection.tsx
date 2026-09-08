@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { Search } from "lucide-react";
 
@@ -7,7 +5,6 @@ export default function BestsellersSection() {
   return (
     <section className="bg-[#0a0503] py-20 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
         <div className="mb-8 flex flex-col gap-6 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -52,7 +49,6 @@ export default function BestsellersSection() {
           </div>
         </Link>
 
-        {/* Divider for next section */}
         <div className="mt-20 sm:mt-24">
           <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>

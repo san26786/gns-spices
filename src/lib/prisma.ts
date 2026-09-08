@@ -1,7 +1,7 @@
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as {
+const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
@@ -12,13 +12,20 @@ function createPrismaClient() {
     password: process.env.DATABASE_PASSWORD!,
     database: process.env.DATABASE_NAME!,
     port: Number(process.env.DATABASE_PORT) || 20962,
-    connectionLimit: 5,
+    connectionLimit: 3,
   });
 
-  return new PrismaClient({ adapter });
+  return new PrismaClient({
+    adapter,
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["error", "warn"]
+        : ["error"],
+  });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+export const prisma =
+  globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
