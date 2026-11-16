@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NewsletterForm } from '@/components/NewsletterForm';
 import { apiFetch } from '@/lib/api';
 import { getProductVisual } from '@/lib/catalog';
 import { ProductTile } from '@/components/ProductTile';
@@ -258,15 +259,7 @@ export default async function HomePage() {
           <p className="mt-4 text-zinc-400">
             One letter a month. Never spam. Unsubscribe whenever the soup&apos;s on.
           </p>
-          <form className="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" action="#" method="post">
-            <input
-              type="email"
-              required
-              placeholder="Enter your email"
-              className="input-dark flex-1"
-            />
-            <button type="submit" className="btn-primary">Notify Me</button>
-          </form>
+          <NewsletterForm />
           <p className="text-xs text-zinc-500 mt-4">Be the first to know about new harvests &amp; member batches.</p>
         </div>
       </section>

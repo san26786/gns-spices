@@ -6,6 +6,9 @@ import { CatalogModule } from './modules/catalog/catalog.module';
 import { PricingModule } from './modules/pricing/pricing.module';
 import { CartModule } from './modules/cart/cart.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { MailModule } from './modules/mail/mail.service';
+import { PublicFormsModule } from './modules/public-forms/public-forms.controller';
+import { AdminModule } from './modules/admin/admin-ops.controller';
 import { HealthController } from './modules/health/health.controller';
 import { JwtGuard } from './common/guards/jwt.guard';
 
@@ -21,6 +24,9 @@ import { JwtGuard } from './common/guards/jwt.guard';
     PricingModule,
     CartModule,
     OrdersModule,
+    MailModule,
+    PublicFormsModule,
+    AdminModule,
   ],
   controllers: [HealthController],
   // RolesGuard is instantiated via a factory (see common/guards/roles.guard.ts)

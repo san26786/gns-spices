@@ -736,3 +736,73 @@ model OutboxEvent {
   @@index([publishedAt])
   @@map("outbox_events")
 }
+
+// ────────────────────────── Enquiries, newsletter, coupons ──────────────────────────
+// Public website forms (B2B application, quote request, private label brief,
+// contact) all land in one admin inbox. Type-specific answers that don't have
+// their own column go in `details`.
+
+model Enquiry {
+  id           String        @id @default(uuid()) @db.Uuid
+  reference    String        @unique @db.VarChar(20)
+  type         EnquiryType
+  status       EnquiryStatus @default(new)
+  name         String        @db.VarChar(120)
+  email        String        @db.Citext
+  phone        String?       @db.VarChar(32)
+  company      String?       @db.VarChar(160)
+  country      String?       @db.VarChar(80)
+  city         String?       @db.VarChar(80)
+  message      String?
+  details      Json          @default("{}") @db.JsonB
+  adminNotes   String?       @map("admin_notes")
+  handledById  String?       @map("handled_by") @db.Uuid
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([type, status, createdAt(sort: Desc)])
+  @@map("enquiries")
+}
+
+enum EnquiryType {
+  b2b_application
+  quote_request
+  private_label
+  contact
+}
+
+enum EnquiryStatus {
+  new
+  in_review
+  contacted
+  approved
+  rejected
+  closed
+}
+
+model NewsletterSubscriber {
+  id             String    @id @default(uuid()) @db.Uuid
+  email          String    @unique @db.Citext
+  source         String?   @db.VarChar(40)
+  unsubscribedAt DateTime? @map("unsubscribed_at") @db.Timestamptz
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  @@map("newsletter_subscribers")
+}
+
+model Coupon {
+  id             String    @id @default(uuid()) @db.Uuid
+  code           String    @unique @db.VarChar(40)
+  description    String?   @db.VarChar(200)
+  percentOff     Int       @map("percent_off")
+  minSubtotal    Decimal?  @map("min_subtotal") @db.Decimal(14, 2)
+  maxRedemptions Int?      @map("max_redemptions")
+  redemptions    Int       @default(0)
+  isActive       Boolean   @default(true) @map("is_active")
+  startsAt       DateTime? @map("starts_at") @db.Timestamptz
+  expiresAt      DateTime? @map("expires_at") @db.Timestamptz
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@map("coupons")
+}

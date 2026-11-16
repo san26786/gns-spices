@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 export default function SiteHeader() {
   const pathname = usePathname();
-  if (pathname?.startsWith('/partner-strategy')) return null;
+  if (pathname?.startsWith('/partner-strategy') || pathname?.startsWith('/admin')) return null;
 
   return (
     <>

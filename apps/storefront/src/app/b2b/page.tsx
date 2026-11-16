@@ -15,8 +15,8 @@ export default function B2BPage() {
               Tiered pricing, credit terms, and logistics built for restaurants, retailers, and distributors across the UK, India, and the Middle East.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/register?business=1" className="btn-primary">Apply for a business account</Link>
-              <Link href="/account/rfqs/new" className="btn-ghost">Request a quote</Link>
+              <Link href="/b2b/apply" className="btn-primary">Apply for a business account</Link>
+              <Link href="/b2b/quote" className="btn-ghost">Request a quote</Link>
             </div>
           </div>
           <Stats />

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 export default function SiteFooter() {
   const pathname = usePathname();
-  if (pathname?.startsWith('/partner-strategy')) return null;
+  if (pathname?.startsWith('/partner-strategy') || pathname?.startsWith('/admin')) return null;
 
   return (
     <footer className="mt-24 border-t border-white/10 bg-black/80 text-zinc-300">
@@ -36,7 +36,8 @@ export default function SiteFooter() {
           <ul className="space-y-1.5">
             <li><Link href="/b2b" className="hover:text-amber-400 transition">Wholesale</Link></li>
             <li><Link href="/private-label" className="hover:text-amber-400 transition">Private label</Link></li>
-            <li><Link href="/account/rfqs" className="hover:text-amber-400 transition">Request a quote</Link></li>
+            <li><Link href="/b2b/quote" className="hover:text-amber-400 transition">Request a quote</Link></li>
+            <li><Link href="/contact" className="hover:text-amber-400 transition">Contact us</Link></li>
           </ul>
         </div>
         <div>

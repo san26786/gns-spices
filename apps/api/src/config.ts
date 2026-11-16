@@ -18,6 +18,11 @@ const schema = z.object({
   JWT_REFRESH_SECRET: z.string().min(16),
   JWT_REFRESH_TTL_SEC: z.coerce.number().default(60 * 60 * 24 * 30),
   COOKIE_DOMAIN: z.string().default('localhost'),
+  // Email (Resend). Without RESEND_API_KEY emails are logged instead of sent.
+  RESEND_API_KEY: z.string().optional(),
+  MAIL_FROM: z.string().default('GNS Spices <no-reply@gnsspices.com>'),
+  ADMIN_NOTIFY_EMAIL: z.string().optional(),
+  SITE_URL: z.string().default('http://localhost:3100'),
   COOKIE_SECURE: z
     .union([z.literal('true'), z.literal('false')])
     .transform((v) => v === 'true')
@@ -50,4 +55,10 @@ export const config = {
     domain: env.COOKIE_DOMAIN,
     secure: env.COOKIE_SECURE,
   },
+  mail: {
+    resendApiKey: env.RESEND_API_KEY || undefined,
+    from: env.MAIL_FROM,
+    adminNotify: env.ADMIN_NOTIFY_EMAIL || undefined,
+  },
+  siteUrl: env.SITE_URL.replace(/\/+$/, ''),
 } as const;
