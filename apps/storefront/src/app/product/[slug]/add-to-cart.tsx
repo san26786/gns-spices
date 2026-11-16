@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 
-interface Variant { id: string; sku: string; weightGrams: number; packaging: string }
+interface Variant { id: string; sku: string; label?: string | null; weightGrams: number; packaging: string }
 
 export function AddToCart({
   variants,
@@ -55,7 +55,7 @@ export function AddToCart({
                 : 'border-white/15 text-zinc-300 hover:border-amber-400 hover:text-amber-400 bg-white/5'
             }`}
           >
-            {v.weightGrams >= 1000 ? `${v.weightGrams / 1000}kg` : `${v.weightGrams}g`} · {v.packaging}
+            {v.label ?? `${v.weightGrams >= 1000 ? `${v.weightGrams / 1000}kg` : `${v.weightGrams}g`} · ${v.packaging}`}
           </button>
         ))}
       </div>

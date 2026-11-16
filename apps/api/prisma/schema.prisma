@@ -234,8 +234,11 @@ model ProductVariant {
   id           String   @id @default(uuid()) @db.Uuid
   productId    String   @map("product_id") @db.Uuid
   sku          String   @unique @db.VarChar(64)
+  /// Optional human label, e.g. "Chef's Reserve · 100g". Shown on labels and in the pack picker.
+  label        String?  @db.VarChar(120)
   weightGrams  Int      @map("weight_grams")
   packaging    Packaging
+  /// GS1 GTIN (EAN-13) once assigned. When set, the printed barcode is EAN-13; otherwise Code 128 of `sku`.
   barcode      String?  @db.VarChar(32)
   netWeightG   Int?     @map("net_weight_g")
   grossWeightG Int?     @map("gross_weight_g")

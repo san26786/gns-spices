@@ -99,11 +99,73 @@ export class CatalogService {
       variants: product.variants.map((v) => ({
         id: v.id,
         sku: v.sku,
+        label: v.label,
         weightGrams: v.weightGrams,
         packaging: v.packaging,
         barcode: v.barcode,
       })),
     };
+  }
+
+  /**
+   * Resolve a printed code (product `skuRoot` or variant `sku`) to the product's
+   * *current* data. Printed QR codes and barcodes only ever carry this code, so
+   * anything edited in the database shows up on the next scan.
+   */
+  async findByCode(rawCode: string) {
+    const code = rawCode.trim().toUpperCase();
+    const variantSelect = {
+      sku: true, label: true, weightGrams: true, packaging: true, barcode: true, isActive: true,
+    } as const;
+    const productInclude = {
+      category: { select: { slug: true, name: true } },
+      variants: { orderBy: { weightGrams: 'asc' as const }, select: variantSelect },
+    };
+
+    const variant = await this.prisma.productVariant.findFirst({
+      where: { OR: [{ sku: { equals: code, mode: 'insensitive' } }, { barcode: code }] },
+      select: { ...variantSelect, product: { include: productInclude } },
+    });
+    const product = variant?.product
+      ?? (await this.prisma.product.findFirst({
+        where: { skuRoot: { equals: code, mode: 'insensitive' } },
+        include: productInclude,
+      }));
+    if (!product) throw new NotFoundException('code_not_found');
+
+    return {
+      code,
+      kind: variant ? 'variant' : 'product',
+      product: {
+        slug: product.slug,
+        skuRoot: product.skuRoot,
+        name: product.name,
+        shortDesc: product.shortDesc,
+        isActive: product.isActive,
+        category: product.category,
+        updatedAt: product.updatedAt,
+      },
+      variant: variant
+        ? { sku: variant.sku, label: variant.label, weightGrams: variant.weightGrams, packaging: variant.packaging, barcode: variant.barcode, isActive: variant.isActive }
+        : null,
+      variants: product.variants,
+    };
+  }
+
+  /** Every product and pack with the codes to print. Includes B2B-only and inactive items. */
+  async listCodes() {
+    const products = await this.prisma.product.findMany({
+      orderBy: [{ category: { position: 'asc' } }, { name: 'asc' }],
+      select: {
+        slug: true, skuRoot: true, name: true, isActive: true, isB2bOnly: true,
+        category: { select: { slug: true, name: true } },
+        variants: {
+          orderBy: [{ label: 'asc' }, { weightGrams: 'asc' }],
+          select: { sku: true, label: true, weightGrams: true, packaging: true, barcode: true, isActive: true },
+        },
+      },
+    });
+    return { data: products };
   }
 
   async listCategories() {

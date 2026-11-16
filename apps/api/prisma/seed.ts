@@ -3,6 +3,7 @@ import { PrismaClient, Prisma } from '@prisma/client';
 import * as argon2 from 'argon2';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import { seedShopCatalog } from './seed-shop-catalog';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
@@ -298,6 +299,8 @@ async function main() {
     await prisma.staffRole.create({ data: { userId: admin.id, role: 'super_admin' } });
     console.log(`  + Admin created: ${adminEmail}  /  ChangeMeNow!123`);
   }
+
+  await seedShopCatalog(prisma);
 
   console.log('Done.');
 }

@@ -40,6 +40,20 @@ export class CatalogController {
     return { data: await this.catalog.listCategories() };
   }
 
+  /** All products + packs with their permanent codes (for printing QR / barcode labels). */
+  @Public()
+  @Get('codes')
+  async codes() {
+    return this.catalog.listCodes();
+  }
+
+  /** Look up a scanned code (skuRoot, variant SKU or GTIN) and return the live product data. */
+  @Public()
+  @Get('by-code/:code')
+  async byCode(@Param('code') code: string) {
+    return this.catalog.findByCode(code);
+  }
+
   @Public()
   @Get(':slug')
   async detail(@Param('slug') slug: string, @Query() query: unknown, @CurrentUser() user?: AuthUser) {

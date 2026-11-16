@@ -29,6 +29,7 @@ export interface ProductDetail extends Omit<ProductListItem, 'previewVariant' | 
   variants: Array<{
     id: string;
     sku: string;
+    label: string | null;
     weightGrams: number;
     packaging: string;
     barcode: string | null;
