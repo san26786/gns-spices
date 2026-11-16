@@ -7,7 +7,7 @@ Production-grade monorepo for D2C + B2B + Private Label spice commerce.
 - **Backend** — NestJS 10 · TypeScript · Prisma · PostgreSQL
 - **Frontend** — Next.js 15 (App Router) · React 19 · Tailwind CSS
 - **Auth** — Custom JWT (HTTP-only cookies) with rotating refresh tokens
-- **DB** — PostgreSQL 16 (hosted Prisma Postgres is fine; `citext` + `pgcrypto` enabled)
+- **DB** — PostgreSQL 16+ (any host; no extensions needed)
 
 ## Layout
 
@@ -36,7 +36,7 @@ pnpm install
 # generate the Prisma client
 pnpm --filter @gns/api prisma:generate
 
-# push the schema to the hosted DB (creates tables + enables citext/pgcrypto)
+# push the schema to the hosted DB (creates the tables)
 pnpm --filter @gns/api exec prisma db push
 
 # seed sample catalog, pricing, regions, warehouses, and an admin user

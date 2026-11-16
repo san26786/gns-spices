@@ -281,14 +281,17 @@ async function main() {
     ],
   });
 
-  // Default admin user (for quick dashboard testing)
-  const adminEmail = 'admin@gnsspices.test';
+  // Admin user. Production: set ADMIN_EMAIL and ADMIN_PASSWORD (12+ chars).
+  // Local dev falls back to the test account below.
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@gnsspices.test').trim().toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD || 'ChangeMeNow!123';
+  if (process.env.ADMIN_EMAIL && adminPassword.length < 12) throw new Error('ADMIN_PASSWORD must be at least 12 characters');
   const exists = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!exists) {
     const admin = await prisma.user.create({
       data: {
         email: adminEmail,
-        passwordHash: await argon2.hash('ChangeMeNow!123', { type: argon2.argon2id }),
+        passwordHash: await argon2.hash(adminPassword, { type: argon2.argon2id }),
         firstName: 'GNS',
         lastName: 'Admin',
         emailVerifiedAt: new Date(),
@@ -297,7 +300,7 @@ async function main() {
       },
     });
     await prisma.staffRole.create({ data: { userId: admin.id, role: 'super_admin' } });
-    console.log(`  + Admin created: ${adminEmail}  /  ChangeMeNow!123`);
+    console.log(`  + Admin created: ${adminEmail}${process.env.ADMIN_PASSWORD ? ' (password from ADMIN_PASSWORD)' : '  /  ChangeMeNow!123'}`);
   }
 
   await seedShopCatalog(prisma);
