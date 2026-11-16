@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { NewsletterForm } from '@/components/NewsletterForm';
 import { apiFetch } from '@/lib/api';
@@ -51,38 +52,28 @@ export default async function HomePage() {
           {/* Hero visual — glossy spice tile mosaic on glass */}
           <div className="relative h-[460px] md:h-[560px] animate-fade-in-delayed-2">
             <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-3 p-3 glass-card">
-              <div className="gloss rounded-2xl bg-spice-turmeric col-span-2 row-span-2 shadow-xl ring-1 ring-white/10 overflow-hidden flex items-end p-5">
-                <div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-spice-maroon/80">Single Origin</p>
-                  <p className="font-bold text-2xl text-spice-maroon">Turmeric</p>
-                  <p className="text-xs text-spice-maroon/70">Erode, Tamil Nadu</p>
-                </div>
-              </div>
-              <div className="gloss rounded-2xl bg-spice-cardamom shadow-xl ring-1 ring-white/10 overflow-hidden flex items-end p-4">
-                <p className="font-bold text-white text-lg leading-tight drop-shadow">
-                  Green Chilli<br />
-                  <span className="text-[10px] tracking-[0.3em] uppercase opacity-90">Bhavnagri</span>
-                </p>
-              </div>
-              <div className="gloss rounded-2xl bg-spice-saffron shadow-xl ring-1 ring-white/10 overflow-hidden flex items-end p-4">
-                <p className="font-bold text-spice-maroon text-lg leading-tight">
-                  Saffron<br />
-                  <span className="text-[10px] tracking-[0.3em] uppercase opacity-70">Kashmir</span>
-                </p>
-              </div>
-              <div className="gloss rounded-2xl bg-spice-red shadow-xl ring-1 ring-white/10 overflow-hidden flex items-end p-4">
-                <p className="font-bold text-white text-lg leading-tight drop-shadow">
-                  Red Chilli<br />
-                  <span className="text-[10px] tracking-[0.3em] uppercase opacity-95">Guntur</span>
-                </p>
-              </div>
-              <div className="gloss rounded-2xl bg-spice-pepper shadow-xl ring-1 ring-white/10 overflow-hidden flex items-end col-span-2 p-5">
-                <div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-amber-400">Signature Blend No. 7</p>
-                  <p className="font-bold text-2xl text-white leading-tight">Black Pepper Garam Masala</p>
-                  <p className="text-xs text-zinc-400">Tellicherry · stone-milled</p>
-                </div>
-              </div>
+              <PhotoTile src="/home/hero-turmeric.webp" alt="GNS ground turmeric pouch and jar with fresh turmeric roots" className="col-span-2 row-span-2" priority>
+                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-300">Single Origin</p>
+                <p className="font-bold text-2xl text-white">Turmeric</p>
+                <p className="text-xs text-zinc-200">Erode, Tamil Nadu</p>
+              </PhotoTile>
+              <PhotoTile src="/home/hero-green-chilli.webp" alt="GNS green chilli pickle jar with fresh chillies">
+                <p className="font-bold text-white text-lg leading-tight">Green Chilli</p>
+                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Bhavnagri</p>
+              </PhotoTile>
+              <PhotoTile src="/home/hero-saffron.webp" alt="GNS Kashmiri saffron box with saffron threads">
+                <p className="font-bold text-white text-lg leading-tight">Saffron</p>
+                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Kashmir</p>
+              </PhotoTile>
+              <PhotoTile src="/home/hero-red-chilli.webp" alt="GNS ground Byadgi chilli pouch with red chilli powder">
+                <p className="font-bold text-white text-lg leading-tight">Red Chilli</p>
+                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Guntur</p>
+              </PhotoTile>
+              <PhotoTile src="/home/hero-garam-masala.webp" alt="GNS black pepper and garam masala jars on a wooden table" className="col-span-2">
+                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-300">Signature Blend No. 7</p>
+                <p className="font-bold text-2xl text-white leading-tight">Black Pepper Garam Masala</p>
+                <p className="text-xs text-zinc-300">Tellicherry · stone-milled</p>
+              </PhotoTile>
             </div>
           </div>
         </div>
@@ -110,6 +101,7 @@ export default async function HomePage() {
           <CategoryCard
             href="/shop?category=powders"
             title="Pure Powders"
+            image="/home/cat-pure-powders.webp"
             blurb="Turmeric, chilli, coriander & more"
             tone="bg-spice-turmeric"
             ink="text-spice-maroon"
@@ -117,6 +109,7 @@ export default async function HomePage() {
           <CategoryCard
             href="/shop?category=masalas"
             title="Signature Masalas"
+            image="/home/cat-signature-masalas.webp"
             blurb="Garam, biryani, tandoori, kitchen king"
             tone="bg-spice-red"
             ink="text-white"
@@ -124,6 +117,7 @@ export default async function HomePage() {
           <CategoryCard
             href="/shop?category=seeds"
             title="Whole Seeds"
+            image="/home/cat-whole-seeds.webp"
             blurb="Mustard & cumin for tempering"
             tone="bg-spice-cardamom"
             ink="text-white"
@@ -131,6 +125,7 @@ export default async function HomePage() {
           <CategoryCard
             href="/shop?category=whole"
             title="Whole Spices"
+            image="/home/cat-whole-spices.webp"
             blurb="Tellicherry pepper, bay leaves"
             tone="bg-spice-pepper"
             ink="text-white"
@@ -183,8 +178,9 @@ export default async function HomePage() {
             Read the full story →
           </Link>
         </div>
-        <div className="gloss order-1 md:order-2 relative h-[460px] rounded-3xl overflow-hidden bg-gradient-to-br from-spice-maroon via-spice-crimson to-spice-red shadow-2xl ring-1 ring-white/10">
-          <div className="absolute inset-0 paper opacity-50" aria-hidden />
+        <div className="order-1 md:order-2 relative h-[460px] rounded-3xl overflow-hidden bg-spice-maroon shadow-2xl ring-1 ring-white/10">
+          <Image src="/home/our-story.webp" alt="Whole spices, chillies and cinnamon in wooden bowls on a red background" fill sizes="(min-width: 768px) 600px, 100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden />
           <div className="absolute inset-0 flex flex-col justify-end p-10 text-white">
             <p className="text-2xl md:text-3xl font-bold leading-tight">
               &ldquo;Pure spice doesn&apos;t need a sales pitch. It needs a fair price and an honest scale.&rdquo;
@@ -211,18 +207,21 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-3 gap-6">
             <RecipeCard
               title="Kerala Chicken Curry"
+              image="/home/recipe-kerala-chicken-curry.webp"
               meta="45 min · Serves 4"
               tone="from-spice-chili via-spice-red to-spice-maroon"
               spice="Garam Masala No. 7"
             />
             <RecipeCard
               title="Slow-Cooked Chana"
+              image="/home/recipe-slow-cooked-chana.webp"
               meta="2 hr · Serves 6"
               tone="from-spice-leaf via-spice-cardamom to-spice-pepper"
               spice="Green Chana Masala"
             />
             <RecipeCard
               title="Saffron Rice Pulao"
+              image="/home/recipe-saffron-rice-pulao.webp"
               meta="35 min · Serves 4"
               tone="from-spice-saffron via-spice-turmeric to-spice-chili"
               spice="Kashmiri Saffron"
@@ -235,6 +234,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-6">
         <ChannelCard
           title="Wholesale & B2B"
+          image="/home/channel-wholesale.webp"
           body="Tiered pricing, credit terms, and a dedicated account manager. From restaurants to national retail chains."
           href="/b2b"
           tone="bg-gradient-to-br from-spice-leaf via-spice-cardamom to-spice-pepper"
@@ -242,6 +242,7 @@ export default async function HomePage() {
         />
         <ChannelCard
           title="Private Label"
+          image="/home/channel-private-label.webp"
           body="Launch your own spice range. We handle sourcing, blending, packaging, and compliance — your brand, our craft."
           href="/private-label"
           tone="bg-gradient-to-br from-spice-chili via-spice-red to-spice-maroon"
@@ -276,61 +277,8 @@ function TrustItem({ label, sub }: { label: string; sub: string }) {
   );
 }
 
-function CategoryCard({
-  href, title, blurb, tone, ink,
-}: { href: string; title: string; blurb: string; tone: string; ink: string }) {
-  return (
-    <Link
-      href={href}
-      className={`gloss ${tone} ${ink} rounded-2xl p-7 block aspect-[4/5] overflow-hidden flex flex-col justify-between hover:-translate-y-1 transition shadow-xl hover:shadow-2xl ring-1 ring-white/10`}
-    >
-      <span className="text-[10px] tracking-[0.3em] uppercase opacity-80">Category</span>
-      <div>
-        <h3 className="text-2xl font-bold leading-tight drop-shadow-sm">{title}</h3>
-        <p className="text-sm opacity-90 mt-2">{blurb}</p>
-        <span className="inline-block mt-4 text-sm font-semibold underline underline-offset-4">
-          Explore →
-        </span>
-      </div>
-    </Link>
-  );
-}
 
-function ChannelCard({
-  title, body, href, tone, tag,
-}: { title: string; body: string; href: string; tone: string; tag: string }) {
-  return (
-    <Link
-      href={href}
-      className={`gloss ${tone} text-white rounded-3xl p-10 md:p-12 block hover:opacity-95 transition shadow-2xl ring-1 ring-white/10 overflow-hidden`}
-    >
-      <span className="text-[10px] tracking-[0.3em] uppercase opacity-85">{tag}</span>
-      <h3 className="text-3xl md:text-4xl font-bold tracking-tight mt-3">{title}</h3>
-      <p className="opacity-90 max-w-md mt-4 leading-relaxed">{body}</p>
-      <span className="inline-block mt-8 font-semibold underline underline-offset-4">
-        Learn more →
-      </span>
-    </Link>
-  );
-}
 
-function RecipeCard({
-  title, meta, tone, spice,
-}: { title: string; meta: string; tone: string; spice: string }) {
-  return (
-    <div className="glass-card overflow-hidden hover:border-amber-400/30 transition">
-      <div className={`gloss h-48 bg-gradient-to-br ${tone} relative overflow-hidden`}>
-        <span className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-white bg-black/40 backdrop-blur px-2.5 py-1 rounded-full z-10">
-          {spice}
-        </span>
-      </div>
-      <div className="p-5">
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="text-xs tracking-[0.15em] uppercase text-zinc-500 mt-2">{meta}</p>
-      </div>
-    </div>
-  );
-}
 
 function ProductCard({ p }: { p: ProductListItem }) {
   const visual = getProductVisual({
@@ -356,5 +304,81 @@ function ProductCard({ p }: { p: ProductListItem }) {
         </p>
       )}
     </Link>
+  );
+}
+
+/** Photo with a dark gradient so overlaid text stays readable. */
+function PhotoTile({
+  src, alt, className = '', priority, children,
+}: { src: string; alt: string; className?: string; priority?: boolean; children: React.ReactNode }) {
+  return (
+    <div className={`relative rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-spice-pepper flex items-end p-4 md:p-5 ${className}`}>
+      <Image src={src} alt={alt} fill sizes="(min-width: 768px) 400px, 66vw" className="object-cover" priority={priority} />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" aria-hidden />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
+
+function CategoryCard({
+  href, title, blurb, image,
+}: { href: string; title: string; blurb: string; tone?: string; ink?: string; image: string }) {
+  return (
+    <Link
+      href={href}
+      className="group relative rounded-2xl p-7 block aspect-[4/5] overflow-hidden flex flex-col justify-between text-white hover:-translate-y-1 transition shadow-xl hover:shadow-2xl ring-1 ring-white/10 bg-spice-pepper"
+    >
+      <Image src={image} alt="" fill sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" aria-hidden />
+      <span className="relative text-[10px] tracking-[0.3em] uppercase text-amber-300">Category</span>
+      <div className="relative">
+        <h3 className="text-2xl font-bold leading-tight">{title}</h3>
+        <p className="text-sm text-zinc-200 mt-2">{blurb}</p>
+        <span className="inline-block mt-4 text-sm font-semibold underline underline-offset-4">
+          Explore →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function ChannelCard({
+  title, body, href, tag, image,
+}: { title: string; body: string; href: string; tone?: string; tag: string; image: string }) {
+  return (
+    <Link
+      href={href}
+      className="group relative text-white rounded-3xl p-10 md:p-12 block min-h-[320px] hover:opacity-95 transition shadow-2xl ring-1 ring-white/10 overflow-hidden bg-spice-pepper"
+    >
+      <Image src={image} alt="" fill sizes="(min-width: 768px) 640px, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" aria-hidden />
+      <div className="relative">
+        <span className="text-[10px] tracking-[0.3em] uppercase text-amber-300">{tag}</span>
+        <h3 className="text-3xl md:text-4xl font-bold tracking-tight mt-3">{title}</h3>
+        <p className="text-zinc-200 max-w-md mt-4 leading-relaxed">{body}</p>
+        <span className="inline-block mt-8 font-semibold underline underline-offset-4">
+          Learn more →
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function RecipeCard({
+  title, meta, spice, image,
+}: { title: string; meta: string; tone?: string; spice: string; image: string }) {
+  return (
+    <div className="glass-card overflow-hidden hover:border-amber-400/30 transition">
+      <div className="h-48 relative overflow-hidden bg-spice-pepper">
+        <Image src={image} alt={title} fill sizes="(min-width: 768px) 400px, 100vw" className="object-cover" />
+        <span className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-white bg-black/50 backdrop-blur px-2.5 py-1 rounded-full z-10">
+          {spice}
+        </span>
+      </div>
+      <div className="p-5">
+        <h3 className="text-xl font-bold">{title}</h3>
+        <p className="text-xs tracking-[0.15em] uppercase text-zinc-500 mt-2">{meta}</p>
+      </div>
+    </div>
   );
 }

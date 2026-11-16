@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { ProductVisual } from '@/lib/catalog';
 
 /** Renders a square product visual:
@@ -29,12 +30,14 @@ export function ProductTile({
       <div
         className={`relative aspect-square ${radius} overflow-hidden ring-1 ring-black/5 shadow-xl bg-white ${className}`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/* next/image serves a resized WebP/AVIF instead of the 1–2 MB source PNG */}
+        <Image
           src={visual.image}
           alt={alt}
-          className={`w-full h-full object-contain ${imgPadding} transition-transform duration-300 group-hover:scale-[1.03]`}
-          loading="lazy"
+          fill
+          sizes={size === 'detail' ? '(min-width: 768px) 600px, 100vw' : '(min-width: 1024px) 380px, (min-width: 768px) 33vw, 50vw'}
+          priority={size === 'detail'}
+          className={`object-contain ${imgPadding} transition-transform duration-300 group-hover:scale-[1.03]`}
         />
       </div>
     );
