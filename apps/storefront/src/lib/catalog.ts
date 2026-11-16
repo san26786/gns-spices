@@ -854,6 +854,10 @@ const MANUAL_IMAGE_OVERRIDES: Record<string, string> = {
   'fennel-seeds':          '/products/funnel-seeds.png',
   'bay-leaves':            '/products/bay-leaf.png',
   'black-pepper-whole':    '/products/black-pepper.png',
+  // Products seeded in the API with slugs that differ from the photo file names
+  'black-pepper-tellicherry': '/products/black-pepper.png',
+  'cumin-whole':           '/products/cumin.png',
+  'cardamom-green':        '/products/green-cardemom.png',
   'white-pepper-whole':    '/products/white-pepper.png',
   'green-cardamom-whole':  '/products/green-cardemom.png',
   'black-cardamom-whole':  '/products/whole-black-cardemom.png',

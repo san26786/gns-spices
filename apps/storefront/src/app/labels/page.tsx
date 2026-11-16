@@ -1,4 +1,5 @@
 import { barcodeSpec, barcodeSvg, CODES_BASE_URL, listCodes, qrSvg, scanUrl, type CodesListItem } from '@/lib/codes';
+import { getProductVisual } from '@/lib/catalog';
 import { PrintButton } from './print-button';
 
 // Every product's QR code and every pack's barcode, generated from the live
@@ -27,6 +28,14 @@ export default async function LabelsPage() {
   return (
     <div className="labels-page max-w-7xl mx-auto px-6 py-14 text-white">
       <style>{PRINT_CSS}</style>
+      <header className="print-only hidden">
+        <p style={{ fontSize: '9pt', letterSpacing: '0.3em', fontWeight: 700 }}>GNS SPICES</p>
+        <h1 style={{ fontSize: '20pt', fontWeight: 700, margin: '2px 0 4px' }}>Product photos, QR codes &amp; barcodes</h1>
+        <p style={{ fontSize: '9pt' }}>
+          {products.length} products · {packs} packs · generated {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}.
+          QR codes open {CODES_BASE_URL}/p/&lt;code&gt; and always show the current product page. Barcodes carry the pack SKU (Code 128) until a GS1 EAN-13 is added.
+        </p>
+      </header>
 
       <div className="no-print flex flex-wrap items-end justify-between gap-6">
         <div className="max-w-3xl">
@@ -60,10 +69,20 @@ function ProductCard({
   qr: string;
   bars: { v: CodesListItem['variants'][number]; svg: string; spec: ReturnType<typeof barcodeSpec> }[];
 }) {
+  const photo = getProductVisual({ slug: p.slug, name: p.name, category: p.category?.slug }).image;
   return (
-    <section className="label-card glass-card p-6 md:p-7 grid md:grid-cols-[200px_minmax(0,1fr)] gap-7">
+    <section className="label-card glass-card p-6 md:p-7 grid sm:grid-cols-[160px_160px_minmax(0,1fr)] gap-6">
+      <div className="photo-cell">
+        {photo ? (
+          // Plain <img> (eager) so the photo is present when the page is printed or saved as PDF.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={`/_next/image?url=${encodeURIComponent(photo)}&w=384&q=75`} alt={p.name} loading="eager" className="w-[160px] h-[160px] object-contain bg-white rounded-xl p-2" />
+        ) : (
+          <div className="w-[160px] h-[160px] rounded-xl bg-white/5 border border-white/10 grid place-items-center text-xs text-zinc-500 text-center p-3">No product photo yet</div>
+        )}
+      </div>
       <div>
-        <div className="bg-white rounded-xl p-2 w-[200px] max-w-full" dangerouslySetInnerHTML={{ __html: qr }} />
+        <div className="bg-white rounded-xl p-2 w-[160px] max-w-full" dangerouslySetInnerHTML={{ __html: qr }} />
         <p className="mt-2 font-mono text-xs text-zinc-400 break-all">{scanUrl(p.skuRoot)}</p>
         <p className="no-print mt-2 text-xs flex gap-3">
           <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/qr/${p.skuRoot}?download`}>SVG</a>
@@ -110,15 +129,20 @@ function ProductCard({
 const PRINT_CSS = `
 @media print {
   @page { size: A4; margin: 10mm; }
-  body { background: #fff !important; color: #000 !important; }
+  html, body { background: #fff !important; color: #000 !important; min-height: 0 !important; }
+  body { background-image: none !important; }
   body > *:not(main), .no-print { display: none !important; }
   .label-card h2 { flex: 1 1 100%; font-size: 18pt !important; }
   .labels-page { color: #000 !important; padding: 0 !important; max-width: none !important; }
   .label-card { background: #fff !important; border: 1px solid #ccc !important; backdrop-filter: none !important;
-    break-inside: avoid; page-break-inside: avoid; grid-template-columns: 150px minmax(0,1fr) !important; padding: 12px !important; }
+    break-inside: avoid; page-break-inside: avoid; grid-template-columns: 120px 120px minmax(0,1fr) !important; gap: 14px !important; padding: 12px !important; margin-bottom: 8px; }
   .label-card * { color: #000 !important; }
-  .label-card > div > div:first-child { width: 150px !important; }
+  .label-card img, .label-card .photo-cell > div { width: 120px !important; height: 120px !important; }
+  .label-card > div:nth-child(2) > div:first-child { width: 120px !important; }
+  .label-card p.font-mono { font-size: 7pt !important; }
   .bar-cell { break-inside: avoid; }
-  .label-card .grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  .label-card .grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 8px !important; margin-top: 8px !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-only { display: block !important; margin-bottom: 10px; }
 }
 `;
