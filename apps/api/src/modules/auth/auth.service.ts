@@ -29,6 +29,7 @@ export class AuthService {
     password: string;
     firstName?: string;
     lastName?: string;
+    phone?: string;
     region?: string;
   }) {
     const existing = await this.prisma.user.findUnique({ where: { email: input.email } });
@@ -39,8 +40,9 @@ export class AuthService {
       data: {
         email: input.email,
         passwordHash,
-        firstName: input.firstName,
-        lastName: input.lastName,
+        firstName: input.firstName || null,
+        lastName: input.lastName || null,
+        phone: input.phone || null,
         defaultRegion: input.region ?? 'GB',
         defaultCurrency: regionToCurrency(input.region ?? 'GB'),
       },

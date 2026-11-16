@@ -63,6 +63,7 @@ export class CartService {
         sku: i.variant.sku,
         productSlug: i.variant.product.slug,
         productName: displayName,
+        label: i.variant.label,
         weightGrams: i.variant.weightGrams,
         packaging: i.variant.packaging,
         qty: i.qty,

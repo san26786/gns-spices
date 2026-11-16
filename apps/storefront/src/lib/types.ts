@@ -59,6 +59,7 @@ export interface CartResponse {
     sku: string;
     productSlug: string;
     productName: string;
+    label: string | null;
     weightGrams: number;
     packaging: string;
     qty: number;

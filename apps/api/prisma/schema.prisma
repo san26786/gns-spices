@@ -806,3 +806,23 @@ model Coupon {
 
   @@map("coupons")
 }
+
+// One-shot tokens emailed to customers (email verification, password reset).
+// Only the SHA-256 hash is stored, so a database leak can't be replayed.
+model EmailToken {
+  id        String         @id @default(uuid()) @db.Uuid
+  userId    String         @map("user_id") @db.Uuid
+  purpose   EmailTokenPurpose
+  tokenHash String         @unique @map("token_hash") @db.Char(64)
+  expiresAt DateTime       @map("expires_at") @db.Timestamptz
+  usedAt    DateTime?      @map("used_at") @db.Timestamptz
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([userId, purpose])
+  @@map("email_tokens")
+}
+
+enum EmailTokenPurpose {
+  verify_email
+  reset_password
+}

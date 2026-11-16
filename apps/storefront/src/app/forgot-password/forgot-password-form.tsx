@@ -1,5 +1,6 @@
 'use client';
 
+import { api } from '@/lib/admin-api';
 import { useState } from 'react';
 
 export function ForgotPasswordForm() {
@@ -14,16 +15,8 @@ export function ForgotPasswordForm() {
     setError(null);
     setMessage(null);
     try {
-      const res = await fetch('/api/auth/request-password-reset', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; message?: string };
-      if (!res.ok || body.ok === false) {
-        throw new Error(body.error ?? 'Failed to send reset link');
-      }
-      setMessage(body.message ?? "If that email is registered, we've sent a reset link.");
+      await api.post('/auth/request-password-reset', { email });
+      setMessage("If that email is registered, we've sent a reset link. It works for one hour.");
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to send reset link');
     } finally {

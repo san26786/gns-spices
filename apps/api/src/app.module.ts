@@ -9,6 +9,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { MailModule } from './modules/mail/mail.service';
 import { PublicFormsModule } from './modules/public-forms/public-forms.controller';
 import { AdminModule } from './modules/admin/admin-ops.controller';
+import { CheckoutModule } from './modules/checkout/checkout.controller';
 import { HealthController } from './modules/health/health.controller';
 import { JwtGuard } from './common/guards/jwt.guard';
 
@@ -27,6 +28,7 @@ import { JwtGuard } from './common/guards/jwt.guard';
     MailModule,
     PublicFormsModule,
     AdminModule,
+    CheckoutModule,
   ],
   controllers: [HealthController],
   // RolesGuard is instantiated via a factory (see common/guards/roles.guard.ts)

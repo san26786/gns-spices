@@ -38,6 +38,10 @@ export class MailService {
     if (!to.length) return;
     if (!config.mail.resendApiKey) {
       this.log.warn(`RESEND_API_KEY not set — not sending "${msg.subject}" to ${to.join(', ')}`);
+      if (config.nodeEnv !== 'production') {
+        // Local development: print the email's links so verify/reset flows can be tested.
+        for (const m of msg.html.matchAll(/href="([^"]+)"/g)) this.log.warn(`  link: ${m[1]!.replace(/&amp;/g, '&')}`);
+      }
       return;
     }
     try {

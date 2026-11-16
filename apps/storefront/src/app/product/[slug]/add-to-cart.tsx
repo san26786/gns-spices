@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { api } from '@/lib/admin-api';
 
 interface Variant { id: string; sku: string; label?: string | null; weightGrams: number; packaging: string }
 
@@ -23,18 +24,15 @@ export function AddToCart({
 
   async function handleAdd() {
     setError(null);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/v1/cart/items`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ variantId, qty }),
-    });
-    if (res.status === 401) {
-      router.push(`/login?next=/product/${_slug}`);
-      return;
-    }
-    if (!res.ok) {
-      setError((await res.text()) || `Failed (${res.status})`);
+    try {
+      await api.post('/cart/items', { variantId, qty });
+    } catch (e) {
+      const err = e as { status?: number; code?: string; message: string };
+      if (err.status === 401) {
+        router.push(`/login?next=/product/${_slug}`);
+        return;
+      }
+      setError(err.code?.startsWith('no_price') ? 'This pack is not on sale online yet. Contact us to order it.' : err.message);
       return;
     }
     setAdded(true);

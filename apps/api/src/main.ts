@@ -10,6 +10,7 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'debug'],
+    rawBody: true, // Stripe webhook signatures are checked against the raw body
   });
 
   app.use(helmet());

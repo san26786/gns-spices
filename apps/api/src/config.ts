@@ -23,6 +23,11 @@ const schema = z.object({
   MAIL_FROM: z.string().default('GNS Spices <no-reply@gnsspices.com>'),
   ADMIN_NOTIFY_EMAIL: z.string().optional(),
   SITE_URL: z.string().default('http://localhost:3100'),
+  // Payments (Stripe Checkout). Without STRIPE_SECRET_KEY checkout is switched off.
+  STRIPE_SECRET_KEY: z.string().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().optional(),
+  SHIPPING_FLAT_GBP: z.coerce.number().min(0).default(4.95),
+  FREE_SHIPPING_OVER_GBP: z.coerce.number().min(0).default(40),
   COOKIE_SECURE: z
     .union([z.literal('true'), z.literal('false')])
     .transform((v) => v === 'true')
@@ -61,4 +66,12 @@ export const config = {
     adminNotify: env.ADMIN_NOTIFY_EMAIL || undefined,
   },
   siteUrl: env.SITE_URL.replace(/\/+$/, ''),
+  stripe: {
+    secretKey: env.STRIPE_SECRET_KEY || undefined,
+    webhookSecret: env.STRIPE_WEBHOOK_SECRET || undefined,
+  },
+  shipping: {
+    flat: env.SHIPPING_FLAT_GBP,
+    freeOver: env.FREE_SHIPPING_OVER_GBP,
+  },
 } as const;

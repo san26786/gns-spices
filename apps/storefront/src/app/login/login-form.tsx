@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { api } from '@/lib/admin-api';
 
 export function LoginForm({ next }: { next: string }) {
   const router = useRouter();
@@ -16,16 +17,7 @@ export function LoginForm({ next }: { next: string }) {
     setPending(true);
     setError(null);
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
-      if (!res.ok || body.ok === false) {
-        throw new Error(body.error ?? 'Login failed');
-      }
+      await api.post('/auth/login', { email, password });
       router.push(next);
       router.refresh();
     } catch (e) {

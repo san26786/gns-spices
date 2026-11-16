@@ -30,6 +30,20 @@ const FRIENDLY: Record<string, string> = {
   invalid_credentials: 'Email or password is incorrect.',
   staff_only: 'This account does not have admin access.',
   validation_failed: 'Some fields are missing or invalid.',
+  email_in_use: 'An account with this email already exists. Try signing in or resetting your password.',
+  disposable_email: 'Please use a permanent email address.',
+  registration_rejected: 'We could not create the account. Please try again.',
+  token_invalid: 'This link is not valid. Request a new one.',
+  token_used: 'This link has already been used. Request a new one if you need it.',
+  token_expired: 'This link has expired. Request a new one.',
+  weak_password: 'Password must be at least 8 characters and include a letter and a number.',
+  current_password_wrong: 'Your current password is incorrect.',
+  account_not_active: 'This account is not active. Contact us for help.',
+  too_many_requests: 'Too many attempts. Please wait a few minutes and try again.',
+  cart_empty: 'Your cart is empty.',
+  payments_not_configured: 'Online payment is not switched on yet. Please contact us to place your order.',
+  coupon_invalid: 'This discount code is not valid.',
+  order_not_found: 'We could not find that order.',
 };
 
 export async function adminFetch<T>(path: string, init: RequestInit = {}, retry = true): Promise<T> {
@@ -37,24 +51,27 @@ export async function adminFetch<T>(path: string, init: RequestInit = {}, retry 
   if (init.body && !headers.has('content-type')) headers.set('content-type', 'application/json');
   const res = await fetch(`${BASE}${path}`, { ...init, headers, credentials: 'include', cache: 'no-store' });
 
-  if (res.status === 401 && retry && !path.startsWith('/auth/')) {
+  if (res.status === 401 && retry && !/^\/auth\/(login|register|refresh|logout)/.test(path)) {
     if (await refreshSession()) return adminFetch<T>(path, init, false);
   }
   if (!res.ok) {
     let code = `http_${res.status}`;
     let detail = '';
     let fields: string[] = [];
+    let firstFieldMsg = '';
     try {
       const body = await res.json();
       code = body.code ?? code;
       detail = body.detail ?? '';
-      fields = Object.keys(body.errors?.fieldErrors ?? {});
+      const fe = (body.errors?.fieldErrors ?? {}) as Record<string, string[]>;
+      fields = Object.keys(fe);
+      firstFieldMsg = Object.values(fe).flat().find((m) => m.length > 20 && !/^(String|Invalid|Expected|Required)/.test(m)) ?? '';
     } catch { /* not json */ }
     const key = String(detail || code).toLowerCase();
     const message =
       code === 'validation_error'
-        ? `Please check: ${fields.join(', ') || 'the form fields'}.`
-        : FRIENDLY[key] ?? (detail || `Request failed (${res.status})`);
+        ? firstFieldMsg || `Please check: ${fields.join(', ') || 'the form fields'}.`
+        : FRIENDLY[key] ?? (res.status === 429 ? FRIENDLY.too_many_requests : detail && !/^[a-z_]+$/.test(detail) ? detail : `Something went wrong (${res.status}). Please try again.`);
     throw new AdminApiError(res.status, key, message);
   }
   if (res.status === 204) return undefined as T;
@@ -69,6 +86,9 @@ export const adminApi = {
   del: <T>(p: string) => adminFetch<T>(p, { method: 'DELETE' }),
   base: BASE,
 };
+
+/** Same client for customer-facing pages (account, cart, checkout). */
+export const api = adminApi;
 
 export const gbp = (n: number | null | undefined) =>
   n == null ? '—' : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(n);

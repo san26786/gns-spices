@@ -1,5 +1,6 @@
 'use client';
 
+import { api } from '@/lib/admin-api';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -20,19 +21,10 @@ export function ResetPasswordForm({ token }: { token: string }) {
     }
     setPending(true);
     try {
-      const res = await fetch('/api/auth/reset-password', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ token, password }),
-      });
-      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
-      if (!res.ok || body.ok === false) {
-        throw new Error(body.error ?? 'Reset failed');
-      }
+      await api.post('/auth/reset-password', { token, password });
       setDone(true);
       setTimeout(() => {
-        router.push('/account');
+        router.push('/login');
         router.refresh();
       }, 1500);
     } catch (e) {
@@ -47,7 +39,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
       <div className="text-center space-y-3">
         <div className="text-4xl">✅</div>
         <p className="text-white font-bold">Password updated.</p>
-        <p className="text-zinc-400 text-sm">Taking you to your account…</p>
+        <p className="text-zinc-400 text-sm">Sign in with your new password…</p>
       </div>
     );
   }

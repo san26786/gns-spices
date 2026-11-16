@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   HttpCode,
@@ -10,33 +11,45 @@ import {
 import type { Request, Response } from 'express';
 import { z } from 'zod';
 import { AuthService } from './auth.service';
+import { AccountService, isDisposable, passwordOk, PASSWORD_RULE } from './account.service';
 import { Public } from '../../common/decorators/public.decorator';
 import { config } from '../../config';
 
 const RegisterDto = z.object({
-  email: z.string().email(),
-  password: z.string().min(12).max(128),
-  firstName: z.string().max(80).optional(),
-  lastName: z.string().max(80).optional(),
+  email: z.string().trim().toLowerCase().email().max(254),
+  password: z.string().refine(passwordOk, PASSWORD_RULE.message),
+  firstName: z.string().trim().max(80).optional(),
+  lastName: z.string().trim().max(80).optional(),
+  phone: z.string().trim().max(24).optional(),
   region: z.enum(['GB', 'IN', 'AE', 'SA', 'US', 'EU']).optional(),
+  /** Honeypot: must stay empty. */
+  website: z.string().optional(),
+  /** Epoch ms when the form was opened; bots submit instantly. */
+  formOpenedAt: z.coerce.number().optional(),
 });
 
 const LoginDto = z.object({
-  email: z.string().email(),
+  email: z.string().trim().toLowerCase().email(),
   password: z.string().min(1),
 });
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(private readonly auth: AuthService, private readonly account: AccountService) {}
 
   @Public()
   @Post('register')
   @HttpCode(201)
-  async register(@Body() body: unknown, @Res({ passthrough: true }) res: Response) {
+  async register(@Body() body: unknown, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const dto = RegisterDto.parse(body);
+    // Bots: fill the honeypot or submit within 1.5s of opening the form. Reject quietly.
+    if (dto.website || (dto.formOpenedAt !== undefined && Date.now() - dto.formOpenedAt < 1500)) {
+      throw new BadRequestException('registration_rejected');
+    }
+    if (isDisposable(dto.email)) throw new BadRequestException('disposable_email');
     const tokens = await this.auth.register(dto);
     this.setCookies(res, tokens.accessToken, tokens.refreshToken);
+    await this.account.sendVerification(tokens.user.sub);
     return { user: tokens.user };
   }
 
