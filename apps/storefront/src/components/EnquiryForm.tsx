@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { PUBLIC_API_V1 } from '@/lib/api-base';
 
 // One form component for every public enquiry (B2B application, quote,
 // private label brief, contact). Submissions go to POST /v1/enquiries and land
 // in the admin inbox at /admin/enquiries.
 
-const API = `${process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:4000'}/v1`;
+const API = PUBLIC_API_V1;
 
 type Top = 'name' | 'email' | 'phone' | 'company' | 'city' | 'country' | 'message';
 type Detail = 'businessType' | 'brandName' | 'productType' | 'quantity' | 'topic' | 'products';

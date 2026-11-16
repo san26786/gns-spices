@@ -1,0 +1,15 @@
+# Never upload secrets or local-only files to Vercel
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+.claude
+docs
+node_modules
+**/node_modules
+**/.next
+**/dist
+**/*.tsbuildinfo
+infra

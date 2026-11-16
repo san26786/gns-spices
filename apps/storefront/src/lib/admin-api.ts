@@ -3,7 +3,9 @@
 // Browser-side client for the /v1/admin API. Uses the API's httpOnly session
 // cookies (gns_at / gns_rt); on a 401 it refreshes the session once and retries.
 
-const BASE = `${process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:4000'}/v1`;
+import { PUBLIC_API_V1 } from './api-base';
+
+const BASE = PUBLIC_API_V1;
 
 export class AdminApiError extends Error {
   constructor(public status: number, public code: string, message: string) {

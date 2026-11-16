@@ -1,28 +1,9 @@
-import 'reflect-metadata';
-import { NestFactory } from '@nestjs/core';
 import { Logger } from '@nestjs/common';
-import helmet from 'helmet';
-import cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
+import { createApp } from './app-factory';
 import { config } from './config';
-import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'log', 'debug'],
-    rawBody: true, // Stripe webhook signatures are checked against the raw body
-  });
-
-  app.use(helmet());
-  app.use(cookieParser());
-  app.enableCors({
-    origin: config.corsOrigin,
-    credentials: true,
-  });
-  app.setGlobalPrefix('v1');
-  // Validation is handled per-controller via Zod schemas — no global pipe needed.
-  app.useGlobalFilters(new GlobalExceptionFilter());
-
+  const app = await createApp();
   await app.listen(config.apiPort, config.apiHost);
   Logger.log(`GNS API listening on http://${config.apiHost}:${config.apiPort}/v1`, 'Bootstrap');
 }

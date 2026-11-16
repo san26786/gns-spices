@@ -1,6 +1,8 @@
 // Lightweight typed fetch wrapper. Forwards cookies for SSR, throws on non-2xx.
 
-const BASE = process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:4000';
+// Server-side calls (pages, route handlers) go straight to the API origin.
+// In the browser, use PUBLIC_API_BASE from ./api-base instead.
+const BASE = (process.env.API_ORIGIN ?? (process.env.NEXT_PUBLIC_API_BASE === 'same-origin' ? undefined : process.env.NEXT_PUBLIC_API_BASE) ?? 'http://localhost:4000').replace(/\/+$/, '');
 
 export async function apiFetch<T>(
   path: string,

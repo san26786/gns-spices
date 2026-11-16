@@ -87,7 +87,7 @@ export class AuthController {
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     await this.auth.logout(req.cookies?.['gns_rt']);
     res.clearCookie('gns_at', { domain: config.cookie.domain });
-    res.clearCookie('gns_rt', { domain: config.cookie.domain });
+    res.clearCookie('gns_rt', { domain: config.cookie.domain, path: '/v1/auth' });
   }
 
   private setCookies(res: Response, access: string, refresh: string) {

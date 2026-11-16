@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { PUBLIC_API_V1 } from '@/lib/api-base';
 
-const API = `${process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:4000'}/v1`;
+const API = PUBLIC_API_V1;
 
 export function NewsletterForm({ source = 'homepage' }: { source?: string }) {
   const [email, setEmail] = useState('');

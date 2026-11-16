@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm exec prisma generate && pnpm run build && mkdir -p public",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": { "maxDuration": 30, "includeFiles": "dist/**" }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+}
