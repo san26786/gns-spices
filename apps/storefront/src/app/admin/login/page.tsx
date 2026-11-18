@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { adminApi } from '@/lib/admin-api';
@@ -43,6 +44,7 @@ function LoginForm() {
       <label className="grid gap-1.5">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-zinc-400">Password</span>
         <input id="admin-password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} className="input-dark" />
+        <Link href="/admin/forgot-password" className="justify-self-end text-xs text-amber-400 hover:text-amber-300">Forgot password?</Link>
       </label>
       {error && <p role="alert" className="text-sm text-red-300">{error}</p>}
       <button type="submit" disabled={busy} className="btn-primary">{busy ? 'Signing in…' : 'Sign in'}</button>

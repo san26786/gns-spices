@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCart } from '@/lib/cart';
 
 export default function SiteHeader() {
   const pathname = usePathname();
+  const { itemCount } = useCart();
   if (pathname?.startsWith('/partner-strategy') || pathname?.startsWith('/admin')) return null;
 
   return (
@@ -33,7 +35,7 @@ export default function SiteHeader() {
             <Link href="/shop?category=masalas" className="hover:text-amber-400 transition">Masalas</Link>
             <Link href="/b2b" className="hover:text-amber-400 transition">B2B</Link>
             <Link href="/private-label" className="hover:text-amber-400 transition">Private Label</Link>
-            <Link href="/cart" className="hover:text-amber-400 transition">Cart</Link>
+            <CartIcon count={itemCount} />
             <Link
               href="/account"
               className="px-4 py-1.5 rounded-full border border-white/20 hover:border-amber-400 hover:text-amber-400 transition"
@@ -43,10 +45,31 @@ export default function SiteHeader() {
           </nav>
           <nav className="flex md:hidden items-center gap-4 text-sm font-medium text-zinc-200">
             <Link href="/shop" className="hover:text-amber-400">Shop</Link>
-            <Link href="/cart" className="hover:text-amber-400">Cart</Link>
+            <CartIcon count={itemCount} />
           </nav>
         </div>
       </header>
     </>
+  );
+}
+
+function CartIcon({ count }: { count: number }) {
+  return (
+    <Link
+      href="/cart"
+      aria-label={count ? `Cart, ${count} item${count === 1 ? '' : 's'}` : 'Cart, empty'}
+      className="relative inline-flex items-center justify-center w-10 h-10 -my-2 rounded-full text-zinc-200 hover:text-amber-400 transition"
+    >
+      <svg aria-hidden viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.7a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2" />
+        <circle cx="9.5" cy="20" r="1.3" />
+        <circle cx="17.5" cy="20" r="1.3" />
+      </svg>
+      {count > 0 && (
+        <span className="absolute -top-0.5 -right-0.5 min-w-[1.25rem] h-5 px-1 rounded-full bg-amber-500 text-amber-950 text-[11px] font-bold leading-5 text-center tabular-nums shadow-amber">
+          {count > 99 ? '99+' : count}
+        </span>
+      )}
+    </Link>
   );
 }

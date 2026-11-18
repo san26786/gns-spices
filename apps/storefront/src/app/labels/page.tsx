@@ -34,6 +34,7 @@ export default async function LabelsPage() {
         <p style={{ fontSize: '9pt' }}>
           {products.length} products · {packs} packs · generated {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}.
           QR codes open {CODES_BASE_URL}/p/&lt;code&gt; and always show the current product page. Barcodes carry the pack SKU (Code 128) until a GS1 EAN-13 is added.
+          Click any QR code or barcode in this PDF to open the same product details a scan shows.
         </p>
       </header>
 
@@ -45,7 +46,8 @@ export default async function LabelsPage() {
             {products.length} products · {packs} packs. Each QR code opens{' '}
             <code className="text-amber-300">{CODES_BASE_URL}/p/&lt;code&gt;</code>, and each barcode carries the pack’s SKU.
             Scans are looked up in the database every time, so changing a product’s name, price, description or
-            page never needs a new code. Only print new codes for new products or packs.
+            page never needs a new code. Only print new codes for new products or packs. Click any QR code or
+            barcode to open the same details a scan shows. The links also work in the saved PDF.
           </p>
         </div>
         <PrintButton />
@@ -82,11 +84,22 @@ function ProductCard({
         )}
       </div>
       <div>
-        <div className="bg-white rounded-xl p-2 w-[160px] max-w-full" dangerouslySetInnerHTML={{ __html: qr }} />
-        <p className="mt-2 font-mono text-xs text-zinc-400 break-all">{scanUrl(p.skuRoot)}</p>
-        <p className="no-print mt-2 text-xs flex gap-3">
-          <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/qr/${p.skuRoot}?download`}>SVG</a>
+        {/* Clicking the code opens the same page a scan opens. Absolute URL so the link also works in the saved PDF. */}
+        <a
+          href={scanUrl(p.skuRoot)}
+          target="_blank"
+          rel="noreferrer"
+          title={`Open ${p.name} (same as scanning this QR code)`}
+          className="code-link block bg-white rounded-xl p-2 w-[160px] max-w-full cursor-pointer transition hover:ring-2 hover:ring-amber-400"
+          dangerouslySetInnerHTML={{ __html: qr }}
+        />
+        <a href={scanUrl(p.skuRoot)} target="_blank" rel="noreferrer" className="mt-2 block font-mono text-xs text-zinc-400 hover:text-amber-300 break-all">
+          {scanUrl(p.skuRoot)}
+        </a>
+        <p className="no-print mt-2 text-xs flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="text-zinc-400">Download QR:</span>
           <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/qr/${p.skuRoot}?format=png&download`}>PNG</a>
+          <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/qr/${p.skuRoot}?download`}>SVG</a>
         </p>
       </div>
 
@@ -105,16 +118,24 @@ function ProductCard({
           <div className="mt-5 grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {bars.map(({ v, svg, spec }) => (
               <figure key={v.sku} className="bar-cell m-0 min-w-0">
-                <div className="bg-white rounded-lg p-2 [&_svg]:w-full [&_svg]:h-auto" dangerouslySetInnerHTML={{ __html: svg }} />
+                <a
+                  href={scanUrl(v.sku)}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={`Open ${p.name} (same as scanning this barcode)`}
+                  className="code-link block bg-white rounded-lg p-2 cursor-pointer transition hover:ring-2 hover:ring-amber-400 [&_svg]:w-full [&_svg]:h-auto"
+                  dangerouslySetInnerHTML={{ __html: svg }}
+                />
                 <figcaption className="mt-2 text-sm">
                   <span className="font-semibold">{v.label ?? `${fmtWeight(v.weightGrams)} · ${v.packaging}`}</span>
                   <span className="block text-xs text-zinc-400">
                     {spec.bcid === 'ean13' ? `EAN-13 · SKU ${v.sku}` : `Code 128 · no GTIN yet`}
                     {!v.isActive && ' · inactive'}
                   </span>
-                  <span className="no-print text-xs flex gap-3 mt-1">
-                    <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/barcode/${v.sku}?download`}>SVG</a>
+                  <span className="no-print text-xs flex flex-wrap gap-x-3 mt-1">
+                    <span className="text-zinc-400">Download barcode:</span>
                     <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/barcode/${v.sku}?format=png&download`}>PNG</a>
+                    <a className="text-amber-400 hover:text-amber-300" href={`/api/codes/barcode/${v.sku}?download`}>SVG</a>
                   </span>
                 </figcaption>
               </figure>
@@ -141,6 +162,7 @@ const PRINT_CSS = `
   .label-card > div:nth-child(2) > div:first-child { width: 120px !important; }
   .label-card p.font-mono { font-size: 7pt !important; }
   .bar-cell { break-inside: avoid; }
+  .label-card a.code-link { box-shadow: none !important; }
   .label-card .grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 8px !important; margin-top: 8px !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .print-only { display: block !important; margin-bottom: 10px; }

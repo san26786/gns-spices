@@ -33,7 +33,8 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
           <>
             <Link href="/admin/products" className={btnGhostSm}>← All products</Link>
             <a href={`/product/${p.slug}`} target="_blank" rel="noreferrer" className={btnGhostSm}>View in shop</a>
-            <a href={`/api/codes/qr/${p.skuRoot}?download`} className={btnGhostSm}>Download QR</a>
+            <a href={`/api/codes/qr/${p.skuRoot}?format=png&download`} className={btnGhostSm}>Download QR (PNG)</a>
+            <a href={`/api/codes/qr/${p.skuRoot}?download`} className={btnGhostSm}>QR (SVG)</a>
           </>
         }
       />
@@ -48,11 +49,16 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
           onSubmit={async (v) => setData(await adminApi.patch<Product>(`/admin/products/${id}`, v))}
         />
         <div className="glass-card p-4 text-center">
-          <div className="bg-white rounded-lg p-2">
+          {/* Clicking opens the same page a scan opens. */}
+          <a href={`/p/${encodeURIComponent(p.skuRoot)}`} target="_blank" rel="noreferrer" title="Open the page this QR code opens when scanned" className="block bg-white rounded-lg p-2 transition hover:ring-2 hover:ring-amber-400">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/api/codes/qr/${p.skuRoot}`} alt={`QR code for ${p.name}`} className="w-full h-auto" />
-          </div>
-          <p className="mt-2 text-xs text-zinc-400">Scans always open the current product page.</p>
+          </a>
+          <p className="mt-2 text-xs text-zinc-400">Click or scan to open the current product page.</p>
+          <p className="mt-2 text-xs flex justify-center gap-3">
+            <a href={`/api/codes/qr/${p.skuRoot}?format=png&download`} className="text-amber-400 hover:text-amber-300">Download PNG</a>
+            <a href={`/api/codes/qr/${p.skuRoot}?download`} className="text-amber-400 hover:text-amber-300">SVG</a>
+          </p>
         </div>
       </div>
 
@@ -109,7 +115,14 @@ function VariantRow({ v, onSaved }: { v: Variant; onSaved: (p: Product) => void 
       <tr className={dirty ? 'bg-amber-500/5' : undefined}>
         <td className="px-3 py-2 font-mono text-xs text-amber-300 whitespace-nowrap">
           {v.sku}
-          <a href={`/api/codes/barcode/${v.sku}?download`} className="block text-[10px] text-zinc-500 hover:text-zinc-300 font-sans">barcode ↓</a>
+          <a href={`/p/${encodeURIComponent(v.sku)}`} target="_blank" rel="noreferrer" title="Open the page this barcode opens when scanned" className="mt-1 block w-32 bg-white rounded p-1 transition hover:ring-2 hover:ring-amber-400">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/api/codes/barcode/${v.sku}`} alt={`Barcode for ${v.sku}`} className="w-full h-auto" />
+          </a>
+          <span className="mt-1 flex gap-2 text-[10px] font-sans">
+            <a href={`/api/codes/barcode/${v.sku}?format=png&download`} className="text-zinc-400 hover:text-amber-300">barcode PNG ↓</a>
+            <a href={`/api/codes/barcode/${v.sku}?download`} className="text-zinc-400 hover:text-amber-300">SVG ↓</a>
+          </span>
         </td>
         <td className="px-3 py-2"><input aria-label="Label" value={f.label ?? ''} onChange={(e) => setF({ ...f, label: e.target.value })} placeholder={fmtWeight(f.weightGrams)} className={`${inputCls} min-w-[150px]`} /></td>
         <td className="px-3 py-2"><input aria-label="Weight in grams" type="number" min={1} value={f.weightGrams} onChange={(e) => setF({ ...f, weightGrams: Number(e.target.value) })} className={`${inputCls} w-24`} /></td>

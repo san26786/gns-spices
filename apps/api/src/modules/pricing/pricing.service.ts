@@ -81,6 +81,36 @@ export class PricingService {
     );
   }
 
+  /**
+   * Price for one unit of each variant, or null when the variant has no price
+   * in the resolved list. Used to show many packs at once (shop grid).
+   */
+  async unitPrices(variantIds: string[], ctx: ResolveContext) {
+    let list: Awaited<ReturnType<PricingService['pickList']>>;
+    try {
+      list = await this.pickList(ctx);
+    } catch (e) {
+      if (e instanceof NotFoundException) return new Map<string, null>();
+      throw e;
+    }
+    const out = new Map<string, { unitPrice: Prisma.Decimal; baseUnitPrice: Prisma.Decimal; currency: string } | null>();
+    await Promise.all(
+      variantIds.map(async (variantId) => {
+        try {
+          const item = await this.pickItem(list.id, variantId, 1);
+          const rule = await this.pickRule(list.id, variantId, 1);
+          const base = item.unitPrice;
+          const unit = rule ? applyRule(base, rule.discountType, rule.discountValue) : base;
+          out.set(variantId, { unitPrice: unit, baseUnitPrice: base, currency: list.currency });
+        } catch (e) {
+          if (e instanceof NotFoundException) out.set(variantId, null);
+          else throw e;
+        }
+      }),
+    );
+    return out;
+  }
+
   /** Quantity break ladder for a variant — for PDP display. */
   async ladder(variantId: string, ctx: ResolveContext) {
     const list = await this.pickList(ctx);

@@ -8,6 +8,21 @@ import {
   type CatalogProduct,
 } from '@/lib/catalog';
 import { ProductTile } from '@/components/ProductTile';
+import { ShopAddToCart, type ShopPack } from '@/components/ShopAddToCart';
+import { apiFetch } from '@/lib/api';
+
+/** Packs and prices from the API, keyed by product slug. Empty if the API is down. */
+async function loadPacks(region: string): Promise<Record<string, ShopPack[]>> {
+  try {
+    const res = await apiFetch<{ data: Record<string, ShopPack[]> }>(
+      `/pricing/shop-packs?region=${encodeURIComponent(region)}`,
+      { revalidate: 120 },
+    );
+    return res.data;
+  } catch {
+    return {};
+  }
+}
 
 function tierCountLabel(n: number): string {
   if (n === 1) return 'House Selection';
@@ -35,6 +50,7 @@ export default async function ShopPage({
   // list we ship. The API (when up) is used for cart/orders/auth, not catalog.
   const items = filterCatalog(sp.category, sp.q);
   const totalCount = items.length;
+  const packs = await loadPacks(region);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-16 text-white">
@@ -87,7 +103,7 @@ export default async function ShopPage({
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {items.map((p) => (
-            <CatalogCard key={p.slug} product={p} />
+            <CatalogCard key={p.slug} product={p} packs={packs[p.slug]} />
           ))}
         </div>
       )}
@@ -112,7 +128,7 @@ function CategoryPill({
   );
 }
 
-function CatalogCard({ product }: { product: CatalogProduct }) {
+function CatalogCard({ product, packs }: { product: CatalogProduct; packs?: ShopPack[] }) {
   const categoryLabel = CATEGORY_META[product.category].label;
   const visual = getProductVisual({
     slug: product.slug,
@@ -120,14 +136,16 @@ function CatalogCard({ product }: { product: CatalogProduct }) {
     category: product.category,
   });
   return (
-    <article className="block group">
+    <article className="group flex flex-col">
+      {/* Photo, name and details open the product page. Add to cart sits outside the link so it never navigates. */}
+      <Link href={`/product/${product.slug}`} className="flex-1 flex flex-col">
       <ProductTile
         visual={visual}
         alt={product.name}
         className="mb-4 group-hover:shadow-2xl group-hover:-translate-y-0.5 transition"
       />
 
-      <div className="px-1">
+      <div className="px-1 flex-1 flex flex-col">
         <p className="text-[10px] tracking-[0.25em] uppercase text-zinc-500">{categoryLabel}</p>
         <h3 className="text-xl font-bold leading-tight text-white mt-1 group-hover:text-amber-400 transition">
           {product.name}
@@ -164,6 +182,12 @@ function CatalogCard({ product }: { product: CatalogProduct }) {
           ))}
         </ul>
       </div>
+      </Link>
+      {packs && (
+        <div className="px-1">
+          <ShopAddToCart slug={product.slug} name={product.name} image={visual.image ?? null} packs={packs} />
+        </div>
+      )}
     </article>
   );
 }

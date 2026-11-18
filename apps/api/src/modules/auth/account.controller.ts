@@ -66,8 +66,10 @@ export class AccountController {
   @HttpCode(200)
   requestReset(@Body() body: unknown, @Req() req: Request) {
     limit(req, 'reset-request', 5);
-    const dto = z.object({ email: z.string().trim().toLowerCase().email().max(254) }).parse(body);
-    return this.account.requestPasswordReset(dto.email);
+    const dto = z
+      .object({ email: z.string().trim().toLowerCase().email().max(254), scope: z.enum(['admin']).optional() })
+      .parse(body);
+    return this.account.requestPasswordReset(dto.email, dto.scope);
   }
 
   @Public()

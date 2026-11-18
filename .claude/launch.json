@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["-y", "pnpm@9.12.0", "dev"],
       "port": 3100
+    },
+    {
+      "name": "storefront",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "pnpm@9.12.0", "dev:web"],
+      "port": 3100
     }
   ]
 }

@@ -71,14 +71,17 @@ export class AccountService {
   }
 
   /** Always succeeds, so the form can't be used to find out who has an account. */
-  async requestPasswordReset(email: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+  /** `scope: 'admin'` (admin login page) only emails staff accounts, and links to the admin reset page. */
+  async requestPasswordReset(email: string, scope?: 'admin') {
+    const user = await this.prisma.user.findUnique({ where: { email }, include: { staffRole: true } });
     if (!user || user.deletedAt || user.status !== 'active') return { ok: true };
+    if (scope === 'admin' && !user.staffRole) return { ok: true };
     const token = await this.issue(user.id, 'reset_password');
-    const link = `${config.siteUrl}/reset-password?token=${encodeURIComponent(token)}`;
+    const path = scope === 'admin' ? '/admin/reset-password' : '/reset-password';
+    const link = `${config.siteUrl}${path}?token=${encodeURIComponent(token)}`;
     await this.mail.send({
       to: user.email,
-      subject: 'Reset your GNS Spices password',
+      subject: scope === 'admin' ? 'Reset your GNS Spices admin password' : 'Reset your GNS Spices password',
       html: emailLayout(
         'Reset your password',
         `<p style="font-size:14px;line-height:1.6">We received a request to reset the password for this email address.</p>

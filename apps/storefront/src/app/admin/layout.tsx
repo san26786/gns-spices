@@ -22,7 +22,8 @@ const NAV: Array<{ href: string; label: string; group?: string }> = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? '/admin';
   const router = useRouter();
-  const isLogin = pathname === '/admin/login';
+  // Pages reachable while signed out.
+  const isLogin = pathname === '/admin/login' || pathname === '/admin/forgot-password' || pathname === '/admin/reset-password';
   const [me, setMe] = useState<Me | null>(null);
   const [checked, setChecked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
