@@ -865,6 +865,9 @@ const MANUAL_IMAGE_OVERRIDES: Record<string, string> = {
   'sambar-masala':         '/products/sambhar-masala.png',
   'mango-pickle':          '/products/mano-pickle.png',
   'mixed-pickle':          '/products/mix-pickle.png',
+  'asafoetida-powder':     '/products/asafoetida-hing-powder.png',
+  'mango-powder':          '/products/mango-powder-amchur.png',
+  'black-salt':            '/products/black-salt-kala-namak.png',
 };
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'] as const;

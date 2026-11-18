@@ -6,7 +6,6 @@
     "rootDir": "./src",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "ignoreDeprecations": "6.0",
     "types": ["node"],
     "baseUrl": "./src",
     "paths": {
