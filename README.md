@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GNS Spices Platform
 
-## Getting Started
+Production-grade monorepo for D2C + B2B + Private Label spice commerce.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Backend** — NestJS 10 · TypeScript · Prisma · PostgreSQL
+- **Frontend** — Next.js 15 (App Router) · React 19 · Tailwind CSS
+- **Auth** — Custom JWT (HTTP-only cookies) with rotating refresh tokens
+- **DB** — PostgreSQL 16+ (any host; no extensions needed)
+
+## Layout
+
+```
+apps/
+  api/          NestJS service (REST, /v1)
+  storefront/   Next.js 15 customer site
+packages/
+  shared-types/ (reserved for generated DTOs)
+infra/
+  docker-compose.yml  (local Postgres + Redis)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js 20+
+- pnpm 9+  (`corepack enable && corepack prepare pnpm@9.12.0 --activate`)
+- A Postgres URL in `.env` (the repo already has a hosted Prisma Postgres URL wired up)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## First-time setup
 
-## Learn More
+```bash
+# from the repo root
+pnpm install
 
-To learn more about Next.js, take a look at the following resources:
+# generate the Prisma client
+pnpm --filter @gns/api prisma:generate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# push the schema to the hosted DB (creates the tables)
+pnpm --filter @gns/api exec prisma db push
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# seed sample catalog, pricing, regions, warehouses, and an admin user
+pnpm db:seed
+```
 
-## Deploy on Vercel
+Admin user created by the seed:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+email:    admin@gnsspices.test
+password: ChangeMeNow!123
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Run
+
+```bash
+# terminal 1 — API on :4000
+pnpm dev:api
+
+# terminal 2 — storefront on :3000
+pnpm dev:web
+```
+
+Then open http://localhost:3000.
+
+## Key endpoints (API)
+
+| Method | Path | Purpose |
+|---|---|---|
+| `POST` | `/v1/auth/register` | Create customer account |
+| `POST` | `/v1/auth/login` | Sign in (sets `gns_at` / `gns_rt` cookies) |
+| `POST` | `/v1/auth/refresh` | Rotate refresh token |
+| `POST` | `/v1/auth/logout` | Revoke refresh token |
+| `GET`  | `/v1/products` | Product listing (`?region=&category=&q=&cursor=`) |
+| `GET`  | `/v1/products/:slug` | Product detail (region-aware) |
+| `GET`  | `/v1/pricing/variants/:id?qty=` | Resolved unit price + ladder |
+| `GET`  | `/v1/cart` / `POST` `/v1/cart/items` | Shopping cart |
+| `POST` | `/v1/orders` | Place order (transitions cart → `pending_payment`) |
+| `GET`  | `/v1/orders` / `/v1/orders/:id` | Order list + detail |
+| `GET`  | `/v1/healthz` | Liveness |
+
+## Architecture highlights
+
+- **Monorepo monolith** — one NestJS service, split by clear modules. No premature microservices.
+- **Price resolution** — `PricingService.resolveOne` / `resolveMany` picks the right price list (`custom business → tier+region → retail+region`) then applies the highest-`minQty` matching `price_rule`.
+- **Region-aware catalog** — `product_region_data` gates availability + localised content + certifications per region.
+- **Transactional outbox** — `outbox_events` is written inside the same tx as orders, decoupling email / ERP / search side effects.
+- **Refresh token rotation** — reuse detection invalidates the whole token family.
+- **RFC 7807 errors** — every API failure returns `application/problem+json`.
+
+## Next modules (not yet implemented)
+
+- Payments (Stripe / Razorpay / Tap) + webhooks
+- RFQ workflow endpoints
+- Private-label workflow + S3 uploads
+- Shipping / carrier adapters
+- Admin dashboard (separate Next.js app)
+- BullMQ outbox relay + search indexer
+
+See the architecture doc in chat history for the full design.
+
+## Scripts
+
+```bash
+pnpm dev               # run api + storefront in parallel
+pnpm dev:api           # api only
+pnpm dev:web           # storefront only
+pnpm db:generate       # prisma generate
+pnpm db:migrate        # prisma migrate dev
+pnpm db:seed           # run prisma/seed.ts
+pnpm infra:up          # start local postgres + redis via docker
+```
