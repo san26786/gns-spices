@@ -93,21 +93,39 @@ export class PricingService {
       if (e instanceof NotFoundException) return new Map<string, null>();
       throw e;
     }
-    const out = new Map<string, { unitPrice: Prisma.Decimal; baseUnitPrice: Prisma.Decimal; currency: string } | null>();
-    await Promise.all(
-      variantIds.map(async (variantId) => {
-        try {
-          const item = await this.pickItem(list.id, variantId, 1);
-          const rule = await this.pickRule(list.id, variantId, 1);
-          const base = item.unitPrice;
-          const unit = rule ? applyRule(base, rule.discountType, rule.discountValue) : base;
-          out.set(variantId, { unitPrice: unit, baseUnitPrice: base, currency: list.currency });
-        } catch (e) {
-          if (e instanceof NotFoundException) out.set(variantId, null);
-          else throw e;
-        }
+    // Two queries for all variants (not two per variant): on serverless hosting the
+    // database pool is small, and hundreds of parallel queries time out.
+    const now = new Date();
+    const [items, rules] = await Promise.all([
+      this.prisma.priceListItem.findMany({
+        where: { priceListId: list.id, variantId: { in: variantIds }, minQty: { lte: 1 } },
+        orderBy: { minQty: 'desc' },
       }),
-    );
+      this.prisma.priceRule.findMany({
+        where: {
+          priceListId: list.id,
+          minQty: { lte: 1 },
+          OR: [{ variantId: { in: variantIds } }, { variantId: null }],
+          AND: [
+            { OR: [{ validFrom: null }, { validFrom: { lte: now } }] },
+            { OR: [{ validTo: null }, { validTo: { gte: now } }] },
+          ],
+        },
+        orderBy: [{ minQty: 'desc' }],
+      }),
+    ]);
+    const out = new Map<string, { unitPrice: Prisma.Decimal; baseUnitPrice: Prisma.Decimal; currency: string } | null>();
+    for (const variantId of variantIds) {
+      const item = items.find((i) => i.variantId === variantId);
+      if (!item) {
+        out.set(variantId, null);
+        continue;
+      }
+      const rule = rules.find((r) => r.variantId === variantId || r.variantId === null);
+      const base = item.unitPrice;
+      const unit = rule ? applyRule(base, rule.discountType, rule.discountValue) : base;
+      out.set(variantId, { unitPrice: unit, baseUnitPrice: base, currency: list.currency });
+    }
     return out;
   }
 
