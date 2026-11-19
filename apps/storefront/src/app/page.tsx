@@ -52,28 +52,11 @@ export default async function HomePage() {
           {/* Hero visual — glossy spice tile mosaic on glass */}
           <div className="relative h-[460px] md:h-[560px] animate-fade-in-delayed-2">
             <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-3 p-3 glass-card">
-              <PhotoTile src="/home/hero-turmeric.webp" alt="GNS ground turmeric pouch and jar with fresh turmeric roots" className="col-span-2 row-span-2" priority>
-                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-300">Single Origin</p>
-                <p className="font-bold text-2xl text-white">Turmeric</p>
-                <p className="text-xs text-zinc-200">Erode, Tamil Nadu</p>
-              </PhotoTile>
-              <PhotoTile src="/home/hero-green-chilli.webp" alt="GNS green chilli pickle jar with fresh chillies">
-                <p className="font-bold text-white text-lg leading-tight">Green Chilli</p>
-                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Bhavnagri</p>
-              </PhotoTile>
-              <PhotoTile src="/home/hero-saffron.webp" alt="GNS Kashmiri saffron box with saffron threads">
-                <p className="font-bold text-white text-lg leading-tight">Saffron</p>
-                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Kashmir</p>
-              </PhotoTile>
-              <PhotoTile src="/home/hero-red-chilli.webp" alt="GNS ground Byadgi chilli pouch with red chilli powder">
-                <p className="font-bold text-white text-lg leading-tight">Red Chilli</p>
-                <p className="text-[10px] tracking-[0.3em] uppercase text-zinc-200">Guntur</p>
-              </PhotoTile>
-              <PhotoTile src="/home/hero-garam-masala.webp" alt="GNS black pepper and garam masala jars on a wooden table" className="col-span-2">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-300">Signature Blend No. 7</p>
-                <p className="font-bold text-2xl text-white leading-tight">Black Pepper Garam Masala</p>
-                <p className="text-xs text-zinc-300">Tellicherry · stone-milled</p>
-              </PhotoTile>
+              <PhotoTile src="/home/hero-turmeric.webp" alt="GNS ground turmeric pouch and jar with fresh turmeric roots" className="col-span-2 row-span-2" priority />
+              <PhotoTile src="/home/hero-green-chilli.webp" alt="GNS green chilli pickle jar with fresh chillies" />
+              <PhotoTile src="/home/hero-saffron.webp" alt="GNS Kashmiri saffron box with saffron threads" />
+              <PhotoTile src="/home/hero-red-chilli.webp" alt="GNS ground Byadgi chilli pouch with red chilli powder" />
+              <PhotoTile src="/home/hero-garam-masala.webp" alt="GNS black pepper and garam masala jars on a wooden table" className="col-span-2" />
             </div>
           </div>
         </div>
@@ -178,10 +161,11 @@ export default async function HomePage() {
             Read the full story →
           </Link>
         </div>
-        <div className="order-1 md:order-2 relative h-[460px] rounded-3xl overflow-hidden bg-spice-maroon shadow-2xl ring-1 ring-white/10">
-          <Image src="/home/our-story.webp" alt="Whole spices, chillies and cinnamon in wooden bowls on a red background" fill sizes="(min-width: 768px) 600px, 100vw" className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden />
-          <div className="absolute inset-0 flex flex-col justify-end p-10 text-white">
+        <div className="order-1 md:order-2 relative aspect-[584/540] min-h-[440px] rounded-3xl overflow-hidden bg-spice-maroon shadow-2xl ring-1 ring-white/10">
+          <Image src="/home/our-story.webp" alt="Whole spices, chillies and cinnamon in wooden bowls on a red background" fill sizes="(min-width: 768px) 600px, 100vw" className="object-cover object-bottom" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-transparent" aria-hidden />
+          <span aria-hidden className="absolute top-2 right-6 font-serif text-8xl leading-none text-amber-500/30 select-none">&rdquo;</span>
+          <div className="absolute inset-0 flex flex-col justify-start p-8 md:p-10 text-white">
             <p className="text-2xl md:text-3xl font-bold leading-tight">
               &ldquo;Pure spice doesn&apos;t need a sales pitch. It needs a fair price and an honest scale.&rdquo;
             </p>
@@ -231,7 +215,9 @@ export default async function HomePage() {
       </section>
 
       {/* CHANNELS CTA */}
-      <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-6">
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <span className="gold-rule mb-10">For Trade</span>
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
         <ChannelCard
           title="Wholesale & B2B"
           image="/home/channel-wholesale.webp"
@@ -248,6 +234,7 @@ export default async function HomePage() {
           tone="bg-gradient-to-br from-spice-chili via-spice-red to-spice-maroon"
           tag="Build your brand"
         />
+        </div>
       </section>
 
       {/* NEWSLETTER — matches the live coming-soon page styling */}
@@ -310,7 +297,7 @@ function ProductCard({ p }: { p: ProductListItem }) {
 /** Photo with a dark gradient so overlaid text stays readable. */
 function PhotoTile({
   src, alt, className = '', priority, children,
-}: { src: string; alt: string; className?: string; priority?: boolean; children: React.ReactNode }) {
+}: { src: string; alt: string; className?: string; priority?: boolean; children?: React.ReactNode }) {
   return (
     <div className={`relative rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-spice-pepper flex items-end p-4 md:p-5 ${className}`}>
       <Image src={src} alt={alt} fill sizes="(min-width: 768px) 400px, 66vw" className="object-cover" priority={priority} />
@@ -326,16 +313,20 @@ function CategoryCard({
   return (
     <Link
       href={href}
-      className="group relative rounded-2xl p-7 block aspect-[4/5] overflow-hidden flex flex-col justify-between text-white hover:-translate-y-1 transition shadow-xl hover:shadow-2xl ring-1 ring-white/10 bg-spice-pepper"
+      className="group flex flex-col rounded-3xl overflow-hidden border border-white/10 bg-[#121212] text-white shadow-xl transition duration-300 hover:border-amber-500/70 hover:-translate-y-1 hover:shadow-2xl"
     >
-      <Image src={image} alt="" fill sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" aria-hidden />
-      <span className="relative text-[10px] tracking-[0.3em] uppercase text-amber-300">Category</span>
-      <div className="relative">
-        <h3 className="text-2xl font-bold leading-tight">{title}</h3>
-        <p className="text-sm text-zinc-200 mt-2">{blurb}</p>
-        <span className="inline-block mt-4 text-sm font-semibold underline underline-offset-4">
-          Explore →
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <Image src={image} alt="" fill sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+      </div>
+      <div className="flex flex-1 flex-col px-5 sm:px-6 pt-5 pb-6">
+        <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-amber-500">Category</span>
+        <h3 className="mt-2 text-xl font-bold leading-tight">{title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">{blurb}</p>
+        <span className="mt-auto pt-4 inline-flex items-center gap-2 text-sm font-bold">
+          Explore
+          <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </span>
       </div>
     </Link>
@@ -343,21 +334,23 @@ function CategoryCard({
 }
 
 function ChannelCard({
-  title, body, href, tag, image,
-}: { title: string; body: string; href: string; tone?: string; tag: string; image: string }) {
+  title, body, href, image,
+}: { title: string; body: string; href: string; tone?: string; tag?: string; image: string }) {
   return (
     <Link
       href={href}
-      className="group relative text-white rounded-3xl p-10 md:p-12 block min-h-[320px] hover:opacity-95 transition shadow-2xl ring-1 ring-white/10 overflow-hidden bg-spice-pepper"
+      className="group flex flex-col rounded-3xl overflow-hidden border border-white/10 bg-[#0d0d0d] text-white shadow-2xl transition duration-300 hover:border-amber-500/60 hover:-translate-y-1"
     >
-      <Image src={image} alt="" fill sizes="(min-width: 768px) 640px, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" aria-hidden />
-      <div className="relative">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-amber-300">{tag}</span>
-        <h3 className="text-3xl md:text-4xl font-bold tracking-tight mt-3">{title}</h3>
-        <p className="text-zinc-200 max-w-md mt-4 leading-relaxed">{body}</p>
-        <span className="inline-block mt-8 font-semibold underline underline-offset-4">
-          Learn more →
+      <div className="relative aspect-[604/296] overflow-hidden">
+        <Image src={image} alt="" fill sizes="(min-width: 768px) 640px, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+      </div>
+      <div className="flex flex-1 flex-col px-6 md:px-7 pt-5 pb-6">
+        <span aria-hidden className="block w-12 h-px bg-white/20" />
+        <h3 className="mt-4 text-2xl font-bold tracking-tight leading-tight">{title}</h3>
+        <p className="mt-2.5 text-zinc-400 text-sm md:text-base leading-relaxed">{body}</p>
+        <span className="mt-auto pt-4 inline-flex items-center gap-2.5 text-sm md:text-base">
+          <span className="underline underline-offset-4 decoration-1">Learn more</span>
+          <span aria-hidden className="transition-transform group-hover:translate-x-1">⟶</span>
         </span>
       </div>
     </Link>
@@ -368,16 +361,21 @@ function RecipeCard({
   title, meta, spice, image,
 }: { title: string; meta: string; tone?: string; spice: string; image: string }) {
   return (
-    <div className="glass-card overflow-hidden hover:border-amber-400/30 transition">
-      <div className="h-48 relative overflow-hidden bg-spice-pepper">
-        <Image src={image} alt={title} fill sizes="(min-width: 768px) 400px, 100vw" className="object-cover" />
-        <span className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-white bg-black/50 backdrop-blur px-2.5 py-1 rounded-full z-10">
-          {spice}
-        </span>
+    <div className="group rounded-3xl overflow-hidden border border-white/10 bg-[#121212] text-white shadow-xl transition duration-300 hover:border-amber-500/60 hover:-translate-y-1">
+      <div className="relative aspect-[2/1] overflow-hidden bg-spice-pepper">
+        <Image src={image} alt={title} fill sizes="(min-width: 768px) 400px, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
       </div>
-      <div className="p-5">
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="text-xs tracking-[0.15em] uppercase text-zinc-500 mt-2">{meta}</p>
+      <div className="px-6 pt-5 pb-6">
+        <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-amber-500">{spice}</p>
+        <h3 className="mt-2.5 text-xl font-bold leading-tight">{title}</h3>
+        <p className="mt-3 flex flex-wrap items-center gap-x-3 text-[11px] font-semibold tracking-[0.18em] uppercase text-zinc-500">
+          {meta.split('·').map((part, i) => (
+            <span key={i} className="inline-flex items-center gap-3">
+              {i > 0 && <span aria-hidden className="w-1 h-1 rounded-full bg-zinc-600" />}
+              {part.trim()}
+            </span>
+          ))}
+        </p>
       </div>
     </div>
   );

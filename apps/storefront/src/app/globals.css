@@ -93,6 +93,20 @@ body {
   box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
 }
 
+/* Dropdown lists: the browser draws options on its own (white) background, so
+   white select text became invisible. Give every dropdown the dark theme. */
+select { color-scheme: dark; }
+select option,
+select optgroup {
+  background-color: #1c1917;
+  color: #FFFFFF;
+}
+select option:checked {
+  background-color: #451A03;
+  color: #FBBF24;
+}
+select option:disabled { color: rgba(212,212,216,0.45); }
+
 /* ── Buttons ─────────────────────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;
