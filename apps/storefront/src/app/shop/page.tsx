@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {
   CATEGORY_META,
-  TIER_BADGE,
   filterCatalog,
   getProductVisual,
   type CatalogCategory,
@@ -9,6 +8,7 @@ import {
 } from '@/lib/catalog';
 import { ProductTile } from '@/components/ProductTile';
 import { ShopAddToCart, type ShopPack } from '@/components/ShopAddToCart';
+import { TierSelect } from '@/components/TierSelect';
 import { apiFetch } from '@/lib/api';
 
 /** Packs and prices from the API, keyed by product slug. Empty if the API is down. */
@@ -154,35 +154,14 @@ function CatalogCard({ product, packs }: { product: CatalogProduct; packs?: Shop
         <p className="text-[11px] tracking-[0.15em] uppercase text-amber-400 mt-2">
           {product.origin}
         </p>
+      </div>
+      </Link>
+      <div className="px-1">
         <p className="text-[10px] tracking-[0.25em] uppercase text-zinc-500 mt-3 mb-1.5">
           {tierCountLabel(product.variants.length)}
         </p>
-        <ul className="space-y-2">
-          {product.variants.map((v, i) => (
-            <li
-              key={v.tier ?? `house-${i}`}
-              className="border-t border-white/10 pt-2 first:border-t-0 first:pt-0"
-            >
-              <div className="flex items-center justify-between gap-3">
-                {v.tier ? (
-                  <span
-                    className={`inline-flex items-center text-[10px] tracking-[0.18em] uppercase px-2 py-0.5 rounded-full border font-semibold ${TIER_BADGE[v.tier]}`}
-                  >
-                    {v.tier}
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center text-[10px] tracking-[0.18em] uppercase px-2 py-0.5 rounded-full border border-white/15 text-zinc-300 font-semibold">
-                    House Selection
-                  </span>
-                )}
-                {v.pack && <span className="text-[11px] text-zinc-500 tabular-nums">{v.pack}</span>}
-              </div>
-              <p className="text-xs text-zinc-400 mt-1 leading-snug">{v.description}</p>
-            </li>
-          ))}
-        </ul>
+        <TierSelect slug={product.slug} name={product.name} variants={product.variants} />
       </div>
-      </Link>
       {packs && (
         <div className="px-1">
           <ShopAddToCart slug={product.slug} name={product.name} image={visual.image ?? null} packs={packs} />
